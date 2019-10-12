@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace COE131L
 {
-    class User
+    public class User
     {
         public int id;
         public int userType;

@@ -19,10 +19,22 @@ namespace COE131L
     /// </summary>
     public partial class Main : Window
     {
+        User loggedUser = new User();
         public Main()
         {
             InitializeComponent();
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
+
+        }
+        public Main(User loguser)
+        {
+            InitializeComponent();
+            ButtonCloseMenu.Visibility = Visibility.Collapsed;
+            loggedUser = loguser;
+
+            string fName = loggedUser.firstName + " " + loggedUser.lastName;
+            this.nameBox.Text = fName;
+
         }
 
         private void Shutdown_Click(object sender, RoutedEventArgs e)

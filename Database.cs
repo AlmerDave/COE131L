@@ -23,20 +23,50 @@ namespace COE131L
         }
 
 
-
-        public static string connectionStr()
+        public static bool accessUser(string username,string password,ref User loggedUser)
         {
-            return ConfigurationManager.ConnectionStrings["constring"].ConnectionString;
-        }
+            //SELECT id,firstname,lastname,username,password from account 
+            // WHERE username = 'derick' and password = '123456'
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                bool userExist = false;
+                conn.Open();
 
+                //PLACE USERTYPELATER ON IN THE SCRIPT
+                SQLiteCommand command = new SQLiteCommand("SELECT id,firstname,lastname,username,password from account WHERE username = @uname and password = @pword", conn);
+                command.Parameters.AddWithValue("@uname", username);
+                command.Parameters.AddWithValue("@pword", password);
+
+                //command.Parameters.AddWithValue("@uType", newUser.userType);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        loggedUser.id = reader.GetInt32(0);
+                        loggedUser.userName = reader.GetString(3);
+                        loggedUser.password = reader.GetString(4);
+                        loggedUser.firstName = reader.GetString(1);
+                        loggedUser.lastName = reader.GetString(2);
+                    }
+                    userExist = true;
+                }
+
+                conn.Close();
+
+                return userExist;
+            }
+        }
+      
         public static void insertAccount(User newUser)
         {
-            using(SQLiteConnection conn = new SQLiteConnection(connectionStr()))
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                SQLiteCommand command = new SQLiteCommand("INSERT INTO account(firstName,lastName,username,password) VALUES(@fname,@lname,@usname,@pass)",conn);
-                command.Parameters.AddWithValue("@fname",newUser.firstName);
+                SQLiteCommand command = new SQLiteCommand("INSERT INTO account(firstName,lastName,username,password) VALUES(@fname,@lname,@usname,@pass)", conn);
+                command.Parameters.AddWithValue("@fname", newUser.firstName);
                 command.Parameters.AddWithValue("@lname", newUser.lastName);
                 command.Parameters.AddWithValue("@usname", newUser.userName);
                 command.Parameters.AddWithValue("@pass", newUser.password);

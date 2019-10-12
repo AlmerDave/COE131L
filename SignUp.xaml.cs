@@ -73,7 +73,7 @@ namespace COE131L
             newUser.password = this.TextBoxPassword.Password;
            
             Database.insertAccount(newUser);
-
+            //MAKE A PROMPT FOR SUCCESDSFUL LOGIN
             MainWindow login = new MainWindow();
             this.Close();
             login.Show();

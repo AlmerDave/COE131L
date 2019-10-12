@@ -21,17 +21,31 @@ namespace COE131L
     public partial class MainWindow : Window
     {
         Database databaseObject = new Database();
+        
         public MainWindow()
         {
             InitializeComponent();
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
+            User loguser = new User();
 
+            if(Database.accessUser(this.Email_TextBox.Text,this.Password_TextBox.Password.ToString(),ref loguser) == true)
+            {
+                //LOGIN SUCESS 
+                Main main = new Main(loguser);
+                this.Close();
+                main.Show();
+                
 
-            Main main = new Main();
-            this.Close();
-            main.Show();
+            }
+            else
+            {
+                //LOGIN FAIL
+                this.mamamo.Text = "MAMA MO";
+            }
+
+            
         }
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
