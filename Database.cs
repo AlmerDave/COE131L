@@ -7,7 +7,7 @@ using System.Data.SQLite;
 using System.IO;
 using System.Configuration;
 using System.Data.SqlClient;
-
+using System.Data;
 
 namespace COE131L
 {
@@ -17,19 +17,37 @@ namespace COE131L
 
         public Database()
         {
-            //myConnection = new SQLiteConnection("Data Source = MULabInventory.db");
+            
 
 
         }
 
-
-        public static bool accessUser(string username,string password,ref User loggedUser)
+        public static DataTable getRecord()
         {
-            //SELECT id,firstname,lastname,username,password from account 
-            // WHERE username = 'derick' and password = '123456'
+            DataTable itemTable = new DataTable();
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=.\\data\\MUlab.db"))
             {
-                bool userExist = false;
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand("SELECT serialnumber as 'Serial Number',type.name as 'Item Name',acount.firstname as 'Added By'" +
+                    ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
+                    "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
+                    "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
+                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.condition",conn);
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
+
+                
+                adapter.Fill(itemTable);
+                conn.Close();
+            }
+            return itemTable;
+        }
+        public static bool accessUser(string username,string password,ref User loggedUser)
+        {
+            bool userExist = false;
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=.\\data\\MUlab.db"))
+            {
+                
                 conn.Open();
 
                 //PLACE USERTYPELATER ON IN THE SCRIPT

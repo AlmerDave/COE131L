@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace COE131L
 {
@@ -35,6 +36,12 @@ namespace COE131L
             string fName = loggedUser.firstName + " " + loggedUser.lastName;
             this.nameBox.Text = fName;
 
+            DataTable itemTable = new DataTable();
+            itemTable = Database.getRecord();
+            this.itemGrid.ItemsSource = itemTable.DefaultView;
+
+
+            
         }
 
         private void Shutdown_Click(object sender, RoutedEventArgs e)
