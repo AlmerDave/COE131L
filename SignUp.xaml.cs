@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Data.SQLite;
 
+
 namespace COE131L
 {
     /// <summary>
@@ -51,20 +52,27 @@ namespace COE131L
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
-            
-            string query = "INSERT INTO UserInformation('UserName', 'FirstName', 'LastName', 'Password')" +
-                            "VALUES(@username, @firstname, @lastname, @Password)";
-            using (SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection))
-            {
-                databaseObject.myConnection.Open();
-                myCommand.Parameters.AddWithValue("@username", TextBoxName.Text);
-                myCommand.Parameters.AddWithValue("@firstname", TextBoxFName.Text);
-                myCommand.Parameters.AddWithValue("@lastname", TextBoxLName.Text);
-                myCommand.Parameters.AddWithValue("@Password", TextBoxPassword.Password);
 
-                myCommand.ExecuteNonQuery();
-                databaseObject.myConnection.Close();
-            }
+            //string query = "INSERT INTO UserInformation('UserName', 'FirstName', 'LastName', 'Password')" +
+            //                "VALUES(@username, @firstname, @lastname, @Password)";
+            //using (SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection))
+            //{
+            //    databaseObject.myConnection.Open();
+            //    myCommand.Parameters.AddWithValue("@username", TextBoxName.Text);
+            //    myCommand.Parameters.AddWithValue("@firstname", TextBoxFName.Text);
+            //    myCommand.Parameters.AddWithValue("@lastname", TextBoxLName.Text);
+            //    myCommand.Parameters.AddWithValue("@Password", TextBoxPassword.Password);
+
+            //    myCommand.ExecuteNonQuery();
+            //    databaseObject.myConnection.Close();
+            //}
+            User newUser = new User();
+            newUser.firstName = this.TextBoxFName.Text;
+            newUser.lastName = this.TextBoxLName.Text;
+            newUser.userName = this.TextBoxName.Text;
+            newUser.password = this.TextBoxPassword.Password;
+           
+            Database.insertAccount(newUser);
 
             MainWindow login = new MainWindow();
             this.Close();
