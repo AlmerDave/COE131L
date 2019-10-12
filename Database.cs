@@ -27,7 +27,7 @@ namespace COE131L
         {
             //SELECT id,firstname,lastname,username,password from account 
             // WHERE username = 'derick' and password = '123456'
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=.\\data\\MUlab.db"))
             {
                 bool userExist = false;
                 conn.Open();
@@ -61,7 +61,7 @@ namespace COE131L
       
         public static void insertAccount(User newUser)
         {
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=.\\data\\MUlab.db"))
             {
                 conn.Open();
                 //PLACE USERTYPELATER ON IN THE SCRIPT
