@@ -25,11 +25,11 @@ namespace COE131L
         public static DataTable getRecord()
         {
             DataTable itemTable = new DataTable();
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=.\\data\\MUlab.db"))
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
 
-                SQLiteCommand command = new SQLiteCommand("SELECT serialnumber as 'Serial Number',type.name as 'Item Name',acount.firstname as 'Added By'" +
+                SQLiteCommand command = new SQLiteCommand("SELECT serialnumber as 'Serial Number',type.name as 'Item Name',account.firstname as 'Added By'" +
                     ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
                     "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
                     "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
@@ -45,9 +45,8 @@ namespace COE131L
         public static bool accessUser(string username,string password,ref User loggedUser)
         {
             bool userExist = false;
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=.\\data\\MUlab.db"))
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
-                
                 conn.Open();
 
                 //PLACE USERTYPELATER ON IN THE SCRIPT
@@ -79,7 +78,7 @@ namespace COE131L
       
         public static void insertAccount(User newUser)
         {
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=.\\data\\MUlab.db"))
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
                 //PLACE USERTYPELATER ON IN THE SCRIPT
