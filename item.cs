@@ -8,7 +8,7 @@ namespace COE131L
 {
     class item
     {
-        //HEELO WORLD
+     
         public int serialNumber;
         public int itemType;
         public int addedby;

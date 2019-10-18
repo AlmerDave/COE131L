@@ -21,7 +21,7 @@ namespace COE131L
 
 
         }
-
+        //FUNCTION TO DISPLAY THE TABLE
         public static DataTable getRecord()
         {
             DataTable itemTable = new DataTable();
@@ -33,7 +33,7 @@ namespace COE131L
                     ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
                     "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
                     "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
-                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.condition",conn);
+                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId",conn);
                 SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
 
                 
@@ -42,6 +42,7 @@ namespace COE131L
             }
             return itemTable;
         }
+        //FUNCTION USED FOR LOGGING IN RETURNS ACCOUNT DETAILS 
         public static bool accessUser(string username,string password,ref User loggedUser)
         {
             bool userExist = false;
@@ -76,6 +77,8 @@ namespace COE131L
             }
         }
       
+
+        //FUNCTION TO ADD NEW ACCOUNT TO THE RECORD
         public static void insertAccount(User newUser)
         {
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
@@ -95,10 +98,90 @@ namespace COE131L
             }
         }
 
-        public static void addItem()
+        //FUNCTION TO ADD NEW ITEM TO THE RECORD
+        public static void addItem(item newItem)
         {
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                SQLiteCommand command = new SQLiteCommand("INSERT INTO itemTable (itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid)" +
+                                                            "VALUES(@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid)" , conn);
+                command.Parameters.AddWithValue("@itemtype", newItem.itemType);
+                command.Parameters.AddWithValue("@userid", newItem.addedby);
+                command.Parameters.AddWithValue("@supp", newItem.supplier);
+                command.Parameters.AddWithValue("@datedel", newItem.datedelivered);
+                command.Parameters.AddWithValue("@statid", newItem.statusId);
+                command.Parameters.AddWithValue("@datedecom", newItem.datedecomm);
+                command.Parameters.AddWithValue("@conid", newItem.conditionId);
+
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
+
+        //FUNCTION TO REMOVE AN ITEM TO THE RECORD
+        public static bool removeItem(int serNum)
+        {
+            bool itemFound = false;
+            
+
+            //search item
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand("SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum", conn);
+                command.Parameters.AddWithValue("@sernum", serNum);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                       itemFound = true;
+                }
+                //remove item if found
+
+                if(itemFound == true)
+                {
+                    command = new SQLiteCommand("DELETE FROM itemTable where serialnumber = @sernum", conn);
+                    command.Parameters.AddWithValue("@sernum", serNum);
+
+                    command.ExecuteNonQuery();
+
+
+                }
+
+                conn.Close();
+            }
+
+                return itemFound;
+        }
+
+
+        //FUNCTION TO EDIT AN EXISTING ITEM
+        public static bool editItem(item editItem)
+        {
+             bool itemFound = false;
+            
+
+            //search item
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand("SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum", conn);
+                command.Parameters.AddWithValue("@sernum", serNum);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                       itemFound = true;
+                }
+
+            //edit new details UPDATE command 
+            command = new SQLiteCommand();
 
         }
+
 
     }
 }
