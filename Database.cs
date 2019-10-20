@@ -158,7 +158,7 @@ namespace COE131L
 
 
         //FUNCTION TO EDIT AN EXISTING ITEM
-        public static bool editItem(item editItem)
+       /* public static bool editItem(item editItem)
         {
              bool itemFound = false;
             
@@ -175,14 +175,49 @@ namespace COE131L
                 if (reader.HasRows)
                 {
                        itemFound = true;
+                    //edit new details UPDATE command 
+            
+                    command = new SQLiteCommand("");
                 }
 
-            //edit new details UPDATE command 
-            command = new SQLiteCommand();
+            
+            }
+        }*/
 
+        public static bool searchItem(int serialNum, ref item foundItem)
+        {
+        bool itemFound = false;
+            
+
+            //search item
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand("SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum", conn);
+                command.Parameters.AddWithValue("@sernum", serNum);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    itemFound = true;
+
+                    foundItem.serialNumber=sernum;
+                    foundItem.itemType = reader.GetInt32(0);
+                    foundItem.addedby = reader.GetInt32(1);
+                    foundItem.supplier=reader.GetString(2);
+                    foundItem.datedelivered = reader.GetString(3);
+                    foundItem.statusId = reader.GetInt32(4);
+                    foundItem.datedecomm = reader.GetString(5);
+                    foundItem.conditionId = reader.GetInt32(6);
+                    
+                }
+
+            
+            }
+
+            return itemFound;
         }
-
-
     }
 }
 
