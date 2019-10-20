@@ -26,28 +26,28 @@
 
         <StackPanel Margin="10 30" Grid.Row="1">
             <Grid>
-                <materialDesign:PackIcon Kind="Face" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxUserName}"/>
-                <TextBox x:Name="TextBoxName" Margin="5" materialDesign:HintAssist.Hint="User Name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" SelectionBrush="#FF992020" />
+                <materialDesign:PackIcon x:Name ="userMaterial" Kind="Face" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxUserName}"/>
+                <TextBox x:Name="TextBoxName" Margin="5" materialDesign:HintAssist.Hint="User Name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" SelectionBrush="#FF992020" TextChanged="TextBoxName_TextChanged" />
             </Grid>
             <Grid>
                 <materialDesign:PackIcon Kind="At" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxEmail}"/>
                 <TextBox x:Name="TextBoxEmail" Margin="5" materialDesign:HintAssist.Hint="Nickname" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" SelectionBrush="#FF992020"/>
             </Grid>
             <Grid>
-                <materialDesign:PackIcon Kind="PermIdentity" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxFName}"/>
-                <TextBox x:Name="TextBoxFName" Margin="5" materialDesign:HintAssist.Hint="First name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" />
+                <materialDesign:PackIcon x:Name="fnameMaterial" Kind="PermIdentity" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxFName}"/>
+                <TextBox x:Name="TextBoxFName" Margin="5" materialDesign:HintAssist.Hint="First name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" TextChanged="TextBoxFName_TextChanged"/>
             </Grid>
             <Grid>
-                <materialDesign:PackIcon Kind="PermIdentity" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxLName}"/>
-                <TextBox x:Name="TextBoxLName" Margin="5" materialDesign:HintAssist.Hint="Last name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020"/>
+                <materialDesign:PackIcon x:Name="lnameMaterial" Kind="PermIdentity" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxLName}"/>
+                <TextBox x:Name="TextBoxLName" Margin="5" materialDesign:HintAssist.Hint="Last name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" TextChanged="TextBoxLName_TextChanged"/>
             </Grid>
             <Grid>
-                <materialDesign:PackIcon Kind="Lock" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxPassword}"/>
-                <PasswordBox x:Name="TextBoxPassword" Margin="5" materialDesign:HintAssist.Hint="Password" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="#FF992020"/>
+                <materialDesign:PackIcon x:Name="passMaterial" Kind="Lock" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxPassword}"/>
+                <PasswordBox x:Name="TextBoxPassword" Margin="5" materialDesign:HintAssist.Hint="Password" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="#FF992020" PasswordChanged="TextBoxPassword_PasswordChanged"/>
             </Grid>
             <Grid>
-                <materialDesign:PackIcon Kind="LockAlert" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxCPassword}"/>
-                <PasswordBox x:Name="TextBoxCPassword" Margin="5" materialDesign:HintAssist.Hint="Confirm Password" Padding="8 0 0 0"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="#FF992020"/>
+                <materialDesign:PackIcon x:Name="confirmMaterial" Kind="LockAlert" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxCPassword}" />
+                <PasswordBox x:Name="TextBoxCPassword" Margin="5" materialDesign:HintAssist.Hint="Confirm Password" Padding="8 0 0 0"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="#FF992020" PasswordChanged="TextBoxCPassword_PasswordChanged"/>
             </Grid>
 
         </StackPanel>

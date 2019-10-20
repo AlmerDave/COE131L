@@ -29,7 +29,7 @@ namespace COE131L
                     ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
                     "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
                     "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
-                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId"; 
+                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId";
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
@@ -80,7 +80,7 @@ namespace COE131L
                 conn.Open();
                 string query = "SELECT id,firstname,lastname,username,password from account WHERE username = @uname and password = @pword";
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                SQLiteCommand command = new SQLiteCommand( query, conn);
+                SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@uname", username);
                 command.Parameters.AddWithValue("@pword", password);
 
@@ -190,8 +190,8 @@ namespace COE131L
         }
 
 
-        //FUNCTION TO EDIT AN EXISTING ITEM
-        public static bool editItem(item editItem)
+        //FUNCTION TO FIND AN EXISTING ITEM
+        public static bool searchItem(int serialNum, ref item foundItem)
         {
             bool itemFound = false;
 
@@ -200,24 +200,99 @@ namespace COE131L
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
-                string query = "SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum";
 
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                command.Parameters.AddWithValue("@sernum", editItem);
+                SQLiteCommand command = new SQLiteCommand("SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum", conn);
+                command.Parameters.AddWithValue("@sernum", serialNum);
 
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
                     itemFound = true;
+
+                    foundItem.serialNumber = serialNum;
+                    foundItem.itemType = reader.GetInt32(0);
+                    foundItem.addedby = reader.GetInt32(1);
+                    foundItem.supplier = reader.GetString(2);
+                    foundItem.datedelivered = DateTime.Parse(reader.GetString(3));
+                    foundItem.statusId = reader.GetInt32(4);
+                    foundItem.datedecomm = DateTime.Parse(reader.GetString(5));
+                    foundItem.conditionId = reader.GetInt32(6);
+
                 }
 
-                //edit new details UPDATE command 
-                command = new SQLiteCommand();
 
             }
 
             return itemFound;
         }
+        //ASSUMED THAT THE ITEM IS EXISTING TO BE EDITED IN THIS FUNCTION 
+        public static void editItem(item editItem)
+        {
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                string query = "UPDATE itemTable SET itemtype = @itemType,addedby = @added,supplier = @supp,datedelivered = @datedel, statusid = @stat ,datedecommissioned = @datedecom, conditionid = @cond WHERE serialnumber = @sernum";
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@sernum", editItem.serialNumber);
+                command.Parameters.AddWithValue("@itemType", editItem.itemType);
+                command.Parameters.AddWithValue("@added", editItem.addedby);
+                command.Parameters.AddWithValue("@supp", editItem.supplier);
+                command.Parameters.AddWithValue("@datedel", editItem.datedelivered);
+                command.Parameters.AddWithValue("@stat", editItem.statusId);
+                command.Parameters.AddWithValue("@datedecom", editItem.datedecomm);
+                command.Parameters.AddWithValue("@cond", editItem.conditionId);
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        //FUNCTION FOR ADDING A NEW ITEM TYPE
+        public static bool addItemType(string typeName,string modelName)
+        {
+            bool nameExists = true;
+            string tName = typeName + "%";
+            string mName = modelName + "%";
+               
+            string query = "SELECT name, model,typeid FROM type where name = @tname";
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@tname", tName);
+                
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if(!reader.HasRows)
+                {
+                    nameExists = false;
+                }
+                conn.Close();
+            
+            }
+
+            if (nameExists == false)
+            {
+                query = "INSERT INTO type (name,model) VALUES (@Name,@Model)";
+
+                using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+                {
+                    conn.Open();
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    command.Parameters.AddWithValue("@Name", typeName);
+                    command.Parameters.AddWithValue("@Model", modelName);
+                    command.ExecuteNonQuery();
+
+                    conn.Close();
+                }
+            }
+            return nameExists;
+        }
+
+
     }
 }
 
