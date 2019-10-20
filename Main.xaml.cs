@@ -26,6 +26,7 @@ namespace COE131L
             InitializeComponent();
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
 
+
         }
         public Main(User loguser)
         {

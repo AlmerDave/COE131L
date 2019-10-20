@@ -11,13 +11,13 @@ using System.Data;
 
 namespace COE131L
 {
-    class Database 
+    class Database
     {
         //public SQLiteConnection myConnection;
 
         public Database()
         {
-            
+
 
 
         }
@@ -25,25 +25,27 @@ namespace COE131L
         public static DataTable getRecord()
         {
             DataTable itemTable = new DataTable();
+            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name',account.firstname as 'Added By'" +
+                    ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
+                    "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
+                    "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
+                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId"; 
+
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
 
-                SQLiteCommand command = new SQLiteCommand("SELECT serialnumber as 'Serial Number',type.name as 'Item Name',account.firstname as 'Added By'" +
-                    ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
-                    "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
-                    "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
-                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId",conn);
+                SQLiteCommand command = new SQLiteCommand(query, conn);
                 SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
 
-                
+
                 adapter.Fill(itemTable);
                 conn.Close();
             }
             return itemTable;
         }
         //FUNCTION USED FOR LOGGING IN RETURNS ACCOUNT DETAILS 
-        public static bool accessUser(string username,string password,ref User loggedUser)
+        public static bool accessUser(string username, string password, ref User loggedUser)
         {
             bool userExist = false;
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
@@ -60,6 +62,7 @@ namespace COE131L
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
+                    // inrelevant code
                     while (reader.Read())
                     {
                         loggedUser.id = reader.GetInt32(0);
@@ -68,6 +71,7 @@ namespace COE131L
                         loggedUser.firstName = reader.GetString(1);
                         loggedUser.lastName = reader.GetString(2);
                     }
+
                     userExist = true;
                 }
 
@@ -76,7 +80,7 @@ namespace COE131L
                 return userExist;
             }
         }
-      
+
 
         //FUNCTION TO ADD NEW ACCOUNT TO THE RECORD
         public static void insertAccount(User newUser)
@@ -105,7 +109,7 @@ namespace COE131L
             {
                 conn.Open();
                 SQLiteCommand command = new SQLiteCommand("INSERT INTO itemTable (itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid)" +
-                                                            "VALUES(@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid)" , conn);
+                                                            "VALUES(@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid)", conn);
                 command.Parameters.AddWithValue("@itemtype", newItem.itemType);
                 command.Parameters.AddWithValue("@userid", newItem.addedby);
                 command.Parameters.AddWithValue("@supp", newItem.supplier);
@@ -123,7 +127,7 @@ namespace COE131L
         public static bool removeItem(int serNum)
         {
             bool itemFound = false;
-            
+
 
             //search item
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
@@ -136,11 +140,11 @@ namespace COE131L
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
-                       itemFound = true;
+                    itemFound = true;
                 }
                 //remove item if found
 
-                if(itemFound == true)
+                if (itemFound == true)
                 {
                     command = new SQLiteCommand("DELETE FROM itemTable where serialnumber = @sernum", conn);
                     command.Parameters.AddWithValue("@sernum", serNum);
@@ -153,15 +157,15 @@ namespace COE131L
                 conn.Close();
             }
 
-                return itemFound;
+            return itemFound;
         }
 
 
         //FUNCTION TO EDIT AN EXISTING ITEM
         public static bool editItem(item editItem)
         {
-             bool itemFound = false;
-            
+            bool itemFound = false;
+
 
             //search item
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
@@ -169,20 +173,21 @@ namespace COE131L
                 conn.Open();
 
                 SQLiteCommand command = new SQLiteCommand("SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum", conn);
-                command.Parameters.AddWithValue("@sernum", serNum);
+                command.Parameters.AddWithValue("@sernum", editItem);
 
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
-                       itemFound = true;
+                    itemFound = true;
                 }
 
-            //edit new details UPDATE command 
-            command = new SQLiteCommand();
+                //edit new details UPDATE command 
+                command = new SQLiteCommand();
 
+            }
+
+            return itemFound;
         }
-
-
     }
 }
 
