@@ -11,13 +11,13 @@ using System.Data;
 
 namespace COE131L
 {
-    class Database 
+    class Database
     {
         //public SQLiteConnection myConnection;
 
         public Database()
         {
-            
+
 
 
         }
@@ -25,33 +25,62 @@ namespace COE131L
         public static DataTable getRecord()
         {
             DataTable itemTable = new DataTable();
+            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name',account.firstname as 'Added By'" +
+                    ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
+                    "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
+                    "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
+                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId"; 
+
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
 
-                SQLiteCommand command = new SQLiteCommand("SELECT serialnumber as 'Serial Number',type.name as 'Item Name',account.firstname as 'Added By'" +
-                    ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
-                    "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
-                    "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
-                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId",conn);
+                SQLiteCommand command = new SQLiteCommand(query, conn);
                 SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
 
-                
+
                 adapter.Fill(itemTable);
                 conn.Close();
             }
             return itemTable;
         }
+        //FUNCTION USED FOR SEARCHING
+        public static DataTable searchRecord(string word)
+        {
+            DataTable itemTable = new DataTable();
+            string quote = word + "%";
+            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name',account.firstname as 'Added By'" +
+                    ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
+                    "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
+                    "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
+                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId "
+                    + "WHERE serialnumber like @word or type.name like @word or account.firstname like  @word or supplier like  @word or status.description like  @word  or condition.description like  @word ";
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@word", quote);
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
+
+
+                adapter.Fill(itemTable);
+                conn.Close();
+            }
+            return itemTable;
+        }
+
         //FUNCTION USED FOR LOGGING IN RETURNS ACCOUNT DETAILS 
-        public static bool accessUser(string username,string password,ref User loggedUser)
+        public static bool accessUser(string username, string password, ref User loggedUser)
         {
             bool userExist = false;
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
-
+                string query = "SELECT id,firstname,lastname,username,password from account WHERE username = @uname and password = @pword";
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                SQLiteCommand command = new SQLiteCommand("SELECT id,firstname,lastname,username,password from account WHERE username = @uname and password = @pword", conn);
+                SQLiteCommand command = new SQLiteCommand( query, conn);
                 command.Parameters.AddWithValue("@uname", username);
                 command.Parameters.AddWithValue("@pword", password);
 
@@ -60,6 +89,7 @@ namespace COE131L
                 SQLiteDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
+                    // inrelevant code
                     while (reader.Read())
                     {
                         loggedUser.id = reader.GetInt32(0);
@@ -68,6 +98,7 @@ namespace COE131L
                         loggedUser.firstName = reader.GetString(1);
                         loggedUser.lastName = reader.GetString(2);
                     }
+
                     userExist = true;
                 }
 
@@ -76,7 +107,7 @@ namespace COE131L
                 return userExist;
             }
         }
-      
+
 
         //FUNCTION TO ADD NEW ACCOUNT TO THE RECORD
         public static void insertAccount(User newUser)
@@ -85,7 +116,8 @@ namespace COE131L
             {
                 conn.Open();
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                SQLiteCommand command = new SQLiteCommand("INSERT INTO account(firstName,lastName,username,password) VALUES(@fname,@lname,@usname,@pass)", conn);
+                string query = "INSERT INTO account(firstName,lastName,username,password) VALUES(@fname,@lname,@usname,@pass)";
+                SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@fname", newUser.firstName);
                 command.Parameters.AddWithValue("@lname", newUser.lastName);
                 command.Parameters.AddWithValue("@usname", newUser.userName);
@@ -104,8 +136,9 @@ namespace COE131L
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
-                SQLiteCommand command = new SQLiteCommand("INSERT INTO itemTable (itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid)" +
-                                                            "VALUES(@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid)" , conn);
+                string query = "INSERT INTO itemTable (itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid)" +
+                                                            "VALUES(@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid)";
+                SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@itemtype", newItem.itemType);
                 command.Parameters.AddWithValue("@userid", newItem.addedby);
                 command.Parameters.AddWithValue("@supp", newItem.supplier);
@@ -123,71 +156,7 @@ namespace COE131L
         public static bool removeItem(int serNum)
         {
             bool itemFound = false;
-            
 
-            //search item
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
-            {
-                conn.Open();
-
-                SQLiteCommand command = new SQLiteCommand("SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum", conn);
-                command.Parameters.AddWithValue("@sernum", serNum);
-
-                SQLiteDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                       itemFound = true;
-                }
-                //remove item if found
-
-                if(itemFound == true)
-                {
-                    command = new SQLiteCommand("DELETE FROM itemTable where serialnumber = @sernum", conn);
-                    command.Parameters.AddWithValue("@sernum", serNum);
-
-                    command.ExecuteNonQuery();
-
-
-                }
-
-                conn.Close();
-            }
-
-                return itemFound;
-        }
-
-
-        //FUNCTION TO EDIT AN EXISTING ITEM
-       /* public static bool editItem(item editItem)
-        {
-             bool itemFound = false;
-            
-
-            //search item
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
-            {
-                conn.Open();
-
-                SQLiteCommand command = new SQLiteCommand("SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum", conn);
-                command.Parameters.AddWithValue("@sernum", serNum);
-
-                SQLiteDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                       itemFound = true;
-                    //edit new details UPDATE command 
-            
-                    command = new SQLiteCommand("");
-                }
-
-            
-            }
-        }*/
-
-        public static bool searchItem(int serialNum, ref item foundItem)
-        {
-        bool itemFound = false;
-            
 
             //search item
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
@@ -201,19 +170,50 @@ namespace COE131L
                 if (reader.HasRows)
                 {
                     itemFound = true;
+                }
+                //remove item if found
 
-                    foundItem.serialNumber=sernum;
-                    foundItem.itemType = reader.GetInt32(0);
-                    foundItem.addedby = reader.GetInt32(1);
-                    foundItem.supplier=reader.GetString(2);
-                    foundItem.datedelivered = reader.GetString(3);
-                    foundItem.statusId = reader.GetInt32(4);
-                    foundItem.datedecomm = reader.GetString(5);
-                    foundItem.conditionId = reader.GetInt32(6);
-                    
+                if (itemFound == true)
+                {
+                    command = new SQLiteCommand("DELETE FROM itemTable where serialnumber = @sernum", conn);
+                    command.Parameters.AddWithValue("@sernum", serNum);
+
+                    command.ExecuteNonQuery();
+
+
                 }
 
-            
+                conn.Close();
+            }
+
+            return itemFound;
+        }
+
+
+        //FUNCTION TO EDIT AN EXISTING ITEM
+        public static bool editItem(item editItem)
+        {
+            bool itemFound = false;
+
+
+            //search item
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                string query = "SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum";
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@sernum", editItem);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    itemFound = true;
+                }
+
+                //edit new details UPDATE command 
+                command = new SQLiteCommand();
+
             }
 
             return itemFound;

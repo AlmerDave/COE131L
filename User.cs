@@ -15,6 +15,7 @@ namespace COE131L
         public string lastName;
         public string userName;
         public string password;
+        public string nickname;
     }
 
 }

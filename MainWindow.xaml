@@ -30,7 +30,7 @@
             </Grid.RowDefinitions>
             <TextBlock x:Name="mamamo" Text="MULab" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="112,5,111,0" Foreground="Gray" FontSize="18"/>
             <StackPanel VerticalAlignment="Center" Margin="10,58" Grid.RowSpan="2">
-                <TextBox x:Name="Email_TextBox" materialDesign:HintAssist.Hint ="EMAIL" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontFamily="Champagne &amp; Limousiness" FontSize="18" CaretBrush="#FF992020" SelectionBrush="#FF992020" />
+                <TextBox x:Name="Email_TextBox" materialDesign:HintAssist.Hint ="EMAIL" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0,10" FontFamily="Champagne &amp; Limousiness" FontSize="18" CaretBrush="#FF992020" SelectionBrush="#FF992020" TextChanged="email_textChanged" />
                 <PasswordBox x:Name="Password_TextBox"  materialDesign:HintAssist.Hint ="PASSWORD" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" Margin="0,10" FontFamily="Champagne &amp; Limousiness" FontSize="18" CaretBrush="#FF992020"/>
             </StackPanel>
         </Grid>
@@ -39,6 +39,7 @@
         <TextBlock x:Name="Text1" Text="  New Here?" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="22,0,247,32" Foreground="Gray" Width="74" Height="26" />
         <Button x:Name="SignUp_Button" VerticalAlignment="Bottom" Margin="96,0,154,37" Content="SignUp" Height="26" FontSize="12" Click="SignUpButton_Click" Background="#FF992020"/>
         <TextBlock x:Name="ChangePassText" Text="  Forgot Password?" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="218,0,10,34" Foreground="Red" Width="115"  Cursor="Hand" Height="24"/>
+        <TextBlock x:Name="Error_textBox" Text="  Wrong username or password" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="49,310,47,0" Foreground="Red" FontSize="14" Width="247" FontStyle="Italic"/>
 
     </Grid>
 

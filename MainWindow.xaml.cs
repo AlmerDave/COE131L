@@ -25,6 +25,8 @@ namespace COE131L
         public MainWindow()
         {
             InitializeComponent();
+            Password_TextBox.IsEnabled = false;
+            Error_textBox.Visibility = Visibility.Hidden;
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
@@ -42,7 +44,8 @@ namespace COE131L
             else
             {
                 //LOGIN FAIL
-                this.mamamo.Text = "MAMA MO";
+                Error_textBox.Visibility = Visibility.Visible;
+
             }
 
             
@@ -55,5 +58,14 @@ namespace COE131L
             su.Show();
         }
 
+        private void email_textChanged(object sender, TextChangedEventArgs e)
+        {
+            Error_textBox.Visibility = Visibility.Hidden;
+            Password_TextBox.IsEnabled = true;
+            if(string.IsNullOrWhiteSpace(Email_TextBox.Text))
+            {
+                Password_TextBox.IsEnabled = false;
+            }
+        }
     }
 }
