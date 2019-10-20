@@ -176,7 +176,7 @@
                 </Button>
                 <Grid Height="90" VerticalAlignment="Top" Visibility="Visible">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBox materialDesign:HintAssist.Hint="SEARCH" Foreground="Black" Width="600" FontSize="20" CaretBrush="#FF992020"/>
+                        <TextBox x:Name="Search_textBox" materialDesign:HintAssist.Hint="SEARCH" Foreground="Black" Width="600" FontSize="20" CaretBrush="#FF992020" TextChanged="search_textChanged"/>
                         <materialDesign:PackIcon Kind="Magnify" Foreground="Black" Width="25" Height="25" VerticalAlignment="Center" Margin="5"/>
                     </StackPanel>
 

@@ -21,13 +21,6 @@ namespace COE131L
     public partial class Main : Window
     {
         User loggedUser = new User();
-        public Main()
-        {
-            InitializeComponent();
-            ButtonCloseMenu.Visibility = Visibility.Collapsed;
-
-
-        }
         public Main(User loguser)
         {
             InitializeComponent();
@@ -36,11 +29,11 @@ namespace COE131L
 
             string fName = loggedUser.firstName + " " + loggedUser.lastName;
             this.nameBox.Text = fName;
-
+            
             DataTable itemTable = new DataTable();
             itemTable = Database.getRecord();
             this.itemGrid.ItemsSource = itemTable.DefaultView;
-
+            
 
             
         }
@@ -60,6 +53,15 @@ namespace COE131L
         {
             ButtonOpenMenu.Visibility = Visibility.Collapsed;
             ButtonCloseMenu.Visibility = Visibility.Visible; 
+        }
+
+        private void search_textChanged(object sender, TextChangedEventArgs e)
+        {
+            var search = Search_textBox.Text;
+
+            DataTable itemTable = new DataTable();
+            itemTable = Database.searchRecord(search);
+            this.itemGrid.ItemsSource = itemTable.DefaultView;
         }
     }
 }

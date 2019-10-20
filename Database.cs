@@ -44,6 +44,33 @@ namespace COE131L
             }
             return itemTable;
         }
+        //FUNCTION USED FOR SEARCHING
+        public static DataTable searchRecord(string word)
+        {
+            DataTable itemTable = new DataTable();
+            string quote = word + "%";
+            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name',account.firstname as 'Added By'" +
+                    ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
+                    "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
+                    "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
+                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId "
+                    + "WHERE serialnumber like @word or type.name like @word or account.firstname like  @word or supplier like  @word or status.description like  @word  or condition.description like  @word ";
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@word", quote);
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
+
+
+                adapter.Fill(itemTable);
+                conn.Close();
+            }
+            return itemTable;
+        }
+
         //FUNCTION USED FOR LOGGING IN RETURNS ACCOUNT DETAILS 
         public static bool accessUser(string username, string password, ref User loggedUser)
         {
@@ -51,9 +78,9 @@ namespace COE131L
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
-
+                string query = "SELECT id,firstname,lastname,username,password from account WHERE username = @uname and password = @pword";
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                SQLiteCommand command = new SQLiteCommand("SELECT id,firstname,lastname,username,password from account WHERE username = @uname and password = @pword", conn);
+                SQLiteCommand command = new SQLiteCommand( query, conn);
                 command.Parameters.AddWithValue("@uname", username);
                 command.Parameters.AddWithValue("@pword", password);
 
@@ -89,7 +116,8 @@ namespace COE131L
             {
                 conn.Open();
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                SQLiteCommand command = new SQLiteCommand("INSERT INTO account(firstName,lastName,username,password) VALUES(@fname,@lname,@usname,@pass)", conn);
+                string query = "INSERT INTO account(firstName,lastName,username,password) VALUES(@fname,@lname,@usname,@pass)";
+                SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@fname", newUser.firstName);
                 command.Parameters.AddWithValue("@lname", newUser.lastName);
                 command.Parameters.AddWithValue("@usname", newUser.userName);
@@ -108,8 +136,9 @@ namespace COE131L
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
-                SQLiteCommand command = new SQLiteCommand("INSERT INTO itemTable (itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid)" +
-                                                            "VALUES(@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid)", conn);
+                string query = "INSERT INTO itemTable (itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid)" +
+                                                            "VALUES(@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid)";
+                SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@itemtype", newItem.itemType);
                 command.Parameters.AddWithValue("@userid", newItem.addedby);
                 command.Parameters.AddWithValue("@supp", newItem.supplier);
@@ -171,8 +200,9 @@ namespace COE131L
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
+                string query = "SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum";
 
-                SQLiteCommand command = new SQLiteCommand("SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum", conn);
+                SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@sernum", editItem);
 
                 SQLiteDataReader reader = command.ExecuteReader();
