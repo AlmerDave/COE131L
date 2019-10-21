@@ -24,12 +24,6 @@ namespace COE131L
     {
         Database databaseObject = new Database();
         bool discardChanges;
-
-        bool usernameValid = false;
-        bool fnameValid = false;
-        bool lnameValid = false;
-        bool passValid = false;
-
         public SignUp()
         {
            
@@ -59,127 +53,43 @@ namespace COE131L
         private void Register_Click(object sender, RoutedEventArgs e)
         {
 
+            //string query = "INSERT INTO UserInformation('UserName', 'FirstName', 'LastName', 'Password')" +
+            //                "VALUES(@username, @firstname, @lastname, @Password)";
+            //using (SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection))
+            //{
+            //    databaseObject.myConnection.Open();
+            //    myCommand.Parameters.AddWithValue("@username", TextBoxName.Text);
+            //    myCommand.Parameters.AddWithValue("@firstname", TextBoxFName.Text);
+            //    myCommand.Parameters.AddWithValue("@lastname", TextBoxLName.Text);
+            //    myCommand.Parameters.AddWithValue("@Password", TextBoxPassword.Password);
+
+            //    myCommand.ExecuteNonQuery();
+            //    databaseObject.myConnection.Close();
+            //}
             User newUser = new User();
-            if (string.IsNullOrWhiteSpace(this.TextBoxName.Text) || string.IsNullOrWhiteSpace(this.TextBoxFName.Text)
-                || string.IsNullOrWhiteSpace(this.TextBoxLName.Text) || string.IsNullOrWhiteSpace(this.TextBoxPassword.Password.ToString()) || string.IsNullOrWhiteSpace(this.TextBoxCPassword.Password.ToString()))
-            {
-                MessageBox.Show("Please provide correct information!", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-            else if (usernameValid && fnameValid && lnameValid && passValid)
-            {
-                newUser.firstName = this.TextBoxFName.Text;
-                newUser.lastName = this.TextBoxLName.Text;
-                newUser.userName = this.TextBoxName.Text;
-                newUser.password = this.TextBoxPassword.Password;
-
-                Database.insertAccount(newUser);
-
-                this.Close();
-                MainWindow login = new MainWindow();
-                
-                login.Show();
-            }
-            else
-            {
-                MessageBox.Show("Please provide correct information!", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            }
-
+            newUser.firstName = this.TextBoxFName.Text;
+            newUser.lastName = this.TextBoxLName.Text;
+            newUser.userName = this.TextBoxName.Text;
+            newUser.password = this.TextBoxPassword.Password;
+           
+            Database.insertAccount(newUser);
             //MAKE A PROMPT FOR SUCCESDSFUL LOGIN
-            
+            MainWindow login = new MainWindow();
+            this.Hide();
+            login.Show();
         }
 
         private void Snackbar_Click(object sender, RoutedEventArgs e)
         {
             SnackbarUnsavedChanges.IsActive = false;
             discardChanges = true;
-
-           
         }
 
-        private void TextBoxName_TextChanged(object sender, TextChangedEventArgs e)
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            if(string.IsNullOrWhiteSpace(this.TextBoxName.Text))
-            {
-                this.userMaterial.Kind = MaterialDesignThemes.Wpf.PackIconKind.Alert;
-                this.userMaterial.Foreground = Brushes.Red;
-
-                this.usernameValid = false;
-            }
-            else
-            {
-                this.userMaterial.Kind = MaterialDesignThemes.Wpf.PackIconKind.Face;
-                this.userMaterial.Foreground = this.TextBoxName.BorderBrush;
-                this.usernameValid = true;
-            }
-        }
-
-        private void TextBoxFName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(this.TextBoxFName.Text))
-            {
-                this.fnameMaterial.Kind = MaterialDesignThemes.Wpf.PackIconKind.Alert;
-                this.fnameMaterial.Foreground = Brushes.Red;
-
-                this.fnameValid = false;
-            }
-            else
-            {
-                this.fnameMaterial.Kind = MaterialDesignThemes.Wpf.PackIconKind.PermIdentity;
-                this.fnameMaterial.Foreground = this.TextBoxName.BorderBrush;
-                this.fnameValid = true;
-            }
-        }
-
-        private void TextBoxLName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(this.TextBoxLName.Text))
-            {
-                this.lnameMaterial.Kind = MaterialDesignThemes.Wpf.PackIconKind.Alert;
-                this.lnameMaterial.Foreground = Brushes.Red;
-
-                this.lnameValid = false;
-            }
-            else
-            {
-                this.lnameMaterial.Kind = MaterialDesignThemes.Wpf.PackIconKind.PermIdentity;
-                this.lnameMaterial.Foreground = this.TextBoxName.BorderBrush;
-                this.lnameValid = true;
-            }
-        }
-
-        private void TextBoxPassword_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(this.TextBoxPassword.Password))
-            { 
-                this.passMaterial.Kind = MaterialDesignThemes.Wpf.PackIconKind.Alert;
-                this.passMaterial.Foreground = Brushes.Red;
-
-                this.passValid = false;
-            }
-            else
-            {
-                this.passMaterial.Kind = MaterialDesignThemes.Wpf.PackIconKind.Lock;
-                this.passMaterial.Foreground = this.TextBoxName.BorderBrush;
-                this.passValid = true;
-            }
-        }
-
-        private void TextBoxCPassword_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(this.TextBoxCPassword.Password.ToString()) || !Equals(this.TextBoxPassword.Password.ToString(), this.TextBoxCPassword.Password.ToString()))
-            {
-                this.confirmMaterial.Kind = MaterialDesignThemes.Wpf.PackIconKind.Alert;
-                this.confirmMaterial.Foreground = Brushes.Red;
-
-                this.passValid = false;
-            }
-            else
-            {
-                this.confirmMaterial.Kind = MaterialDesignThemes.Wpf.PackIconKind.Lock;
-                this.confirmMaterial.Foreground = this.TextBoxName.BorderBrush;
-                this.passValid = true;
-            }
+            MainWindow login = new MainWindow();
+            this.Hide();
+            login.Show();
         }
     }
 }

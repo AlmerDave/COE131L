@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:COE131L"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Main" Height="600" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="MULab Inventory" Height="600" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" Icon="img/icon.ico" ResizeMode="NoResize">
     <Window.Resources>
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMain">
@@ -68,11 +68,7 @@
     </Window.Triggers>
     <Grid>
         <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FFCAD400" Offset="0"/>
-                <GradientStop Color="#FF380202" Offset="1"/>
-                <GradientStop Color="#FFCB2C2C" Offset="0.313"/>
-            </LinearGradientBrush>
+            <ImageBrush ImageSource="img/BG2.png" Stretch="UniformToFill"/>
         </Grid.Background>
         <Grid x:Name="StackPanelMenu" Margin="-250 0 0 0" Width="250" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" >
             <Grid.RenderTransform>
@@ -98,7 +94,7 @@
                         <ColumnDefinition Width="63*"/>
                     </Grid.ColumnDefinitions>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="Add" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Add Equipment" Height="Auto" FontSize="20" Grid.ColumnSpan="2" Background="#FF992020" BorderBrush="#FFD4B805" />
+                    <Button Margin="45,33,5,23"  Content="Add Equipment" Height="Auto" FontSize="20" Grid.ColumnSpan="2" Background="#FF992020" BorderBrush="#FFD4B805" FontFamily="Tahoma" />
                 </Grid>
                 <Grid x:Name="grid1" Height="100" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
@@ -110,7 +106,7 @@
                         </TransformGroup>
                     </Grid.RenderTransform>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="Folder" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Add Item Type" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
+                    <Button Margin="45,33,5,23"  Content="Add Item Type" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" FontFamily="Tahoma" />
                 </Grid>
                 <Grid x:Name="grid2" Height="100" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
@@ -122,7 +118,7 @@
                         </TransformGroup>
                     </Grid.RenderTransform>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="Edit" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Edit" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
+                    <Button Margin="45,33,5,23"  Content="Edit" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" FontFamily="Tahoma" />
                 </Grid>
                 <Grid x:Name="grid3" Height="100" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
@@ -134,12 +130,12 @@
                         </TransformGroup>
                     </Grid.RenderTransform>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="Clear" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Remove" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
+                    <Button Margin="45,33,5,23"  Content="Remove" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" FontFamily="Tahoma" />
                 </Grid>
             </StackPanel>
 
         </Grid>
-        <Grid x:Name="GridMain" Background="White" Width="1024" RenderTransformOrigin="0.5,0.5" >
+        <Grid x:Name="GridMain" Background="#FFFAF6E6" RenderTransformOrigin="0.5,0.5" Margin="0,1,-7,0" >
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -152,19 +148,22 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="250"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" Margin="0,-2,0,0.333">
                 <Grid.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFCAD400" Offset="0"/>
-                        <GradientStop Color="#FF380202" Offset="1"/>
-                        <GradientStop Color="#FFCB2C2C" Offset="0.482"/>
-                    </LinearGradientBrush>
+                    <ImageBrush ImageSource="img/BG2.png" Stretch="UniformToFill"/>
                 </Grid.Background>
-                <Image Height="150" VerticalAlignment="Top" Source="img/ImageWallpaper.jpg" Stretch="Fill"/>
-                <TextBlock x:Name="nameBox" Text="{Binding fName,Mode=OneWay}" TextWrapping="Wrap" Foreground="White" FontSize="28" FontFamily="Nirmala UI Semilight" Margin="10 75" VerticalAlignment="Top"/>
-                <StackPanel Margin="0,150">
-                    <TextBlock TextWrapping="Wrap" Margin="10" Foreground="White" FontSize="20" FontStyle="Normal"><Run Text=" MULab Inventory System"/></TextBlock>
-                    <TextBlock TextWrapping="Wrap" Margin="10" Foreground="White" FontSize="14" FontStyle="Italic" Height="300"><Run Text="The MULab Inventory is a standalone software application that can be used for personal computers, laptops, and other electronic devices that runs a Windows operating system. The device to be used, however, must be confidential to the user as the software being utilized stores private information. "/></TextBlock>
+                <Image Height="187" VerticalAlignment="Top" Source="img/ImageWallpaper.png" Stretch="Fill" Margin="0,1,1,0"/>
+                <TextBlock x:Name="nameBox" Text="{Binding fName,Mode=OneWay}" TextWrapping="Wrap" Foreground="White" FontSize="28" FontFamily="Nirmala UI Semilight" Margin="10,73,10,0" VerticalAlignment="Top"/>
+                <StackPanel Margin="0,224,0,35.333">
+                    <Image Height="111" VerticalAlignment="Top" Source="img/mulab inventory.png" Stretch="Fill" Margin="16,0,19,0"/>
+                    <TextBlock TextWrapping="Wrap" Margin="13,10,25,10" FontSize="14" Height="189" FontFamily="Tahoma" FontWeight="Bold" TextAlignment="Center">
+                        <TextBlock.Foreground>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="Black" Offset="0"/>
+                                <GradientStop Color="#FF170404" Offset="1"/>
+                            </LinearGradientBrush>
+                        </TextBlock.Foreground><Run Text="The MULab Inventory is a standalone software application that can be used for personal computers, laptops, and other electronic devices that runs a Windows operating system. The device to be used must also be confidential to the user as the software being utilized stores private information. "/><InlineUIContainer/></TextBlock>
+
                 </StackPanel>
             </Grid>
             <Grid>
@@ -176,12 +175,12 @@
                 </Button>
                 <Grid Height="90" VerticalAlignment="Top" Visibility="Visible">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBox x:Name="Search_textBox" materialDesign:HintAssist.Hint="SEARCH" Foreground="Black" Width="600" FontSize="20" CaretBrush="#FF992020" TextChanged="search_textChanged"/>
+                        <TextBox materialDesign:HintAssist.Hint="SEARCH" Foreground="Black" Width="600" FontSize="20" CaretBrush="#FF992020" FontFamily="Tahoma"/>
                         <materialDesign:PackIcon Kind="Magnify" Foreground="Black" Width="25" Height="25" VerticalAlignment="Center" Margin="5"/>
                     </StackPanel>
 
                 </Grid>
-                <DataGrid x:Name="itemGrid" HorizontalAlignment="Left" Height="492" Margin="10,90,0,0" VerticalAlignment="Top" Width="754" IsReadOnly="True"/>
+                <DataGrid x:Name="itemGrid" HorizontalAlignment="Left" Height="492" Margin="10,90,0,0" VerticalAlignment="Top" Width="754" IsReadOnly="True" FontFamily="Tahoma" Background="#FFFAF6E6"/>
 
             </Grid>
 

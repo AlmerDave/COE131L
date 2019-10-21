@@ -30,15 +30,22 @@ namespace COE131L
         }
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            User loguser = new User();
 
-            if(Database.accessUser(this.Email_TextBox.Text,this.Password_TextBox.Password.ToString(),ref loguser) == true)
+
+            User loguser = new User();
+            if (this.Email_TextBox.Text == "" || this.Password_TextBox.ToString() == "")
+            {
+                LoginNullError logError = new LoginNullError();
+                logError.ShowDialog();
+            }
+
+            if (Database.accessUser(this.Email_TextBox.Text, this.Password_TextBox.Password.ToString(), ref loguser) == true)
             {
                 //LOGIN SUCESS 
                 Main main = new Main(loguser);
                 this.Close();
                 main.Show();
-                
+
 
             }
             else
@@ -48,7 +55,7 @@ namespace COE131L
 
             }
 
-            
+
         }
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)

@@ -7,47 +7,43 @@
         
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="SignUp" Height="500" Width="400" ResizeMode="NoResize" FontFamily="Roboto" FontSize="14" WindowStartupLocation="CenterScreen" Closing="SignUp_Closing">
-    <Grid>
+        Title="MULab Inventory - Signup" Height="523" Width="400" ResizeMode="NoResize" FontFamily="Roboto" FontSize="14" WindowStartupLocation="CenterScreen" Closing="SignUp_Closing" Icon="img/icon.ico">
+    <Grid Margin="0,0,-0.333,-7.333" Background="#FFFAF6E6">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <materialDesign:ColorZone Mode ="PrimaryMid" Grid.Row="0" VerticalAlignment="Stretch">
             <materialDesign:ColorZone.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFCAD400" Offset="0"/>
-                    <GradientStop Color="#FF380202" Offset="1"/>
-                    <GradientStop Color="#FFCB2C2C" Offset="0.526"/>
-                </LinearGradientBrush>
+                <ImageBrush Stretch="UniformToFill" ImageSource="img/BG2.png"/>
             </materialDesign:ColorZone.Background>
-            <TextBlock Text="SignUp" VerticalAlignment="Center" Margin="20" FontSize="30"/>
+            <Image Source ="img/signup.png" HorizontalAlignment="Left" Height="124" Margin="17,1,0,-25" VerticalAlignment="Top" Width="184"/>
         </materialDesign:ColorZone>
 
         <StackPanel Margin="10 30" Grid.Row="1">
             <Grid>
-                <materialDesign:PackIcon x:Name ="userMaterial" Kind="Face" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxUserName}"/>
-                <TextBox x:Name="TextBoxName" Margin="5" materialDesign:HintAssist.Hint="User Name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" SelectionBrush="#FF992020" TextChanged="TextBoxName_TextChanged" />
+                <materialDesign:PackIcon Kind="Face" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxUserName}"/>
+                <TextBox x:Name="TextBoxName" Margin="5" materialDesign:HintAssist.Hint="User Name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" SelectionBrush="#FF992020" FontFamily="Tahoma" />
             </Grid>
             <Grid>
                 <materialDesign:PackIcon Kind="At" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxEmail}"/>
-                <TextBox x:Name="TextBoxEmail" Margin="5" materialDesign:HintAssist.Hint="Nickname" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" SelectionBrush="#FF992020"/>
+                <TextBox x:Name="TextBoxEmail" Margin="5" materialDesign:HintAssist.Hint="Nickname" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" SelectionBrush="#FF992020" FontFamily="Tahoma"/>
             </Grid>
             <Grid>
-                <materialDesign:PackIcon x:Name="fnameMaterial" Kind="PermIdentity" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxFName}"/>
-                <TextBox x:Name="TextBoxFName" Margin="5" materialDesign:HintAssist.Hint="First name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" TextChanged="TextBoxFName_TextChanged"/>
+                <materialDesign:PackIcon Kind="PermIdentity" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxFName}"/>
+                <TextBox x:Name="TextBoxFName" Margin="5" materialDesign:HintAssist.Hint="First name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" FontFamily="Tahoma" />
             </Grid>
             <Grid>
-                <materialDesign:PackIcon x:Name="lnameMaterial" Kind="PermIdentity" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxLName}"/>
-                <TextBox x:Name="TextBoxLName" Margin="5" materialDesign:HintAssist.Hint="Last name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" TextChanged="TextBoxLName_TextChanged"/>
+                <materialDesign:PackIcon Kind="PermIdentity" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxLName}"/>
+                <TextBox x:Name="TextBoxLName" Margin="5" materialDesign:HintAssist.Hint="Last name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" FontFamily="Tahoma"/>
             </Grid>
             <Grid>
-                <materialDesign:PackIcon x:Name="passMaterial" Kind="Lock" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxPassword}"/>
-                <PasswordBox x:Name="TextBoxPassword" Margin="5" materialDesign:HintAssist.Hint="Password" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="#FF992020" PasswordChanged="TextBoxPassword_PasswordChanged"/>
+                <materialDesign:PackIcon Kind="Lock" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxPassword}"/>
+                <PasswordBox x:Name="TextBoxPassword" Margin="5" materialDesign:HintAssist.Hint="Password" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="#FF992020" FontFamily="Tahoma"/>
             </Grid>
             <Grid>
-                <materialDesign:PackIcon x:Name="confirmMaterial" Kind="LockAlert" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxCPassword}" />
-                <PasswordBox x:Name="TextBoxCPassword" Margin="5" materialDesign:HintAssist.Hint="Confirm Password" Padding="8 0 0 0"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="#FF992020" PasswordChanged="TextBoxCPassword_PasswordChanged"/>
+                <materialDesign:PackIcon Kind="LockAlert" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxCPassword}"/>
+                <PasswordBox x:Name="TextBoxCPassword" Margin="5" materialDesign:HintAssist.Hint="Confirm Password" Padding="8 0 0 0"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="#FF992020" FontFamily="Tahoma"/>
             </Grid>
 
         </StackPanel>
@@ -60,6 +56,7 @@
                 Content="There are unsaved changes, discard them?"
                 ActionContent="DISCARD" ActionClick="Snackbar_Click" Foreground="White" Background="Black"/>
         </materialDesign:Snackbar>
+        <Button x:Name="Back_Button" VerticalAlignment="Top" Margin="152,333,148.667,0" Content="Back" Height="26" FontSize="12" Click="SignUpButton_Click" Background="#FF992020" FontFamily="Tahoma" FontWeight="Bold" Grid.Row="1"/>
 
     </Grid>
 </Window>
