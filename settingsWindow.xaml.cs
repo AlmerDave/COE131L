@@ -25,6 +25,7 @@ namespace COE131L
         int itemStat;
         int condId;
         int loggedUser;
+        Main wind;
         public settingsWindow()
         {
             InitializeComponent();
@@ -36,7 +37,7 @@ namespace COE131L
             InitializeComponent();
             this.comboType.ItemsSource = Database.getItemtypes();
             loggedUser = userId;
-
+           
         }
 
         private void ButtonExecutetype_Click(object sender, RoutedEventArgs e)

@@ -32,14 +32,14 @@ namespace COE131L
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
             loggedUser = loguser;
 
-            //DataTable itemTable = new DataTable();
-            //itemTable = Database.getRecord();
-            //this.itemGrid.ItemsSource = itemTable.DefaultView;
+            DataTable itemTable = new DataTable();
+            itemTable = Database.getRecord();
+            this.itemGrid.ItemsSource = itemTable.DefaultView;
 
             string fName = loggedUser.firstName + " " + loggedUser.lastName;
             this.nameBox.Text = fName;
-            
-            
+
+            //loadDatagrid(this);
 
             DateTime mydate = DateTime.Now;
             string strdate = mydate.ToShortDateString();
@@ -72,9 +72,7 @@ namespace COE131L
             }
 
                
-           
-            
-
+       
         }
 
         private void Shutdown_Click(object sender, RoutedEventArgs e)
@@ -105,19 +103,21 @@ namespace COE131L
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            settingsWindow setwin = new settingsWindow(loggedUser.id);
+            settingsWindow setwin = new settingsWindow(loggedUser.id,this);
             setwin.Show();
         }
         
-        public void loadDatagrid()
+        /*
+        public static void loadDatagrid(Main main)
         {
             DataTable itemTable = new DataTable();
             itemTable = Database.getRecord();
 
             foreach( item row in itemTable.Rows)
             {
-                datamodel.Add(row);
+               main.datamodel.Add(row);
             }
-        }
+        }*/
+        
     }
 }
