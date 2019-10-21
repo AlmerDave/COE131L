@@ -16,8 +16,9 @@ namespace COE131L
         public int statusId;
 
         public string supplier;
+        public string model;
 
-        public DateTime datedelivered;
-        public DateTime datedecomm;
+        public string datedelivered;
+        public string datedecomm;
     }
 }

@@ -131,9 +131,10 @@ namespace COE131L
                     }
 
                     userExist = true;
+                    conn.Close();
                 }
 
-                conn.Close();
+                
 
                 return userExist;
             }
@@ -161,26 +162,54 @@ namespace COE131L
             }
         }
 
-        //FUNCTION TO ADD NEW ITEM TO THE RECORD
-        public static void addItem(item newItem)
+        //FUNCTION TO ADD NEW ITEM TO THE RECORD 
+        //IF IT RETURNS FALSE THEN THE ITEM IS ADDED TO THE RECORD 
+        public static bool addItem(item newItem)
         {
+            bool itemExist = false;
+            //SEARCH FOR ITEM
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
-                string query = "INSERT INTO itemTable (itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid)" +
-                                                            "VALUES(@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid)";
+                string query = "SELECT itemtype from itemTable  WHERE serialnumber = @serial";
+                //PLACE USERTYPELATER ON IN THE SCRIPT
                 SQLiteCommand command = new SQLiteCommand(query, conn);
-                command.Parameters.AddWithValue("@itemtype", newItem.itemType);
-                command.Parameters.AddWithValue("@userid", newItem.addedby);
-                command.Parameters.AddWithValue("@supp", newItem.supplier);
-                command.Parameters.AddWithValue("@datedel", newItem.datedelivered);
-                command.Parameters.AddWithValue("@statid", newItem.statusId);
-                command.Parameters.AddWithValue("@datedecom", newItem.datedecomm);
-                command.Parameters.AddWithValue("@conid", newItem.conditionId);
+                command.Parameters.AddWithValue("@serial", newItem.serialNumber);
 
-                command.ExecuteNonQuery();
+                SQLiteDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    itemExist = true;
+                }
                 conn.Close();
             }
+
+            // ITEMEXIST = FALSE MEANS ITEM IS NOT EXISTING YET AND CAN BE ADDED TO THE RECORD
+            if(itemExist==false)
+            {
+                using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+                {
+                    conn.Open();
+                    string query = "INSERT INTO itemTable (serialnumber,itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid,model)" +
+                                                                "VALUES(@sernum,@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid,@model)";
+                    SQLiteCommand command = new SQLiteCommand(query, conn);
+                    command.Parameters.AddWithValue("@sernum", newItem.serialNumber);
+                    command.Parameters.AddWithValue("@itemtype", newItem.itemType);
+                    command.Parameters.AddWithValue("@userid", newItem.addedby);
+                    command.Parameters.AddWithValue("@supp", newItem.supplier);
+                    command.Parameters.AddWithValue("@datedel", newItem.datedelivered);
+                    command.Parameters.AddWithValue("@statid", newItem.statusId);
+                    command.Parameters.AddWithValue("@datedecom", newItem.datedecomm);
+                    command.Parameters.AddWithValue("@conid", newItem.conditionId);
+                    command.Parameters.AddWithValue("@model", newItem.model);
+
+                    command.ExecuteNonQuery();
+                    conn.Close();
+                }
+            }
+
+            return itemExist;
+            
         }
 
         //FUNCTION TO REMOVE AN ITEM TO THE RECORD
@@ -325,6 +354,58 @@ namespace COE131L
             return typeExist;
         }
 
+        //FUNCTION TO GET ITEM TYPES
+        public static List<string> getItemtypes()
+        {
+            List<string> itemType = new List<string>();
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                
+               
+                conn.Open();
+                string query = "SELECT name FROM type group by name";
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    itemType.Add(reader.GetString(0));
+                }
+                conn.Close();
+            }
+
+            return itemType;
+
+        }
+
+        //function to get models based on selected item type
+        public static List<string> getModel(string itemType)
+        {
+            List<string> modelList = new List<string>();
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+
+
+                conn.Open();
+                string query = "SELECT model from type where name = @itemtype group by model";
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@itemtype", itemType);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    modelList.Add(reader.GetString(0));
+                }
+                conn.Close();
+            }
+
+            return modelList;
+
+        }
 
     }
 }

@@ -101,7 +101,7 @@ namespace COE131L
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            settingsWindow setwin = new settingsWindow();
+            settingsWindow setwin = new settingsWindow(loggedUser.id);
             setwin.Show();
         }
     }
