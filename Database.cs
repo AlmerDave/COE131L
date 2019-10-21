@@ -249,37 +249,82 @@ namespace COE131L
 
             return itemFound;
         }
+
+
+        //FUNCION FOR INSERTING A NEW ITEM TYPE 
+        //IF RETURNS FALSE MEANING THE SUCCESSFUL INSERT
+        public static bool addnewtype(string name, string model)
+        {
+            bool typeExist = false;
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                string query = "SELECT name,model FROM type where name = @name and model = @model";
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@model", model);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    typeExist = true;
+                }
+
+                if(typeExist == false)
+                {
+                    query = "INSERT INTO type(name,model) VALUES(@name,@model)";
+                    command = new SQLiteCommand(query, conn);
+                    command.Parameters.AddWithValue("@name", name);
+                    command.Parameters.AddWithValue("@model", model);
+
+                    command.ExecuteNonQuery();
+                }
+
+                conn.Close();
+            }
+
+            return typeExist;
+        }
+
+        //FUNCTION FORREMOVING AITEM TYPE 
+        //IF IT RETURNS TRUE THE REMOVAL IS SUCCESSFUL
+        public static bool removetype(string name, string model)
+        {
+            bool typeExist = false;
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                string query = "SELECT name,model FROM type where name = @name and model = @model";
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@model", model);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    //IF TYPE EXISTS
+                    typeExist = true;
+                }
+                if (typeExist == true)
+                {
+                    query = "DELETE FROM type where name = @name and model = @model";
+                    command = new SQLiteCommand(query, conn);
+                    command.Parameters.AddWithValue("@name", name);
+                    command.Parameters.AddWithValue("@model", model);
+
+                    command.ExecuteNonQuery();
+                }
+
+                conn.Close();
+            }
+
+            return typeExist;
+        }
+
+
     }
 }
-
-/*
-  <connectionStrings>
-    <add name="usercon" connectionString="Data Source =.\accounts.db;Version=3;" providerName="System.Data.SqlClient" />
-  </connectionStrings>
-  <configSections>
-    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
-    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
-  </configSections>
-  <startup>
-    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
-  </startup>
-  <entityFramework>
-    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
-      <parameters>
-        <parameter value="mssqllocaldb" />
-      </parameters>
-    </defaultConnectionFactory>
-    <providers>
-      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
-      <provider invariantName="System.Data.SQLite.EF6" type="System.Data.SQLite.EF6.SQLiteProviderServices, System.Data.SQLite.EF6" />
-    </providers>
-  </entityFramework>
-  <system.data>
-    <DbProviderFactories>
-      <remove invariant="System.Data.SQLite.EF6" />
-      <add name="SQLite Data Provider (Entity Framework 6)" invariant="System.Data.SQLite.EF6" description=".NET Framework Data Provider for SQLite (Entity Framework 6)" type="System.Data.SQLite.EF6.SQLiteProviderFactory, System.Data.SQLite.EF6" />
-    <remove invariant="System.Data.SQLite" /><add name="SQLite Data Provider" invariant="System.Data.SQLite" description=".NET Framework Data Provider for SQLite" type="System.Data.SQLite.SQLiteFactory, System.Data.SQLite" /></DbProviderFactories>
-  </system.data>
-     
-     
-     */

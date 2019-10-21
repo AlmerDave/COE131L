@@ -97,8 +97,8 @@
                         <ColumnDefinition Width="167*"/>
                         <ColumnDefinition Width="63*"/>
                     </Grid.ColumnDefinitions>
-                    <materialDesign:PackIcon Width="30" Height="30" Kind="Add" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Add Equipment" Height="Auto" FontSize="20" Grid.ColumnSpan="2" Background="#FF992020" BorderBrush="#FFD4B805" />
+                    <materialDesign:PackIcon Width="30" Height="30" Kind="SettingsApplications" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
+                    <Button Margin="45,33,5,23"  Content="Settings" Height="Auto" FontSize="20" Grid.ColumnSpan="2" Background="#FF992020" BorderBrush="#FFD4B805" Click="Button_Click"/>
                 </Grid>
                 <Grid x:Name="grid1" Height="100" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
@@ -110,7 +110,7 @@
                         </TransformGroup>
                     </Grid.RenderTransform>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="Folder" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Add Item Type" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
+                    <Button Margin="45,33,5,23"  Content="Breakage" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
                 </Grid>
                 <Grid x:Name="grid2" Height="100" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
@@ -122,7 +122,8 @@
                         </TransformGroup>
                     </Grid.RenderTransform>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="Edit" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Edit" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
+                    <Button Margin="45,33,5,23"  Content="Edit
+" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
                 </Grid>
                 <Grid x:Name="grid3" Height="100" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
@@ -134,7 +135,7 @@
                         </TransformGroup>
                     </Grid.RenderTransform>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="Clear" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Remove" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
+                    <Button Margin="45,33,5,23"  Content="Print" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
                 </Grid>
             </StackPanel>
 
@@ -177,7 +178,7 @@
                 </Button>
                 <Grid Height="90" VerticalAlignment="Top" Visibility="Visible">
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBox x:Name="Search_textBox" materialDesign:HintAssist.Hint="SEARCH" Foreground="Black" Width="600" FontSize="20" CaretBrush="#FF992020" TextChanged="search_textChanged"/>
+                        <TextBox x:Name="Search_textBox" materialDesign:HintAssist.Hint="SEARCH" Foreground="Black" Width="546" FontSize="20" CaretBrush="#FF992020" TextChanged="search_textChanged"/>
                         <materialDesign:PackIcon Kind="Magnify" Foreground="Black" Width="25" Height="25" VerticalAlignment="Center" Margin="5"/>
                     </StackPanel>
 

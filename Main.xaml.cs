@@ -98,5 +98,11 @@ namespace COE131L
             itemTable = Database.searchRecord(search);
             this.itemGrid.ItemsSource = itemTable.DefaultView;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            settingsWindow setwin = new settingsWindow();
+            setwin.Show();
+        }
     }
 }

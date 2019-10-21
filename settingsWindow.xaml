@@ -1,0 +1,57 @@
+﻿<Window x:Class="COE131L.settingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:COE131L"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Settings" Height="798" Width="615.5">
+    <Grid Margin="0,0,2,-108">
+        <RadioButton x:Name="typeRadio" Content="Item Type" HorizontalAlignment="Left" Margin="22,21,0,0" VerticalAlignment="Top" Height="20" Width="108"/>
+        <GroupBox Header="Item Type" HorizontalAlignment="Left" Height="210" Margin="30,46,0,0" VerticalAlignment="Top" Width="492">
+            <Grid>
+
+                <TextBox x:Name="textboxName" HorizontalAlignment="Left" Height="23" Margin="122,10,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" Width="120"/>
+                <TextBlock x:Name="blockName" HorizontalAlignment="Left" Margin="32,17,0,0" TextWrapping="Wrap" Text="name" VerticalAlignment="Top" RenderTransformOrigin="-3.735,-3.156"/>
+                <TextBox x:Name="textboxModel" HorizontalAlignment="Left" Height="24" Margin="122,50,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                <TextBlock x:Name="blockModel" HorizontalAlignment="Left" Margin="32,58,0,0" TextWrapping="Wrap" Text="Model" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="305,14,0,0" TextWrapping="Wrap" Text="Mode:" VerticalAlignment="Top" RenderTransformOrigin="-2.02,-5.625"/>
+                <RadioButton x:Name="addRadio" Content="Add Item Type" HorizontalAlignment="Left" Margin="305,32,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="removeRadio" Content="Remove Item Type" HorizontalAlignment="Left" Margin="305,56,0,0" VerticalAlignment="Top"/>
+                <Button x:Name="buttonExecutetype" Content="Execute"  Margin="198,114,189,0" VerticalAlignment="Top" Click="ButtonExecutetype_Click" />
+            </Grid>
+        </GroupBox>
+        <RadioButton Content="Equipment" HorizontalAlignment="Left" Margin="30,297,0,0" VerticalAlignment="Top"/>
+        <GroupBox Header="Equipment" HorizontalAlignment="Left" Height="397" Margin="30,320,0,0" VerticalAlignment="Top" Width="492">
+            <Grid Margin="0,0,0,-11" Width="482">
+                <TextBox x:Name="textboxSerial" HorizontalAlignment="Left" Height="23" Margin="125,10,0,0" TextWrapping="Wrap" Text="Serial Number" VerticalAlignment="Top" Width="120"/>
+                <TextBlock x:Name="serialBlock" HorizontalAlignment="Left" Margin="10,17,0,0" TextWrapping="Wrap" Text="Serial Number:" VerticalAlignment="Top"/>
+                <TextBlock x:Name="typeBlock" HorizontalAlignment="Left" Margin="10,54,0,0" TextWrapping="Wrap" Text="Item Type" VerticalAlignment="Top"/>
+                <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="125,42,0,0" VerticalAlignment="Top" Width="157"/>
+                <TextBlock x:Name="statusBlock" HorizontalAlignment="Left" Margin="13,100,0,0" TextWrapping="Wrap" Text="Item Status" VerticalAlignment="Top"/>
+                <TextBlock x:Name="conditionBlock" HorizontalAlignment="Left" Margin="13,144,0,0" TextWrapping="Wrap" Text="Condition" VerticalAlignment="Top" Width="75"/>
+                <RadioButton x:Name="radioGood" Content="Good" HorizontalAlignment="Left" Margin="125,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.159,0.611"/>
+                <RadioButton x:Name="radioDecom" Content="For decommission" HorizontalAlignment="Left" Margin="210,98,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="radioGoodCon" Content="Good" HorizontalAlignment="Left" Margin="125,142,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="radioBadCon" Content="Bad" HorizontalAlignment="Left" Margin="210,142,0,0" VerticalAlignment="Top" Width="119"/>
+                <TextBox x:Name="textblockDeliver" HorizontalAlignment="Left" Height="23" Margin="125,183,0,0" TextWrapping="Wrap" Text="Date Delivered" VerticalAlignment="Top" Width="180"/>
+                <Button x:Name="buttonCalendar" Content="CALENDAR" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="327,174,0,0"/>
+                <TextBlock HorizontalAlignment="Left" Margin="13,193,0,0" TextWrapping="Wrap" Text="Date Delivered" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="13,232,0,0" TextWrapping="Wrap" Text="Lifespan" VerticalAlignment="Top"/>
+                <TextBox x:Name="textblockMonth" HorizontalAlignment="Left" Height="23" Margin="179,225,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="56"/>
+                <TextBlock HorizontalAlignment="Left" Margin="112,229,0,0" TextWrapping="Wrap" Text="Months" VerticalAlignment="Top"/>
+                <TextBox x:Name="textblockYear" HorizontalAlignment="Left" Height="23" Margin="316,225,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+                <TextBlock HorizontalAlignment="Left" Margin="266,232,0,0" TextWrapping="Wrap" Text="Years" VerticalAlignment="Top"/>
+                <Button x:Name="buttonEquipExec" Content="Execute" HorizontalAlignment="Left" Margin="207,303,0,0" VerticalAlignment="Top" Width="86"/>
+                <RadioButton x:Name="radioEqauipadd"  Content="Add Equipment" HorizontalAlignment="Left" Margin="13,275,0,0" VerticalAlignment="Top"/>
+                <RadioButton x:Name="raduiEquiprem" Content="Remove Equipment" HorizontalAlignment="Left" Margin="194,275,0,0" VerticalAlignment="Top"/>
+
+
+
+            </Grid>
+        </GroupBox>
+
+
+    </Grid>
+</Window>
