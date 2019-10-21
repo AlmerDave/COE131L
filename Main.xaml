@@ -183,7 +183,7 @@
                     </StackPanel>
 
                 </Grid>
-                <DataGrid x:Name="itemGrid" HorizontalAlignment="Left" Height="492" Margin="10,90,0,0" VerticalAlignment="Top" Width="754" IsReadOnly="True"/>
+                <DataGrid x:Name="itemGrid" HorizontalAlignment="Left" Height="492" Margin="10,90,0,0" VerticalAlignment="Top" Width="754" IsReadOnly="True" ItemsSource="{Binding Path=datamodel}"/>
 
             </Grid>
 

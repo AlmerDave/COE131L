@@ -13,15 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
 using Tulpep.NotificationWindow;
+using System.Collections.ObjectModel;
 
 namespace COE131L
 {
     /// <summary>
     /// Interaction logic for Main.xaml
     /// </summary>
+    /// 
+    
     public partial class Main : Window
     {
-
+        ObservableCollection<item> datamodel = new ObservableCollection<item>();
         User loggedUser = new User();
         public Main(User loguser)
         {
@@ -29,13 +32,14 @@ namespace COE131L
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
             loggedUser = loguser;
 
+            //DataTable itemTable = new DataTable();
+            //itemTable = Database.getRecord();
+            //this.itemGrid.ItemsSource = itemTable.DefaultView;
 
             string fName = loggedUser.firstName + " " + loggedUser.lastName;
             this.nameBox.Text = fName;
             
-            DataTable itemTable = new DataTable();
-            itemTable = Database.getRecord();
-            this.itemGrid.ItemsSource = itemTable.DefaultView;
+            
 
             DateTime mydate = DateTime.Now;
             string strdate = mydate.ToShortDateString();
@@ -103,6 +107,17 @@ namespace COE131L
         {
             settingsWindow setwin = new settingsWindow(loggedUser.id);
             setwin.Show();
+        }
+        
+        public void loadDatagrid()
+        {
+            DataTable itemTable = new DataTable();
+            itemTable = Database.getRecord();
+
+            foreach( item row in itemTable.Rows)
+            {
+                datamodel.Add(row);
+            }
         }
     }
 }

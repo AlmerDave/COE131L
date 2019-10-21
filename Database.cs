@@ -25,7 +25,7 @@ namespace COE131L
         public static DataTable getRecord()
         {
             DataTable itemTable = new DataTable();
-            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name',account.firstname as 'Added By'" +
+            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name', type.model as 'Model',account.firstname as 'Added By'" +
                     ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
                     "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
                     "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
@@ -213,6 +213,7 @@ namespace COE131L
         }
 
         //FUNCTION TO REMOVE AN ITEM TO THE RECORD
+        //IF TRUE IF ITEM IS FOUND AND REMOVED
         public static bool removeItem(int serNum)
         {
             bool itemFound = false;

@@ -28,40 +28,40 @@
                 <TextBox x:Name="textboxSerial" HorizontalAlignment="Left" Height="23" Margin="125,10,0,0" TextWrapping="Wrap" Text="Serial Number" VerticalAlignment="Top" Width="120"/>
                 <TextBlock x:Name="serialBlock" HorizontalAlignment="Left" Margin="10,17,0,0" TextWrapping="Wrap" Text="Serial Number:" VerticalAlignment="Top"/>
                 <TextBlock x:Name="typeBlock" HorizontalAlignment="Left" Margin="10,54,0,0" TextWrapping="Wrap" Text="Item Type" VerticalAlignment="Top"/>
-                <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="125,42,0,0" VerticalAlignment="Top" Width="157" SelectionChanged="comboType_SelectionChanged"/>
+                <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="125,42,0,0" VerticalAlignment="Top" Width="157" SelectionChanged="comboType_SelectionChanged" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock x:Name="statusBlock" HorizontalAlignment="Left" Margin="13,100,0,0" TextWrapping="Wrap" Text="Item Status" VerticalAlignment="Top"/>
                 <TextBlock x:Name="conditionBlock" HorizontalAlignment="Left" Margin="13,144,0,0" TextWrapping="Wrap" Text="Condition" VerticalAlignment="Top" Width="75"/>
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton x:Name="radioGood" Content="Good" HorizontalAlignment="Left" Margin="125,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.159,0.611"/>
-                    <RadioButton x:Name="radioDecom" Content="For decommission" HorizontalAlignment="Left" Margin="50,98,0,0" VerticalAlignment="Top"/>
+                    <RadioButton x:Name="radioGood" Content="Good" HorizontalAlignment="Left" Margin="125,98,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.159,0.611" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
+                    <RadioButton x:Name="radioDecom" Content="For decommission" HorizontalAlignment="Left" Margin="50,98,0,0" VerticalAlignment="Top" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton x:Name="radioGoodCon" Content="Good" HorizontalAlignment="Left" Margin="125,142,0,0" VerticalAlignment="Top"/>
-                    <RadioButton x:Name="radioBadCon" Content="Bad" HorizontalAlignment="Left" Margin="50,142,0,0" VerticalAlignment="Top" Width="119"/>
-                    <RadioButton x:Name="radioRepCon" Content="For Repair" HorizontalAlignment="Left" Margin="0,142,0,0" VerticalAlignment="Top" Width="119"/>
+                    <RadioButton x:Name="radioGoodCon" Content="Good" HorizontalAlignment="Left" Margin="125,142,0,0" VerticalAlignment="Top" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
+                    <RadioButton x:Name="radioBadCon" Content="Bad" HorizontalAlignment="Left" Margin="50,142,0,0" VerticalAlignment="Top" Width="119" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
+                    <RadioButton x:Name="radioRepCon" Content="For Repair" HorizontalAlignment="Left" Margin="0,142,0,0" VerticalAlignment="Top" Width="119" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 </StackPanel>
                 
                 
                 <TextBlock HorizontalAlignment="Left" Margin="13,193,0,0" TextWrapping="Wrap" Text="Date Delivered" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="13,232,0,0" TextWrapping="Wrap" Text="Lifespan" VerticalAlignment="Top"/>
-                <TextBox x:Name="textblockMonth" HorizontalAlignment="Left" Height="23" Margin="179,225,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="56"/>
+                <TextBox x:Name="textblockMonth" HorizontalAlignment="Left" Height="23" Margin="179,225,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="56" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock HorizontalAlignment="Left" Margin="112,229,0,0" TextWrapping="Wrap" Text="Months" VerticalAlignment="Top"/>
-                <TextBox x:Name="textblockYear" HorizontalAlignment="Left" Height="23" Margin="316,225,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="textblockYear" HorizontalAlignment="Left" Height="23" Margin="316,225,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock HorizontalAlignment="Left" Margin="266,232,0,0" TextWrapping="Wrap" Text="Years" VerticalAlignment="Top"/>
                 <Button x:Name="buttonEquipExec" Content="Execute" HorizontalAlignment="Left" Margin="207,303,0,0" VerticalAlignment="Top" Width="86" Click="buttonEquipExec_Click"/>
                 <RadioButton x:Name="radioEqauipadd"  Content="Add Equipment" HorizontalAlignment="Left" Margin="13,275,0,0" VerticalAlignment="Top"/>
                 <RadioButton x:Name="raduiEquiprem" Content="Remove Equipment" HorizontalAlignment="Left" Margin="194,275,0,0" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="212,193,0,0" TextWrapping="Wrap" Text="Month:" VerticalAlignment="Top" RenderTransformOrigin="1.09,0.125"/>
-                <TextBox x:Name="textboxDay" HorizontalAlignment="Left" Height="23" Margin="153,186,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="49"/>
+                <TextBox x:Name="textboxDay" HorizontalAlignment="Left" Height="23" Margin="153,186,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="49" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
 
-                <TextBox x:Name="textboxMonth" HorizontalAlignment="Left" Height="23" Margin="255,186,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="49"/>
+                <TextBox x:Name="textboxMonth" HorizontalAlignment="Left" Height="23" Margin="255,186,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="49" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock HorizontalAlignment="Left" Margin="104,193,0,0" TextWrapping="Wrap" Text="Day:" VerticalAlignment="Top" RenderTransformOrigin="1.09,0.125"/>
-                <TextBox x:Name="textboxYear" HorizontalAlignment="Left" Height="23" Margin="366,186,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="49"/>
+                <TextBox x:Name="textboxYear" HorizontalAlignment="Left" Height="23" Margin="366,186,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="49" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock HorizontalAlignment="Left" Margin="338,193,0,0" TextWrapping="Wrap" Text="Year:" VerticalAlignment="Top" RenderTransformOrigin="1.09,0.125"/>
                 <TextBlock HorizontalAlignment="Left" Margin="312,54,0,0" TextWrapping="Wrap" Text="Model: " VerticalAlignment="Top"/>
-                <ComboBox x:Name="comboModel" HorizontalAlignment="Left" Margin="352,42,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.571"/>
-                <TextBox x:Name="textboxSupplier" HorizontalAlignment="Left" Height="23" Margin="352,10,0,0" TextWrapping="Wrap" Text="Supplier" VerticalAlignment="Top" Width="120"/>
+                <ComboBox x:Name="comboModel" HorizontalAlignment="Left" Margin="352,42,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.483,0.571" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
+                <TextBox x:Name="textboxSupplier" HorizontalAlignment="Left" Height="23" Margin="352,10,0,0" TextWrapping="Wrap" Text="Supplier" VerticalAlignment="Top" Width="120" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock HorizontalAlignment="Left" Margin="298,14,0,0" TextWrapping="Wrap" Text="Supplier" VerticalAlignment="Top"/>
             </Grid>
         </GroupBox>

@@ -11,15 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Collections.ObjectModel;
 namespace COE131L
 {
     /// <summary>
     /// Interaction logic for settingsWindow.xaml
     /// </summary>
+    /// 
+    
     public partial class settingsWindow : Window
     {
-
+        
         int itemStat;
         int condId;
         int loggedUser;
@@ -27,7 +29,7 @@ namespace COE131L
         {
             InitializeComponent();
             this.comboType.ItemsSource = Database.getItemtypes();
-
+            
         }
         public settingsWindow(int userId)
         {
@@ -107,6 +109,8 @@ namespace COE131L
             //ADD SELECTED
             if (this.radioEqauipadd.IsChecked == true)
             {
+              
+
                 item newItem = new item();
                 string date = this.textboxDay.Text.ToString() + "/" + this.textboxMonth.Text.ToString() + "/" + this.textboxYear.Text.ToString();
                 DateTime deldate = DateTime.ParseExact(date, "dd/MM/yyyy", null);
@@ -130,13 +134,21 @@ namespace COE131L
                 else //SUCCESSFULLY ADDED
                 {
                     MessageBox.Show("Item is added to the record!", "Item added", MessageBoxButton.OK, MessageBoxImage.Information);
+                    
                     //CLEAR ALL THE CONTENT OF THE RECORD  
                 }
             }
             //remove selected
             else if(this.raduiEquiprem.IsChecked == true)
             {
-
+                if(Database.removeItem(Int32.Parse(this.textboxSerial.Text)) == true)//ITEM IS REMOVED 
+                {
+                    MessageBox.Show("Item is successfully removed from the record.", "Item Removed", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Item failed to be removed from the record.", "Removal Failed", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             // none selected
             else
