@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data;
+using Tulpep.NotificationWindow;
 
 namespace COE131L
 {
@@ -20,6 +21,7 @@ namespace COE131L
     /// </summary>
     public partial class Main : Window
     {
+
         User loggedUser = new User();
         public Main(User loguser)
         {
@@ -27,15 +29,48 @@ namespace COE131L
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
             loggedUser = loguser;
 
+
             string fName = loggedUser.firstName + " " + loggedUser.lastName;
             this.nameBox.Text = fName;
             
             DataTable itemTable = new DataTable();
             itemTable = Database.getRecord();
             this.itemGrid.ItemsSource = itemTable.DefaultView;
+
+            DateTime mydate = DateTime.Now;
+            string strdate = mydate.ToShortDateString();
+            List<User> notiftable = new List<User>();
+            notiftable = Database.getSerial(strdate);
+
+            foreach (User p in notiftable)
+            {
+                this.Serial_list.Items.Add(p.id);
+            }
+
+            if(Serial_list.Items.IsEmpty)
+            {
+                ;
+            }
+            else
+            {
+                Notification_button.Foreground = Brushes.Red;
+            }
+
+            if (Notification_button.Foreground == Brushes.Red)
+            {
+                
+                PopupNotifier popup = new PopupNotifier();
+                popup.TitleText = "WARNING";
+                popup.ContentText = "There are items to be decomissioned";
+                 
+                popup.Popup();
+                
+            }
+
+               
+           
             
 
-            
         }
 
         private void Shutdown_Click(object sender, RoutedEventArgs e)

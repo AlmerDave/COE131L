@@ -162,9 +162,10 @@
                 </Grid.Background>
                 <Image Height="150" VerticalAlignment="Top" Source="img/ImageWallpaper.jpg" Stretch="Fill"/>
                 <TextBlock x:Name="nameBox" Text="{Binding fName,Mode=OneWay}" TextWrapping="Wrap" Foreground="White" FontSize="28" FontFamily="Nirmala UI Semilight" Margin="10 75" VerticalAlignment="Top"/>
-                <StackPanel Margin="0,150">
-                    <TextBlock TextWrapping="Wrap" Margin="10" Foreground="White" FontSize="20" FontStyle="Normal"><Run Text=" MULab Inventory System"/></TextBlock>
-                    <TextBlock TextWrapping="Wrap" Margin="10" Foreground="White" FontSize="14" FontStyle="Italic" Height="300"><Run Text="The MULab Inventory is a standalone software application that can be used for personal computers, laptops, and other electronic devices that runs a Windows operating system. The device to be used, however, must be confidential to the user as the software being utilized stores private information. "/></TextBlock>
+                <StackPanel Margin="0,150,0,10">
+                    <TextBlock TextWrapping="Wrap" Margin="10" Foreground="White" FontSize="18" FontStyle="Italic" Text=" MULab Inventory System" FontWeight="Bold"/>
+                    <TextBlock TextWrapping="Wrap" Margin="10" Foreground="White" FontSize="16" FontStyle="Normal" Text="Notification List"/>
+                    <ListBox x:Name="Serial_list" Height="316" Margin="10,0,26,0" Background="White"/>
                 </StackPanel>
             </Grid>
             <Grid>
@@ -187,7 +188,7 @@
 
         </Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="60" HorizontalAlignment="Right" Margin="0,1,1,0" Width="71">
-            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+            <Button x:Name="Notification_button" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
                 <materialDesign:PackIcon Kind="Notifications"  Width="30" Height="30"/>
             </Button>
             <Button x:Name="ShutdownButton" Style="{StaticResource ResourceKey=MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="Shutdown_Click" Margin="0,5">

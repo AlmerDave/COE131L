@@ -70,6 +70,37 @@ namespace COE131L
             }
             return itemTable;
         }
+        public static List<User> getSerial(string date)
+        {
+            List<User> notiftable = new List<User>();
+      
+            string query = "SELECT i.serialnumber FROM itemTable as i WHERE i.datedecommissioned = @date ";
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@date", date);
+                
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        User p = new User();
+                        p.id = reader.GetInt32(0);
+                        notiftable.Add(p);
+
+
+                        // Process people...      
+                    }
+                    
+                }
+
+                conn.Close();
+            }
+            return notiftable;
+        }
 
         //FUNCTION USED FOR LOGGING IN RETURNS ACCOUNT DETAILS 
         public static bool accessUser(string username, string password, ref User loggedUser)
