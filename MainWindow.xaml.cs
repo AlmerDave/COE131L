@@ -18,6 +18,7 @@ namespace COE131L
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// //Hello
     public partial class MainWindow : Window
     {
         Database databaseObject = new Database();
