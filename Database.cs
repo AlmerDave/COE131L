@@ -209,7 +209,7 @@ namespace COE131L
                 command.Parameters.AddWithValue("@lname", newUser.lastName);
                 command.Parameters.AddWithValue("@usname", newUser.userName);
                 command.Parameters.AddWithValue("@pass", newUser.password);
-                command.Parameters.AddWithValue("@nickname", newUser.password);
+                command.Parameters.AddWithValue("@nickname", newUser.nickname);
 
 
                 command.ExecuteNonQuery();

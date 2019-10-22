@@ -15,6 +15,7 @@ using System.Data;
 using Tulpep.NotificationWindow;
 using System.Collections.ObjectModel;
 using System.Media;
+using MaterialDesignThemes.Wpf;
 
 namespace COE131L
 {
@@ -32,7 +33,7 @@ namespace COE131L
         {
  
             InitializeComponent();
-
+            
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
             loggedUser = loguser;
             notif = new SoundPlayer("notif.wav");
@@ -60,6 +61,7 @@ namespace COE131L
             }
             else
             {
+                Notification_button.Content = new PackIcon { Kind = PackIconKind.NotificationsActive, Width = 30, Height = 30 };
                 Notification_button.Foreground = Brushes.Red;
             }
 
@@ -146,6 +148,34 @@ namespace COE131L
             }
             else
                 loadDatagrid(this);
+        }
+
+        private void Notif_clicked(object sender, RoutedEventArgs e)
+        {
+            if (Serial_list.Items.IsEmpty)
+            {
+                ;
+            }
+            else
+            {
+                Notification_button.Content = new PackIcon { Kind = PackIconKind.Notifications, Width = 30, Height = 30 };
+                Notification_button.Foreground = Brushes.White;
+            }
+            
+            if (Notification_button.Foreground == Brushes.White)
+            {
+                notif.Play();
+                PopupNotifier popup = new PopupNotifier();
+                popup.Image = Properties.Resources.warn;
+                popup.TitleText = "WARNING";
+                popup.ContentText = "There are items to be decomissioned";
+
+                popup.Popup();
+            }
+
+           
+
+
         }
     }
 }

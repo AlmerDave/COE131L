@@ -190,7 +190,7 @@
 
         </Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="60" HorizontalAlignment="Right" Margin="0,1,1,0" Width="71">
-            <Button x:Name="Notification_button" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}">
+            <Button x:Name="Notification_button" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="Notif_clicked">
                 <materialDesign:PackIcon Kind="Notifications"  Width="30" Height="30"/>
             </Button>
             <Button x:Name="ShutdownButton" Style="{StaticResource ResourceKey=MaterialDesignFloatingActionMiniAccentButton}" Width="30" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}" Click="Shutdown_Click" Margin="0,5">
