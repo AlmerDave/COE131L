@@ -96,7 +96,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BreakageWindow.xaml.cs">
+      <DependentUpon>BreakageWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Database.cs" />
+    <Compile Include="EditWindow.xaml.cs">
+      <DependentUpon>EditWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="item.cs" />
     <Compile Include="settingsWindow.xaml.cs">
       <DependentUpon>settingsWindow.xaml</DependentUpon>
@@ -105,6 +111,14 @@
       <DependentUpon>SignUp.xaml</DependentUpon>
     </Compile>
     <Compile Include="User.cs" />
+    <Page Include="BreakageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Main.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
