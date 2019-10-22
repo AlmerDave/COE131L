@@ -122,7 +122,7 @@ namespace COE131L
               
 
                 item newItem = new item();
-                string date = this.textboxDay.Text.ToString() + "/" + this.textboxMonth.Text.ToString() + "/" + this.textboxYear.Text.ToString();
+                string date = this.comboDay.SelectedItem.ToString() + "/" + this.comboMonth.SelectedItem.ToString() + "/" + this.comboYear.SelectedItem.ToString();
                 DateTime deldate = DateTime.ParseExact(date, "dd/MM/yyyy", null);
                 DateTime datedecom = deldate.AddMonths(Int32.Parse(this.textblockMonth.Text));
                 datedecom = datedecom.AddYears(Int32.Parse(this.textblockYear.Text));
@@ -165,6 +165,11 @@ namespace COE131L
             {
                 MessageBox.Show("Please select a mode to execute.", "Incomplete input", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        private void BackButton(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
