@@ -25,18 +25,28 @@ namespace COE131L
         int itemStat;
         int condId;
         int loggedUser;
-    
+        Main wind;
+
+        List<string> dayList = new List<string>();
         public settingsWindow()
         {
             InitializeComponent();
             this.comboType.ItemsSource = Database.getItemtypes();
+            
         }
         public settingsWindow(int userId)
         {
+            int dayVal = 1;
             InitializeComponent();
             this.comboType.ItemsSource = Database.getItemtypes();
             loggedUser = userId;
-           
+            //ADD COMBO BOX ELEMENTS 
+            for (; dayVal <= 31;dayVal++ )
+            {
+                dayList.Add(dayVal.ToString());
+
+            }
+            comboDay.ItemsSource = dayList;
         }
 
         private void ButtonExecutetype_Click(object sender, RoutedEventArgs e)
@@ -69,11 +79,6 @@ namespace COE131L
                     MessageBox.Show("Removal of a new type success!", "Successful removal", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
-            else
-            {
-                MessageBox.Show("Please select a mode to execute.", "Incomplete input", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-
 
         }
 
@@ -117,7 +122,7 @@ namespace COE131L
               
 
                 item newItem = new item();
-                string date = this.textboxDay.Text.ToString() + "/" + this.textboxMonth.Text.ToString() + "/" + this.textboxYear.Text.ToString();
+                string date = this.comboDay.SelectedItem.ToString() + "/" + this.comboMonth.SelectedItem.ToString() + "/" + this.comboYear.SelectedItem.ToString();
                 DateTime deldate = DateTime.ParseExact(date, "dd/MM/yyyy", null);
                 DateTime datedecom = deldate.AddMonths(Int32.Parse(this.textblockMonth.Text));
                 datedecom = datedecom.AddYears(Int32.Parse(this.textblockYear.Text));
