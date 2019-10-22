@@ -44,64 +44,6 @@ namespace COE131L
             }
             return itemTable;
         }
-        //FUNCTION USED FOR SEARCHING
-        public static DataTable searchRecord(string word)
-        {
-            DataTable itemTable = new DataTable();
-            string quote = word + "%";
-            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name',account.firstname as 'Added By'" +
-                    ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
-                    "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
-                    "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
-                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId "
-                    + "WHERE serialnumber like @word or type.name like @word or account.firstname like  @word or supplier like  @word or status.description like  @word  or condition.description like  @word ";
-
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
-            {
-                conn.Open();
-
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                command.Parameters.AddWithValue("@word", quote);
-                SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
-
-
-                adapter.Fill(itemTable);
-                conn.Close();
-            }
-            return itemTable;
-        }
-        public static List<User> getSerial(string date)
-        {
-            List<User> notiftable = new List<User>();
-      
-            string query = "SELECT i.serialnumber FROM itemTable as i WHERE i.datedecommissioned = @date ";
-
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
-            {
-                conn.Open();
-
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                command.Parameters.AddWithValue("@date", date);
-                
-                using (SQLiteDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        User p = new User();
-                        p.id = reader.GetInt32(0);
-                        notiftable.Add(p);
-
-
-                        // Process people...      
-                    }
-                    
-                }
-
-                conn.Close();
-            }
-            return notiftable;
-        }
-
         //FUNCTION USED FOR LOGGING IN RETURNS ACCOUNT DETAILS 
         public static bool accessUser(string username, string password, ref User loggedUser)
         {
@@ -109,9 +51,9 @@ namespace COE131L
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
-                string query = "SELECT id,firstname,lastname,username,password from account WHERE username = @uname and password = @pword";
+
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                SQLiteCommand command = new SQLiteCommand( query, conn);
+                SQLiteCommand command = new SQLiteCommand("SELECT id,firstname,lastname,username,password from account WHERE username = @uname and password = @pword", conn);
                 command.Parameters.AddWithValue("@uname", username);
                 command.Parameters.AddWithValue("@pword", password);
 
@@ -147,8 +89,7 @@ namespace COE131L
             {
                 conn.Open();
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                string query = "INSERT INTO account(firstName,lastName,username,password) VALUES(@fname,@lname,@usname,@pass)";
-                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteCommand command = new SQLiteCommand("INSERT INTO account(firstName,lastName,username,password) VALUES(@fname,@lname,@usname,@pass)", conn);
                 command.Parameters.AddWithValue("@fname", newUser.firstName);
                 command.Parameters.AddWithValue("@lname", newUser.lastName);
                 command.Parameters.AddWithValue("@usname", newUser.userName);
@@ -167,9 +108,8 @@ namespace COE131L
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
-                string query = "INSERT INTO itemTable (itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid)" +
-                                                            "VALUES(@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid)";
-                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteCommand command = new SQLiteCommand("INSERT INTO itemTable (itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid)" +
+                                                            "VALUES(@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid)", conn);
                 command.Parameters.AddWithValue("@itemtype", newItem.itemType);
                 command.Parameters.AddWithValue("@userid", newItem.addedby);
                 command.Parameters.AddWithValue("@supp", newItem.supplier);
@@ -231,9 +171,8 @@ namespace COE131L
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
-                string query = "SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum";
 
-                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteCommand command = new SQLiteCommand("SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid FROM itemTable WHERE serialnumber = @sernum", conn);
                 command.Parameters.AddWithValue("@sernum", editItem);
 
                 SQLiteDataReader reader = command.ExecuteReader();
@@ -249,82 +188,37 @@ namespace COE131L
 
             return itemFound;
         }
-
-
-        //FUNCION FOR INSERTING A NEW ITEM TYPE 
-        //IF RETURNS FALSE MEANING THE SUCCESSFUL INSERT
-        public static bool addnewtype(string name, string model)
-        {
-            bool typeExist = false;
-
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
-            {
-                conn.Open();
-                string query = "SELECT name,model FROM type where name = @name and model = @model";
-
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                command.Parameters.AddWithValue("@name", name);
-                command.Parameters.AddWithValue("@model", model);
-
-                SQLiteDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    typeExist = true;
-                }
-
-                if(typeExist == false)
-                {
-                    query = "INSERT INTO type(name,model) VALUES(@name,@model)";
-                    command = new SQLiteCommand(query, conn);
-                    command.Parameters.AddWithValue("@name", name);
-                    command.Parameters.AddWithValue("@model", model);
-
-                    command.ExecuteNonQuery();
-                }
-
-                conn.Close();
-            }
-
-            return typeExist;
-        }
-
-        //FUNCTION FORREMOVING AITEM TYPE 
-        //IF IT RETURNS TRUE THE REMOVAL IS SUCCESSFUL
-        public static bool removetype(string name, string model)
-        {
-            bool typeExist = false;
-
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
-            {
-                conn.Open();
-                string query = "SELECT name,model FROM type where name = @name and model = @model";
-
-                SQLiteCommand command = new SQLiteCommand(query, conn);
-                command.Parameters.AddWithValue("@name", name);
-                command.Parameters.AddWithValue("@model", model);
-
-                SQLiteDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                {
-                    //IF TYPE EXISTS
-                    typeExist = true;
-                }
-                if (typeExist == true)
-                {
-                    query = "DELETE FROM type where name = @name and model = @model";
-                    command = new SQLiteCommand(query, conn);
-                    command.Parameters.AddWithValue("@name", name);
-                    command.Parameters.AddWithValue("@model", model);
-
-                    command.ExecuteNonQuery();
-                }
-
-                conn.Close();
-            }
-
-            return typeExist;
-        }
-
-
     }
 }
+
+/*
+  <connectionStrings>
+    <add name="usercon" connectionString="Data Source =.\accounts.db;Version=3;" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+  </configSections>
+  <startup>
+    <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
+  </startup>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="mssqllocaldb" />
+      </parameters>
+    </defaultConnectionFactory>
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+      <provider invariantName="System.Data.SQLite.EF6" type="System.Data.SQLite.EF6.SQLiteProviderServices, System.Data.SQLite.EF6" />
+    </providers>
+  </entityFramework>
+  <system.data>
+    <DbProviderFactories>
+      <remove invariant="System.Data.SQLite.EF6" />
+      <add name="SQLite Data Provider (Entity Framework 6)" invariant="System.Data.SQLite.EF6" description=".NET Framework Data Provider for SQLite (Entity Framework 6)" type="System.Data.SQLite.EF6.SQLiteProviderFactory, System.Data.SQLite.EF6" />
+    <remove invariant="System.Data.SQLite" /><add name="SQLite Data Provider" invariant="System.Data.SQLite" description=".NET Framework Data Provider for SQLite" type="System.Data.SQLite.SQLiteFactory, System.Data.SQLite" /></DbProviderFactories>
+  </system.data>
+     
+     
+     */

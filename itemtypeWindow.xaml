@@ -1,0 +1,24 @@
+﻿<Window x:Class="COE131L.itemtypeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:COE131L"
+        mc:Ignorable="d"
+        Title="itemtypeWindow" Height="450" Width="800">
+    <Grid Margin="-189,-75,189.333,74.667">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="497*"/>
+            <ColumnDefinition Width="296*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="textBoxName" HorizontalAlignment="Left" Height="23" Margin="114,17,0,0" TextWrapping="Wrap" Text="Name" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="texboxModel" HorizontalAlignment="Left" Height="23" Margin="114,51,0,0" TextWrapping="Wrap" Text="Model" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="31,22,0,0" TextWrapping="Wrap" Text="Name:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="27,63,0,0" TextWrapping="Wrap" Text="Model:" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="32,95,0,0" TextWrapping="Wrap" Text="Mode:" VerticalAlignment="Top"/>
+        <RadioButton Content="Add" HorizontalAlignment="Left" Margin="54,125,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked"/>
+        <RadioButton Content="Remove" HorizontalAlignment="Left" Margin="55,150,0,0" VerticalAlignment="Top"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="107,202,0,0" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

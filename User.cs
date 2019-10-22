@@ -8,7 +8,7 @@ namespace COE131L
 {
     public class User
     {
-        public int id { get; set; }
+        public int id;
         public int userType;
 
         public string firstName;

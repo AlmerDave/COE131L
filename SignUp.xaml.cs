@@ -75,7 +75,7 @@ namespace COE131L
             Database.insertAccount(newUser);
             //MAKE A PROMPT FOR SUCCESDSFUL LOGIN
             MainWindow login = new MainWindow();
-            this.Close();
+            this.Hide();
             login.Show();
         }
 
@@ -83,6 +83,13 @@ namespace COE131L
         {
             SnackbarUnsavedChanges.IsActive = false;
             discardChanges = true;
+        }
+
+        private void SignUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow login = new MainWindow();
+            this.Hide();
+            login.Show();
         }
     }
 }
