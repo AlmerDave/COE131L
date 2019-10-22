@@ -162,7 +162,7 @@
                     </LinearGradientBrush>
                 </Grid.Background>
                 <Image Height="150" VerticalAlignment="Top" Source="img/ImageWallpaper.jpg" Stretch="Fill"/>
-                <TextBlock x:Name="nameBox" Text="{Binding fName,Mode=OneWay}" TextWrapping="Wrap" Foreground="White" FontSize="28" FontFamily="Nirmala UI Semilight" Margin="10 75" VerticalAlignment="Top"/>
+                <TextBlock x:Name="nameBox" Text="{Binding fName,Mode=OneWay}" TextWrapping="Wrap" Foreground="White" FontSize="28" FontFamily="Nirmala UI Semilight" Margin="10,91,10,0" VerticalAlignment="Top" Height="55"/>
                 <StackPanel Margin="0,150,0,10">
                     <TextBlock TextWrapping="Wrap" Margin="10" Foreground="White" FontSize="18" FontStyle="Italic" Text=" MULab Inventory System" FontWeight="Bold"/>
                     <TextBlock TextWrapping="Wrap" Margin="10" Foreground="White" FontSize="16" FontStyle="Normal" Text="Notification List"/>

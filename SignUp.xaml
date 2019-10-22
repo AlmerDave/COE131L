@@ -7,8 +7,9 @@
         
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="SignUp" Height="500" Width="400" ResizeMode="NoResize" FontFamily="Roboto" FontSize="14" WindowStartupLocation="CenterScreen" Closing="SignUp_Closing">
+        Title="SignUp" Height="500" Width="400" ResizeMode="NoResize" FontFamily="Roboto" FontSize="14" WindowStartupLocation="CenterScreen" >
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
@@ -22,16 +23,17 @@
                 </LinearGradientBrush>
             </materialDesign:ColorZone.Background>
             <TextBlock Text="SignUp" VerticalAlignment="Center" Margin="20" FontSize="30"/>
+
         </materialDesign:ColorZone>
 
-        <StackPanel Margin="10 30" Grid.Row="1">
+        <StackPanel Margin="10,30,10,10" Grid.Row="1">
             <Grid>
                 <materialDesign:PackIcon Kind="Face" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxUserName}"/>
                 <TextBox x:Name="TextBoxName" Margin="5" materialDesign:HintAssist.Hint="User Name" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" SelectionBrush="#FF992020" />
             </Grid>
             <Grid>
                 <materialDesign:PackIcon Kind="At" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxEmail}"/>
-                <TextBox x:Name="TextBoxEmail" Margin="5" materialDesign:HintAssist.Hint="Nickname" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" SelectionBrush="#FF992020"/>
+                <TextBox x:Name="NickName_textBox" Margin="5" materialDesign:HintAssist.Hint="Nickname" Padding="8 0 0 0" Style="{StaticResource MaterialDesignFloatingHintTextBox}" CaretBrush="#FF992020" SelectionBrush="#FF992020"/>
             </Grid>
             <Grid>
                 <materialDesign:PackIcon Kind="PermIdentity" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxFName}"/>
@@ -49,6 +51,9 @@
                 <materialDesign:PackIcon Kind="LockAlert" VerticalAlignment="Bottom" Margin="2 12" Foreground="{Binding BorderBrush, ElementName=TextBoxCPassword}"/>
                 <PasswordBox x:Name="TextBoxCPassword" Margin="5" materialDesign:HintAssist.Hint="Confirm Password" Padding="8 0 0 0"  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" CaretBrush="#FF992020"/>
             </Grid>
+            <Button x:Name="BackButon" Style="{StaticResource ResourceKey=MaterialDesignFloatingActionMiniAccentButton}" Width="Auto" Height="30" Padding="0" Background="{x:Null}" BorderBrush="{x:Null}"  Click="BackButtonSign_Clicked" Foreground="#DDFF0F0F" Margin="-5,0,341,0" RenderTransformOrigin="-1.267,0.533">
+                <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30"/>
+            </Button>
 
         </StackPanel>
         <Button x:Name="Register" Grid.RowSpan="2" Margin="50 72" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionButton}" Click="Register_Click" Background="#FF992020">
@@ -58,8 +63,10 @@
         <materialDesign:Snackbar Grid.Row="1" HorizontalAlignment="Stretch" x:Name="SnackbarUnsavedChanges" VerticalAlignment="Bottom">
             <materialDesign:SnackbarMessage
                 Content="There are unsaved changes, discard them?"
-                ActionContent="DISCARD" ActionClick="Snackbar_Click" Foreground="White" Background="Black"/>
+                ActionContent="PROCEED" ActionClick="Snackbar_Click" Foreground="White" Background="Black"/>
         </materialDesign:Snackbar>
+
+
 
     </Grid>
 </Window>

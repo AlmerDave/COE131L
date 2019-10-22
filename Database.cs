@@ -203,13 +203,14 @@ namespace COE131L
             {
                 conn.Open();
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                string query = "INSERT INTO account(firstName,lastName,username,password) VALUES(@fname,@lname,@usname,@pass)";
+                string query = "INSERT INTO account(firstName,lastName,username,password, nickname) VALUES(@fname,@lname,@usname,@pass, @nickname)";
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@fname", newUser.firstName);
                 command.Parameters.AddWithValue("@lname", newUser.lastName);
                 command.Parameters.AddWithValue("@usname", newUser.userName);
                 command.Parameters.AddWithValue("@pass", newUser.password);
-                //command.Parameters.AddWithValue("@uType", newUser.userType);
+                command.Parameters.AddWithValue("@nickname", newUser.password);
+
 
                 command.ExecuteNonQuery();
 

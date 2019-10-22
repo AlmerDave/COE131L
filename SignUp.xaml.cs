@@ -22,67 +22,60 @@ namespace COE131L
     /// </summary>
     public partial class SignUp : Window
     {
-        Database databaseObject = new Database();
-        bool discardChanges;
+
         public SignUp()
         {
            
 
             InitializeComponent();
-            discardChanges = false;
 
 
-        }
 
-        private void SignUp_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-          
-            if (discardChanges == true)
-            {
-                e.Cancel = false;
-                MainWindow login = new MainWindow();
-                login.Show();
-            }
-            else
-            {
-                SnackbarUnsavedChanges.IsActive = true;
-                e.Cancel = true;
-            }
         }
 
         private void Register_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(TextBoxFName.Text) || string.IsNullOrWhiteSpace(TextBoxLName.Text) || string.IsNullOrWhiteSpace(TextBoxName.Text) 
+                || string.IsNullOrWhiteSpace(TextBoxPassword.Password) || string.IsNullOrWhiteSpace(TextBoxCPassword.Password) || string.IsNullOrWhiteSpace(NickName_textBox.Text))
+            {
+                MessageBox.Show("Please Fill ALL Blanks", "INSUFFICIENT INFORMATION", MessageBoxButton.OK, MessageBoxImage.Information, MessageBoxResult.OK);
+            }
+            else if(TextBoxCPassword.Password != TextBoxPassword.Password)
+            {
+                MessageBox.Show("Password does not match", "MISMATCH", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK);
+            }
+            else
+            {
+                SnackbarUnsavedChanges.IsActive = true;
+            }
+            
+        }
 
-            //string query = "INSERT INTO UserInformation('UserName', 'FirstName', 'LastName', 'Password')" +
-            //                "VALUES(@username, @firstname, @lastname, @Password)";
-            //using (SQLiteCommand myCommand = new SQLiteCommand(query, databaseObject.myConnection))
-            //{
-            //    databaseObject.myConnection.Open();
-            //    myCommand.Parameters.AddWithValue("@username", TextBoxName.Text);
-            //    myCommand.Parameters.AddWithValue("@firstname", TextBoxFName.Text);
-            //    myCommand.Parameters.AddWithValue("@lastname", TextBoxLName.Text);
-            //    myCommand.Parameters.AddWithValue("@Password", TextBoxPassword.Password);
+        private void Snackbar_Click(object sender, RoutedEventArgs e)
+        {
 
-            //    myCommand.ExecuteNonQuery();
-            //    databaseObject.myConnection.Close();
-            //}
+            SnackbarUnsavedChanges.IsActive = false;
             User newUser = new User();
             newUser.firstName = this.TextBoxFName.Text;
             newUser.lastName = this.TextBoxLName.Text;
             newUser.userName = this.TextBoxName.Text;
             newUser.password = this.TextBoxPassword.Password;
-           
+            newUser.nickname = this.NickName_textBox.Text;
+
+
             Database.insertAccount(newUser);
             //MAKE A PROMPT FOR SUCCESDSFUL LOGIN
             MainWindow login = new MainWindow();
             this.Close();
             login.Show();
+
         }
 
-        private void Snackbar_Click(object sender, RoutedEventArgs e)
+        private void BackButtonSign_Clicked(object sender, RoutedEventArgs e)
         {
-            SnackbarUnsavedChanges.IsActive = false;
-            discardChanges = true;
+            MainWindow login = new MainWindow();
+            this.Close();
+            login.Show();
         }
     }
 }
