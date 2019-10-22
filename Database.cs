@@ -464,5 +464,81 @@ namespace COE131L
 
         }
 
+        // FUNCTION FOR ADDING BROKEN ITEMS
+        //RETURNS TRUE IF ITEM IS ALREADY SAVED IN THE LIST
+        public static bool breakageAdd(int serialnum,int userId,string studentNum,string daterec)
+        {
+            bool breakageExist = false;
+
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                string query = "SELECT studentid FROM breakageInformation WHERE serialno=@sernum";
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@sernum", serialnum);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    breakageExist = true; //MEANS THAT IT IS ALREADY IN THE RECORD
+                }
+
+                if(breakageExist == false) 
+                {
+                    query = "INSERT INTO breakageInformation(serialno,studentid,recordedby,daterecorded) VALUES(@sernum,@stdnum,@recby,@datrec)";
+                    command = new SQLiteCommand(query, conn);
+                    command.Parameters.AddWithValue("@sernum", serialnum);
+                    command.Parameters.AddWithValue("@stdnum", studentNum);
+                    command.Parameters.AddWithValue("@recby", userId);
+                    command.Parameters.AddWithValue("@datrec", daterec);
+
+                    command.ExecuteNonQuery();
+                }
+
+                conn.Close();
+            }
+
+
+            return breakageExist;
+        }
+
+
+        //FUNCTION FOR REMOVING BROKEN ITEMS IN THE DATABASE
+        //RETURNS TRUE IF BROKEN ITEM IS REMOVED
+        public static bool breakageRemove(int serialnum)
+        {
+            bool breakageExist = false;
+
+            string query = "SELECT studentid FROM breakageInformation WHERE serialno = @sernum";
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@sernum", serialnum);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    breakageExist = true; //MEANS THAT IT IS ALREADY IN THE RECORD
+                }
+
+                if (breakageExist == true)
+                {
+                    query = "DELETE FROM breakageInformation WHERE serialno = @sernum";
+                    command = new SQLiteCommand(query, conn);
+                    command.Parameters.AddWithValue("@sernum", serialnum);
+
+                    command.ExecuteNonQuery();
+                }
+
+                conn.Close();
+            }
+            return breakageExist;
+
+        }
     }
 }
