@@ -25,11 +25,37 @@ namespace COE131L
         public static DataTable getRecord()
         {
             DataTable itemTable = new DataTable();
-            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name', type.model as 'Model',account.firstname as 'Added By'" +
+            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name', type.model as 'Model',account.username as 'Added By'" +
                     ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
                     "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
                     "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
                     "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId"; 
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
+
+
+                adapter.Fill(itemTable);
+                conn.Close();
+            }
+            return itemTable;
+        }
+        //FUNCTION USED FOR GETTING BREAKAGE INFORMATION
+        public static DataTable getBreakageRecord()
+        {
+            DataTable itemTable = new DataTable();
+            string query = "SELECT breakageInformation.serialno as 'Serial Number', type.name as 'Item Name', type.model 'Model', " 
+                + "breakageInformation.studentid as 'Broken By', condition.description as 'Condition', account.username as 'Added By', "
+                + "breakageInformation.daterecorded as 'Date Recorded' FROM breakageInformation  " 
+                + "INNER JOIN itemTable on itemTable.serialnumber = breakageInformation.serialno "
+                + "INNER JOIN type on itemTable.itemtype = type.typeid "
+                + "INNER JOIN condition on itemTable.conditionId = condition.id "
+                + "INNER JOIN account on account.id = breakageInformation.recordedby "
+                + "WHERE itemTable.conditionId = 3";
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
@@ -49,12 +75,12 @@ namespace COE131L
         {
             DataTable itemTable = new DataTable();
             string quote = word + "%";
-            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name',account.firstname as 'Added By'" +
+            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name', type.model as 'Model' ,account.username as 'Added By'" +
                     ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
                     "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
                     "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
                     "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId "
-                    + "WHERE serialnumber like @word or type.name like @word or account.firstname like  @word or supplier like  @word or status.description like  @word  or condition.description like  @word ";
+                    + "WHERE serialnumber like @word or type.name like @word or type.model like @word or account.username like  @word or supplier like  @word or status.description like  @word  or condition.description like  @word ";
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
@@ -70,6 +96,35 @@ namespace COE131L
             }
             return itemTable;
         }
+        //SEARCH FUNCTION FOR BREAKAGE
+        public static DataTable searchBreakageRecord(string word)
+        {
+            DataTable itemTable = new DataTable();
+            string quote = word + "%";
+            string query = "SELECT breakageInformation.serialno as 'Serial Number', type.name as 'Item Name', type.model 'Model', "
+                + "breakageInformation.studentid as 'Broken By', condition.description as 'Condition', account.username as 'Added By', "
+                + "breakageInformation.daterecorded as 'Date Recorded' FROM breakageInformation  "
+                + "INNER JOIN itemTable on itemTable.serialnumber = breakageInformation.serialno "
+                + "INNER JOIN type on itemTable.itemtype = type.typeid "
+                + "INNER JOIN condition on itemTable.conditionId = condition.id "
+                + "INNER JOIN account on account.id = breakageInformation.recordedby "
+                + "WHERE breakageInformation.serialno like @word or type.name like @word or type.model like @word or breakageInformation.studentid like @word or account.username like  @word or condition.description like @word AND itemTable.conditionId = 3";
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@word", quote);
+                SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
+
+
+                adapter.Fill(itemTable);
+                conn.Close();
+            }
+            return itemTable;
+        }
+        //FUNCTION FOR GETTINGserial in notification
         public static List<User> getSerial(string date)
         {
             List<User> notiftable = new List<User>();
@@ -148,13 +203,14 @@ namespace COE131L
             {
                 conn.Open();
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                string query = "INSERT INTO account(firstName,lastName,username,password) VALUES(@fname,@lname,@usname,@pass)";
+                string query = "INSERT INTO account(firstName,lastName,username,password, nickname) VALUES(@fname,@lname,@usname,@pass, @nickname)";
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@fname", newUser.firstName);
                 command.Parameters.AddWithValue("@lname", newUser.lastName);
                 command.Parameters.AddWithValue("@usname", newUser.userName);
                 command.Parameters.AddWithValue("@pass", newUser.password);
-                //command.Parameters.AddWithValue("@uType", newUser.userType);
+                command.Parameters.AddWithValue("@nickname", newUser.password);
+
 
                 command.ExecuteNonQuery();
 

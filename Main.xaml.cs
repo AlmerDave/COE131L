@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Data;
 using Tulpep.NotificationWindow;
 using System.Collections.ObjectModel;
+using System.Media;
 
 namespace COE131L
 {
@@ -26,18 +27,22 @@ namespace COE131L
     {
         ObservableCollection<item> datamodel = new ObservableCollection<item>();
         User loggedUser = new User();
+        private SoundPlayer notif;
         public Main(User loguser)
         {
+ 
             InitializeComponent();
+
             ButtonCloseMenu.Visibility = Visibility.Collapsed;
             loggedUser = loguser;
+            notif = new SoundPlayer("notif.wav");
 
-            DataTable itemTable = new DataTable();
-            itemTable = Database.getRecord();
-            this.itemGrid.ItemsSource = itemTable.DefaultView;
+
 
             string fName = loggedUser.firstName + " " + loggedUser.lastName;
             this.nameBox.Text = fName;
+
+            loadDatagrid(this);
 
             DateTime mydate = DateTime.Now;
             string strdate = mydate.ToShortDateString();
@@ -51,7 +56,7 @@ namespace COE131L
 
             if(Serial_list.Items.IsEmpty)
             {
-                
+                ;
             }
             else
             {
@@ -60,13 +65,14 @@ namespace COE131L
 
             if (Notification_button.Foreground == Brushes.Red)
             {
-                
+                notif.Play();
                 PopupNotifier popup = new PopupNotifier();
+                popup.Image = Properties.Resources.warn;
                 popup.TitleText = "WARNING";
                 popup.ContentText = "There are items to be decomissioned";
-                 
-                popup.Popup();
                 
+                popup.Popup();
+            
             }
 
                
@@ -75,7 +81,9 @@ namespace COE131L
 
         private void Shutdown_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            MainWindow main = new MainWindow();
+            main.Show();
+            this.Close();
         }
 
         private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
@@ -94,9 +102,20 @@ namespace COE131L
         {
             var search = Search_textBox.Text;
 
-            DataTable itemTable = new DataTable();
-            itemTable = Database.searchRecord(search);
-            this.itemGrid.ItemsSource = itemTable.DefaultView;
+            if(Breakage_checkBox.IsChecked == true)
+            {
+                DataTable itemTable = new DataTable();
+                itemTable = Database.searchBreakageRecord(search);
+                this.itemGrid.ItemsSource = itemTable.DefaultView;
+            }
+            else
+            {
+                DataTable itemTable = new DataTable();
+                itemTable = Database.searchRecord(search);
+                this.itemGrid.ItemsSource = itemTable.DefaultView;
+            }
+
+           
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -106,5 +125,27 @@ namespace COE131L
         }
         
         
+        public void loadDatagrid(Main main)
+        {
+            DataTable itemTable = new DataTable();
+            itemTable = Database.getRecord();
+            this.itemGrid.ItemsSource = itemTable.DefaultView;
+        }
+        public void loadBreakageGrid(Main main)
+        {
+            DataTable itemTable = new DataTable();
+            itemTable = Database.getBreakageRecord();
+            this.itemGrid.ItemsSource = itemTable.DefaultView;
+        }
+
+        private void breakage_clicked(object sender, RoutedEventArgs e)
+        {
+            if (Breakage_checkBox.IsChecked == true)
+            {
+                loadBreakageGrid(this);
+            }
+            else
+                loadDatagrid(this);
+        }
     }
 }
