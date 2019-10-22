@@ -25,12 +25,11 @@ namespace COE131L
         int itemStat;
         int condId;
         int loggedUser;
-        Main wind;
+    
         public settingsWindow()
         {
             InitializeComponent();
             this.comboType.ItemsSource = Database.getItemtypes();
-            
         }
         public settingsWindow(int userId)
         {
@@ -70,6 +69,11 @@ namespace COE131L
                     MessageBox.Show("Removal of a new type success!", "Successful removal", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
+            else
+            {
+                MessageBox.Show("Please select a mode to execute.", "Incomplete input", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
 
         }
 
@@ -156,6 +160,11 @@ namespace COE131L
             {
                 MessageBox.Show("Please select a mode to execute.", "Incomplete input", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        private void BackButton(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

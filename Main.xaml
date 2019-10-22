@@ -109,7 +109,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Grid.RenderTransform>
-                    <materialDesign:PackIcon Width="30" Height="30" Kind="Folder" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
+                    <materialDesign:PackIcon Width="30" Height="30" Kind="TrophyBroken" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
                     <Button Margin="45,33,5,23"  Content="Breakage" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
                 </Grid>
                 <Grid x:Name="grid2" Height="100" RenderTransformOrigin="0.5,0.5">
@@ -134,7 +134,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Grid.RenderTransform>
-                    <materialDesign:PackIcon Width="30" Height="30" Kind="Clear" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
+                    <materialDesign:PackIcon Width="30" Height="30" Kind="Printer" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
                     <Button Margin="45,33,5,23"  Content="Print" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
                 </Grid>
             </StackPanel>
@@ -186,6 +186,7 @@
                 <DataGrid x:Name="itemGrid" HorizontalAlignment="Left" Height="492" Margin="10,90,0,0" VerticalAlignment="Top" Width="754" IsReadOnly="True" ItemsSource="{Binding Path=datamodel}"/>
 
             </Grid>
+            <CheckBox x:Name="Breakage_checkBox" Content="View Breakage Information" HorizontalAlignment="Left" Margin="94,59,0,0" VerticalAlignment="Top" Width="194" Height="33" FontSize="14" Click="breakage_clicked"/>
 
         </Grid>
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Height="60" HorizontalAlignment="Right" Margin="0,1,1,0" Width="71">
@@ -196,6 +197,7 @@
                 <materialDesign:PackIcon Kind="Power" Width="30" Height="30"/>
             </Button>
         </StackPanel>
+        <ProgressBar HorizontalAlignment="Left" Height="10" Margin="479,-52,0,0" VerticalAlignment="Top" Width="100"/>
 
 
     </Grid>
