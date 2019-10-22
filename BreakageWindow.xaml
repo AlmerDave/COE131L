@@ -6,8 +6,17 @@
         xmlns:local="clr-namespace:COE131L"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="BreakageWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="BreakageWindow" Height="218" Width="560">
+    <Grid Margin="0,0,2,1">
+        <TextBox x:Name="textboxSerial" HorizontalAlignment="Left" Height="24" Margin="150,24,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="textboxStudent" HorizontalAlignment="Left" Height="24" Margin="150,64,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsEnabled="{Binding ElementName=radioAdd,Path=IsChecked}"/>
+        <TextBox x:Name="textboxDate" HorizontalAlignment="Left" Height="24" Margin="150,102,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" IsEnabled="False" TextChanged="textboxDate_TextChanged"/>
+        <TextBlock HorizontalAlignment="Left" Margin="28,32,0,0" TextWrapping="Wrap" Text="Serial Number" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="28,75,0,0" TextWrapping="Wrap" Text="Student ID" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="28,107,0,0" TextWrapping="Wrap" Text="Date Recorded" VerticalAlignment="Top"/>
+        <RadioButton x:Name="radioAdd" Content="Add Broken Item" HorizontalAlignment="Left" Margin="344,34,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="radioRemove" Content="Remove Broken Item" HorizontalAlignment="Left" Margin="344,73,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="buttonExecute" Content="Execute" HorizontalAlignment="Left" Margin="357,107,0,0" VerticalAlignment="Top" Width="98" Click="buttonExecute_Click"/>
+
     </Grid>
 </Window>

@@ -177,5 +177,11 @@ namespace COE131L
 
 
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            BreakageWindow breakwin = new BreakageWindow(loggedUser.id);
+            breakwin.Show();
+        }
     }
 }

@@ -19,9 +19,60 @@ namespace COE131L
     /// </summary>
     public partial class BreakageWindow : Window
     {
+        int loggedid;
+        DateTime currentDate;
         public BreakageWindow()
         {
             InitializeComponent();
+            
+        }
+
+        public BreakageWindow(int userid)
+        {
+            InitializeComponent();
+            currentDate = System.DateTime.Today;
+            this.loggedid = userid;
+            this.textboxDate.Text = currentDate.ToString("dd/MM/yyyy");
+
+        }
+
+        private void buttonExecute_Click(object sender, RoutedEventArgs e)
+        {
+            int serialNum = Int32.Parse(this.textboxSerial.Text);
+            int studNum;// = Int32.Parse(this.textboxStudent.Text);
+            int recby = this.loggedid;
+            string daterec = this.textboxDate.Text;
+            if (this.radioAdd.IsChecked == true)
+            {
+
+                studNum = Int32.Parse(this.textboxStudent.Text);
+                if (Database.breakageAdd(serialNum, recby, studNum, daterec) == true)
+                {
+                    MessageBox.Show("Broken Item is saved to the list.", "Item Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Item is already on the list!", "Already Existing Item", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+            }
+            else if (this.radioRemove.IsChecked == true)
+            {
+                //item is removedd
+                if(Database.breakageRemove(serialNum) == true)
+                {
+                    MessageBox.Show("Item is removed from the breakage list.", "Item Removed", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Item is not existing in the breakage list.", "Item not in the list", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
+        private void textboxDate_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

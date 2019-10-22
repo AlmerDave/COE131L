@@ -466,7 +466,7 @@ namespace COE131L
 
         // FUNCTION FOR ADDING BROKEN ITEMS
         //RETURNS TRUE IF ITEM IS ALREADY SAVED IN THE LIST
-        public static bool breakageAdd(int serialnum,int userId,string studentNum,string daterec)
+        public static bool breakageAdd(int serialnum,int userId,int studentNum,string daterec)
         {
             bool breakageExist = false;
 
@@ -516,7 +516,6 @@ namespace COE131L
             {
                 conn.Open();
                 
-
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@sernum", serialnum);
 
@@ -534,7 +533,6 @@ namespace COE131L
 
                     command.ExecuteNonQuery();
                 }
-
                 conn.Close();
             }
             return breakageExist;
