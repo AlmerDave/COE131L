@@ -28,6 +28,7 @@ namespace COE131L
         Main wind;
 
         List<string> dayList = new List<string>();
+        List<string> monthList = new List<string>();
         public settingsWindow()
         {
             InitializeComponent();
@@ -37,6 +38,7 @@ namespace COE131L
         public settingsWindow(int userId)
         {
             int dayVal = 1;
+            int monthVal = 1;
             InitializeComponent();
             this.comboType.ItemsSource = Database.getItemtypes();
             loggedUser = userId;
@@ -47,6 +49,14 @@ namespace COE131L
 
             }
             comboDay.ItemsSource = dayList;
+
+            while(monthVal <= 12)
+            {
+                monthList.Add(monthVal.ToString());
+                monthVal++;
+            }
+            this.comboMonth.ItemsSource = monthList;
+
         }
 
         private void ButtonExecutetype_Click(object sender, RoutedEventArgs e)
@@ -122,7 +132,7 @@ namespace COE131L
               
 
                 item newItem = new item();
-                string date = this.comboDay.SelectedItem.ToString() + "/" + this.comboMonth.SelectedItem.ToString() + "/" + this.comboYear.SelectedItem.ToString();
+                string date = this.comboDay.SelectedItem.ToString() + "/" + this.comboMonth.SelectedItem.ToString() + "/" + this.textboxYear.Text;
                 DateTime deldate = DateTime.ParseExact(date, "dd/MM/yyyy", null);
                 DateTime datedecom = deldate.AddMonths(Int32.Parse(this.textblockMonth.Text));
                 datedecom = datedecom.AddYears(Int32.Parse(this.textblockYear.Text));
