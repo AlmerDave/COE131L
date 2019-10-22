@@ -39,8 +39,6 @@ namespace COE131L
             string fName = loggedUser.firstName + " " + loggedUser.lastName;
             this.nameBox.Text = fName;
 
-            //loadDatagrid(this);
-
             DateTime mydate = DateTime.Now;
             string strdate = mydate.ToShortDateString();
             List<User> notiftable = new List<User>();
@@ -53,7 +51,7 @@ namespace COE131L
 
             if(Serial_list.Items.IsEmpty)
             {
-                ;
+                
             }
             else
             {
@@ -103,21 +101,10 @@ namespace COE131L
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            settingsWindow setwin = new settingsWindow(loggedUser.id,this);
+            settingsWindow setwin = new settingsWindow(loggedUser.id);
             setwin.Show();
         }
         
-        /*
-        public static void loadDatagrid(Main main)
-        {
-            DataTable itemTable = new DataTable();
-            itemTable = Database.getRecord();
-
-            foreach( item row in itemTable.Rows)
-            {
-               main.datamodel.Add(row);
-            }
-        }*/
         
     }
 }

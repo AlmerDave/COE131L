@@ -26,6 +26,8 @@ namespace COE131L
         int condId;
         int loggedUser;
         Main wind;
+
+        List<string> dayList = new List<string>();
         public settingsWindow()
         {
             InitializeComponent();
@@ -34,10 +36,17 @@ namespace COE131L
         }
         public settingsWindow(int userId)
         {
+            int dayVal = 1;
             InitializeComponent();
             this.comboType.ItemsSource = Database.getItemtypes();
             loggedUser = userId;
-           
+            //ADD COMBO BOX ELEMENTS 
+            for (; dayVal <= 31;dayVal++ )
+            {
+                dayList.Add(dayVal.ToString());
+
+            }
+            comboDay.ItemsSource = dayList;
         }
 
         private void ButtonExecutetype_Click(object sender, RoutedEventArgs e)
