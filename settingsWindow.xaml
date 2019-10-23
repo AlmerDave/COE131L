@@ -35,7 +35,7 @@
                     <ColumnDefinition Width="221*"/>
                     <ColumnDefinition Width="261*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="textboxSerial" materialDesign:HintAssist.Hint ="Serial Number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="14,13,18,311" FontFamily="Champagne &amp; Limousiness" FontSize="12" CaretBrush="#FF992020" SelectionBrush="#FF992020" IsEnabled="{Binding ElementName =raduiEquiprem,Path=IsChecked}"/>
+                <TextBox x:Name="textboxSerial" materialDesign:HintAssist.Hint ="Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="14,13,18,311" FontFamily="Champagne &amp; Limousiness" FontSize="12" CaretBrush="#FF992020" SelectionBrush="#FF992020" IsEnabled="{Binding ElementName =raduiEquiprem,Path=IsChecked}"/>
                 <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="65,54,0,0" VerticalAlignment="Top" Width="137" SelectionChanged="comboType_SelectionChanged" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock x:Name="statusBlock" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="13,100,0,0" TextWrapping="Wrap" Text="Item Status" VerticalAlignment="Top" Height="20" Width="75" FontSize="14"/>
                 <TextBlock x:Name="conditionBlock" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="13,144,0,0" TextWrapping="Wrap" Text="Condition" VerticalAlignment="Top" Width="75" FontSize="14"/>
