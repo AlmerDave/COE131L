@@ -336,7 +336,6 @@ namespace COE131L
             return itemFound;
         }
 
-
         //FUNCION FOR INSERTING A NEW ITEM TYPE 
         //IF RETURNS FALSE MEANING THE SUCCESSFUL INSERT
         public static bool addnewtype(string name, string model)
@@ -538,5 +537,67 @@ namespace COE131L
             return breakageExist;
 
         }
+
+        //FUNCTION FOR GETTING ITEM INFORMATION USED FOR THE EDIT FUNCTION
+        //RETURNS TRUE IF THE ITEM IS EXISTING AND EDITED
+        public static bool searchitem(int serialNum,ref item foundItem)
+        {
+            bool itemExist = false;
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                //PLACE USERTYPELATER ON IN THE SCRIPT
+                string query = "SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionId,model " +
+                    "FROM itemTable WHERE serialnumber = @sernum";
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@sernum",serialNum);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                if(reader.HasRows)
+                {
+                    itemExist = true;
+                    while(reader.Read())
+                    {
+                        foundItem.itemType = reader.GetInt32(0);
+                        foundItem.addedby = reader.GetInt32(1);
+                        foundItem.supplier = reader.GetString(2);
+                        foundItem.datedelivered = reader.GetString(3);
+                        foundItem.statusId = reader.GetInt32(4);
+                        foundItem.datedecomm = reader.GetString(5);
+                        foundItem.conditionId = reader.GetInt32(6);
+                        foundItem.model = reader.GetString(7);
+                    }
+                }
+
+                conn.Close();
+            }
+
+            return itemExist;
+        }
+
+        public static string getUsername(int serNum)
+        {
+            string username = "null";
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                //FUNCTION TO GET THE USERNAME
+                string query = "SELECT username FROM account WHERE id =@sernum ";
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                command.Parameters.AddWithValue("@sernum", serNum);
+
+                SQLiteDataReader reader = command.ExecuteReader();
+                while(reader.Read())
+                {
+                    username = reader.GetString(0);
+                }
+                conn.Close();
+            }
+            return username;
+        }
+
+
     }
 }

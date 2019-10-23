@@ -11,19 +11,19 @@
         <TextBox x:Name="textboxSerial" HorizontalAlignment="Left" Height="23" Margin="152,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
         <TextBlock HorizontalAlignment="Left" Margin="46,17,0,0" TextWrapping="Wrap" Text="Serial Number" VerticalAlignment="Top"/>
         <CheckBox x:Name="checkEdit" Content="Edit item" HorizontalAlignment="Left" Margin="385,18,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="buttonSearch" Content="Search" HorizontalAlignment="Left" Margin="295,15,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.293,-0.125"/>
+        <Button x:Name="buttonSearch" Content="Search" HorizontalAlignment="Left" Margin="295,15,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.293,-0.125" Click="buttonSearch_Click"/>
         <GroupBox Header="Information" HorizontalAlignment="Left" Height="371" Margin="10,71,0,0" VerticalAlignment="Top" Width="468" IsEnabled="{Binding ElementName=checkEdit,Path=IsChecked}">
             <Grid Height="280" Margin="0,-42,0,-21" VerticalAlignment="Top" Width="450">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="45*"/>
                     <RowDefinition Height="11*"/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="Supplier" HorizontalAlignment="Left" Height="24" Margin="84,52,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+                <TextBox x:Name="textboxSupplier" HorizontalAlignment="Left" Height="24" Margin="84,52,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                 <TextBlock x:Name="textblockSupplier" HorizontalAlignment="Left" Margin="10,60,0,0" TextWrapping="Wrap" Text="Supplier" VerticalAlignment="Top"/>
                 <TextBox x:Name="textboxUser" HorizontalAlignment="Left" Height="23" Margin="338,56,-8,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
                 <TextBlock HorizontalAlignment="Left" Margin="264,63,0,0" TextWrapping="Wrap" Text="Added By:" VerticalAlignment="Top"/>
-                <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="84,112,0,0" VerticalAlignment="Top" Width="120"/>
-                <ComboBox HorizontalAlignment="Left" Margin="338,112,-8,0" VerticalAlignment="Top" Width="120"/>
+                <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="84,112,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboType_SelectionChanged"/>
+                <ComboBox x:Name="comboModel" HorizontalAlignment="Left" Margin="314,112,0,0" VerticalAlignment="Top" Width="120"/>
                 <ComboBox x:Name="comboStatus" HorizontalAlignment="Left" Margin="84,162,0,0" VerticalAlignment="Top" Width="120"/>
                 <ComboBox x:Name="comboCondition" HorizontalAlignment="Left" Margin="338,162,-8,0" VerticalAlignment="Top" Width="120"/>
                 <Button x:Name="buttonSave" Content="Save Changes" HorizontalAlignment="Left" Margin="158,76,0,-53" VerticalAlignment="Top" Width="131" Grid.Row="1"/>
@@ -35,9 +35,8 @@
                 <TextBlock HorizontalAlignment="Left" Margin="124,39,0,0" TextWrapping="Wrap" Text="Month/s" VerticalAlignment="Top" Grid.Row="1"/>
                 <ComboBox HorizontalAlignment="Left" Margin="136,214,0,0" VerticalAlignment="Top" Width="46" Grid.RowSpan="2"/>
                 <ComboBox HorizontalAlignment="Left" Margin="270,214,0,0" VerticalAlignment="Top" Width="38" RenderTransformOrigin="1.895,0.75" Grid.RowSpan="2"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="382,219,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="58" Grid.RowSpan="2"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="199,35,0,-3" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="56" Grid.Row="1"/>
-                <TextBox HorizontalAlignment="Left" Height="23" Margin="383,32,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="62" Grid.Row="1"/>
+         
+    
                 <TextBlock HorizontalAlignment="Left" Margin="220,1,0,0" TextWrapping="Wrap" Text="Month" VerticalAlignment="Top" Grid.Row="1"/>
                 <TextBlock HorizontalAlignment="Left" Margin="100,223,0,0" TextWrapping="Wrap" Text="Day" VerticalAlignment="Top" Width="31" Grid.RowSpan="2"/>
                 <TextBlock HorizontalAlignment="Left" Margin="338,223,0,0" TextWrapping="Wrap" Text="Year" VerticalAlignment="Top" Grid.RowSpan="2"/>
