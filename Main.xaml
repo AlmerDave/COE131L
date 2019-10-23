@@ -1,4 +1,4 @@
-﻿<Window x:Class="COE131L.Main"
+﻿<Window x:Name="MUMain" x:Class="COE131L.Main"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:COE131L"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Main" Height="600" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="Main" Height="600" Width="1024" WindowStartupLocation="CenterScreen" WindowStyle="None" >
     <Window.Resources>
         <Storyboard x:Key="OpenMenu">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="GridMain">

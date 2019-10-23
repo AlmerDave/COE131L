@@ -25,7 +25,7 @@ namespace COE131L
         int itemStat;
         int condId;
         int loggedUser;
-        Main wind;
+  
 
         List<string> dayList = new List<string>();
         List<string> monthList = new List<string>();
@@ -39,20 +39,33 @@ namespace COE131L
         {
             int dayVal = 1;
             int monthVal = 1;
+            string com;
             InitializeComponent();
             this.comboType.ItemsSource = Database.getItemtypes();
             loggedUser = userId;
             //ADD COMBO BOX ELEMENTS 
             for (; dayVal <= 31;dayVal++ )
             {
-                dayList.Add(dayVal.ToString());
+                if(dayVal < 10)
+                {
+                    com = "0" + dayVal.ToString();
+                    dayList.Add(com);
+                }
+                else
+                    dayList.Add(dayVal.ToString());
 
             }
             comboDay.ItemsSource = dayList;
 
             while(monthVal <= 12)
             {
-                monthList.Add(monthVal.ToString());
+                if (monthVal < 10)
+                {
+                    com = "0" + monthVal.ToString();
+                    monthList.Add(com);
+                }
+                else
+                    monthList.Add(monthVal.ToString());
                 monthVal++;
             }
             this.comboMonth.ItemsSource = monthList;

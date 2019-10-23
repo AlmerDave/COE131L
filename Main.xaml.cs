@@ -177,5 +177,25 @@ namespace COE131L
 
 
         }
+
+ 
+        
+        private void MUMain_MouseMove(object sender, MouseEventArgs e)
+        {
+            var search = Search_textBox.Text;
+
+            if (Breakage_checkBox.IsChecked == true)
+            {
+                DataTable itemTable = new DataTable();
+                itemTable = Database.searchBreakageRecord(search);
+                this.itemGrid.ItemsSource = itemTable.DefaultView;
+            }
+            else
+            {
+                DataTable itemTable = new DataTable();
+                itemTable = Database.searchRecord(search);
+                this.itemGrid.ItemsSource = itemTable.DefaultView;
+            }
+        }
     }
 }
