@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace COE131L
 {
@@ -21,7 +22,7 @@ namespace COE131L
     public partial class MainWindow : Window
     {
         Database databaseObject = new Database();
-        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,6 +36,7 @@ namespace COE131L
             if(Database.accessUser(this.Email_TextBox.Text,this.Password_TextBox.Password.ToString(),ref loguser) == true)
             {
                 //LOGIN SUCESS 
+    
                 Main main = new Main(loguser);
                 this.Close();
                 main.Show();
@@ -48,8 +50,12 @@ namespace COE131L
 
             }
 
+           
+
+
             
         }
+
 
         private void SignUpButton_Click(object sender, RoutedEventArgs e)
         {
