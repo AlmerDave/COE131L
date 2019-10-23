@@ -31,11 +31,11 @@ namespace COE131L
         List<string> monthList = new List<string>();
         public settingsWindow()
         {
-            InitializeComponent();
-            this.comboType.ItemsSource = Database.getItemtypes();
+            InitializeComponent(); 
+            this.comboType.ItemsSource =  Database.getItemtypes();
             
         }
-        public settingsWindow(int userId,Main mWin)
+        public settingsWindow(int userId, Main mWin)
         {
             wind = mWin;
             InitializeComponent();
@@ -129,7 +129,27 @@ namespace COE131L
 
         private void comboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.comboModel.ItemsSource = Database.getModel(this.comboType.SelectedItem.ToString());
+            List<item> modellist = new List<item>();
+            modellist = Database.getModel(this.comboType.SelectedItem.ToString());
+
+            if(comboModel.HasItems)
+            {
+                comboModel.Items.Clear();
+                foreach (item p in modellist)
+                {
+                    this.comboModel.Items.Add(p.model);
+                }
+            }
+            else
+            {
+                foreach (item p in modellist)
+                {
+                    this.comboModel.Items.Add(p.model);
+                }
+            }
+            
+            //this.comboModel.ItemsSource = Database.getModel(this.comboType.SelectedItem.ToString());
+
         }
 
         private void buttonEquipExec_Click(object sender, RoutedEventArgs e)
@@ -161,19 +181,30 @@ namespace COE131L
             {
                 
                     item newItem = new item();
-                    string date = this.comboDay.SelectedItem.ToString() + "/" + this.comboMonth.SelectedItem.ToString() + "/" + this.textboxYear.Text;
-                    DateTime deldate = DateTime.ParseExact(date, "dd/MM/yyyy", null);
+                    string date = this.comboMonth.SelectedItem.ToString() + "/" + this.comboDay.SelectedItem.ToString() + "/" + this.textboxYear.Text;
+                    DateTime deldate = DateTime.ParseExact(date, "MM/dd/yyyy", null);
                     DateTime datedecom = deldate.AddMonths(Int32.Parse(this.textblockMonth.Text));
                     datedecom = datedecom.AddYears(Int32.Parse(this.textblockYear.Text));
 
-                    newItem.serialNumber = Int32.Parse(this.textboxSerial.Text);
-                    newItem.itemType = this.comboType.SelectedIndex + 1;
+                    newItem.serialNumber = this.textboxSerial.Text;
+
+                    List<item> modelist = new List<item>();
+                    modelist = Database.storeRecord();
+
+                foreach (item p in modelist)
+                {
+                    if (p.model == comboModel.Text)
+                    {
+                        newItem.itemType = p.itemType;
+                    }
+                }
+
                     newItem.addedby = loggedUser;
                     newItem.statusId = this.itemStat;
                     newItem.conditionId = this.condId;
                     newItem.supplier = this.textboxSupplier.Text;
-                    newItem.datedelivered = deldate.ToString("dd/MM/yyyy");
-                    newItem.datedecomm = datedecom.ToString("dd/MM/yyyy");
+                    newItem.datedelivered = deldate.ToString("MM/dd/yyyy");
+                    newItem.datedecomm = datedecom.ToString("MM/dd/yyyy");
                     newItem.model = this.comboModel.SelectedItem.ToString();
 
                     if (Database.addItem(newItem) == true) //FAILED TO ADD ITEM TO THE RECORD 

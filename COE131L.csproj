@@ -99,6 +99,7 @@
     <Compile Include="BreakageWindow.xaml.cs">
       <DependentUpon>BreakageWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CSVUtlity.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>

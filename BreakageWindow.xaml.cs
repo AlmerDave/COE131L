@@ -39,7 +39,7 @@ namespace COE131L
 
         private void buttonExecute_Click(object sender, RoutedEventArgs e)
         {
-            int serialNum = Int32.Parse(this.textboxSerial.Text);
+            string serialNum =  this.textboxSerial.Text;
             int studNum;// = Int32.Parse(this.textboxStudent.Text);
             int recby = this.loggedid;
             string daterec = this.textboxDate.Text;
@@ -49,13 +49,14 @@ namespace COE131L
                 studNum = Int32.Parse(this.textboxStudent.Text);
                 if (Database.breakageAdd(serialNum, recby, studNum, daterec) == true)
                 {
-                    MessageBox.Show("Broken Item is saved to the list.", "Item Saved", MessageBoxButton.OK, MessageBoxImage.Information);
-               
+                    MessageBox.Show("Item is already on the list!", "Already Existing Item", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 }
                 else
                 {
-                    MessageBox.Show("Item is already on the list!", "Already Existing Item", MessageBoxButton.OK, MessageBoxImage.Error);
-               
+                    
+                    MessageBox.Show("Broken Item is saved to the list.", "Item Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+
                 }
 
             }
@@ -76,6 +77,11 @@ namespace COE131L
         private void textboxDate_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void BackButton(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

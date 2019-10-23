@@ -16,7 +16,7 @@
             </LinearGradientBrush>
         </Grid.Background>
         <RadioButton x:Name="typeRadio" FontFamily="Champagne &amp; Limousiness" Content="Item Type" HorizontalAlignment="Left" Margin="28,24,0,0" VerticalAlignment="Top" Height="21" Width="100" Checked="typeRadio_Checked" FontSize="16"/>
-        <GroupBox  Header= "Type " HorizontalAlignment="Left" Height="210" Margin="30,50,0,0" VerticalAlignment="Top" Width="492" IsEnabled="{Binding ElementName = typeRadio,Path=IsChecked}" Background="White">
+        <GroupBox   Header= "Type " HorizontalAlignment="Left" Height="210" Margin="30,50,0,0" VerticalAlignment="Top" Width="492" IsEnabled="{Binding ElementName = typeRadio,Path=IsChecked}" Background="White">
 
             <Grid>
 
@@ -52,29 +52,29 @@
 
 
                 <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="10,193,0,0" TextWrapping="Wrap" Text="Date Delivered" VerticalAlignment="Top" FontSize="14"/>
-                <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="13,232,0,0" TextWrapping="Wrap" Text="Lifespan" VerticalAlignment="Top" FontSize="14"/>
-                <TextBox x:Name="textblockMonth" HorizontalAlignment="Left" Height="23" Margin="146,228,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="68" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
-                <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="89,232,0,0" TextWrapping="Wrap" Text="Months:" VerticalAlignment="Top" FontSize="14"/>
-                <TextBox x:Name="textblockYear" HorizontalAlignment="Left" Height="23" Margin="74,232,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="76" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" Grid.Column="1"/>
-                <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="34,232,0,0" TextWrapping="Wrap" Text="Years:" VerticalAlignment="Top" FontSize="14" Grid.Column="1"/>
+                <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="14,236,0,0" TextWrapping="Wrap" Text="Lifespan in" VerticalAlignment="Top" FontSize="14" Width="71"/>
+                <TextBox x:Name="textblockMonth" HorizontalAlignment="Left" Height="23" Margin="175,232,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="68" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" Grid.ColumnSpan="2"/>
+                <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="118,236,0,0" TextWrapping="Wrap" Text="Months:" VerticalAlignment="Top" FontSize="14"/>
+                <TextBox x:Name="textblockYear" HorizontalAlignment="Left" Height="23" Margin="85,232,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="76" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" Grid.Column="1"/>
+                <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="45,236,0,0" TextWrapping="Wrap" Text="Years:" VerticalAlignment="Top" FontSize="14" Grid.Column="1"/>
                 <Button x:Name="buttonEquipExec" Content="Execute" HorizontalAlignment="Left" Margin="158,297,0,0" VerticalAlignment="Top" Width="86" Click="buttonEquipExec_Click" Background="#FF992020" Grid.Column="1"/>
                 <RadioButton x:Name="radioEqauipadd"  Content="Add Equipment" HorizontalAlignment="Left" Margin="13,308,0,0" VerticalAlignment="Top" FontSize="14"/>
                 <RadioButton x:Name="raduiEquiprem" Content="Remove Equipment" HorizontalAlignment="Left" Margin="148,308,0,0" VerticalAlignment="Top" FontSize="14" Grid.ColumnSpan="2"/>
-                <TextBlock HorizontalAlignment="Left" Margin="0,193,0,0" TextWrapping="Wrap" Text="Month:" VerticalAlignment="Top" RenderTransformOrigin="1.09,0.125" FontSize="14" Grid.Column="1"/>
+                <TextBlock HorizontalAlignment="Left" Margin="124,193,0,0" TextWrapping="Wrap" Text="Month:" VerticalAlignment="Top" RenderTransformOrigin="1.09,0.125" FontSize="14"/>
 
 
 
-                <TextBlock  IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="112,193,0,0" TextWrapping="Wrap" Text="Day:" VerticalAlignment="Top" RenderTransformOrigin="1.09,0.125" FontSize="14"/>
+                <TextBlock  IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="15,193,0,0" TextWrapping="Wrap" Text="Day:" VerticalAlignment="Top" RenderTransformOrigin="1.09,0.125" FontSize="14" Grid.Column="1"/>
 
-                <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="131,197,0,0" TextWrapping="Wrap" Text="Year:" VerticalAlignment="Top" RenderTransformOrigin="1.09,0.125" FontSize="14" Grid.Column="1"/>
+                <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="114,197,0,0" TextWrapping="Wrap" Text="Year:" VerticalAlignment="Top" RenderTransformOrigin="1.09,0.125" FontSize="14" Grid.Column="1"/>
                 <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="45,54,0,0" TextWrapping="Wrap" Text="Model: " VerticalAlignment="Top" FontSize="14" Height="28" Grid.Column="1"/>
                 <ComboBox x:Name="comboModel" HorizontalAlignment="Left" Margin="99,54,0,0" VerticalAlignment="Top" Width="135" RenderTransformOrigin="0.483,0.571" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" Grid.Column="1"/>
                 <TextBox x:Name="textboxSupplier" materialDesign:HintAssist.Hint ="Supplier" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,27,311" FontFamily="Champagne &amp; Limousiness" FontSize="12" CaretBrush="#FF992020" SelectionBrush="#FF992020" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" Grid.Column="1"/>
                 <TextBlock HorizontalAlignment="Left" Margin="13,54,0,0" TextWrapping="Wrap" Text="Type: " VerticalAlignment="Top" FontSize="14" Height="28" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="14,282,0,0" TextWrapping="Wrap" Text="Mode" VerticalAlignment="Top" FontSize="14"/>
-                <ComboBox x:Name="comboDay" HorizontalAlignment="Left" Margin="148,184,0,0" VerticalAlignment="Top" Width="41" RenderTransformOrigin="0.488,0.786" IsEnabled="{Binding ElementName=equiRadio,Path=IsChecked}"/>
-                <ComboBox x:Name="comboMonth" Grid.Column="1" HorizontalAlignment="Left" Margin="62,184,0,0" VerticalAlignment="Top" Width="52"  IsEnabled="{Binding ElementName=equiRadio,Path=IsChecked}"/>
-                <TextBox x:Name="textboxYear" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="165,189,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="86"  IsEnabled="{Binding ElementName=equiRadio,Path=IsChecked}"/>
+                <ComboBox x:Name="comboDay" HorizontalAlignment="Left" Margin="51,184,0,0" VerticalAlignment="Top" Width="41" RenderTransformOrigin="0.488,0.786" IsEnabled="{Binding ElementName=equiRadio,Path=IsChecked}" Grid.Column="1"/>
+                <ComboBox x:Name="comboMonth" HorizontalAlignment="Left" Margin="173,184,0,0" VerticalAlignment="Top" Width="38"  IsEnabled="{Binding ElementName=equiRadio,Path=IsChecked}"/>
+                <TextBox x:Name="textboxYear" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="148,189,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="86"  IsEnabled="{Binding ElementName=equiRadio,Path=IsChecked}"/>
             </Grid>
 
         </GroupBox>

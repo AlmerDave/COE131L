@@ -20,12 +20,15 @@ namespace COE131L
     public partial class EditWindow : Window
     {
         int loggeduser;
+        int loggedid;
+        DateTime currentDate;
+        Main win;
         public EditWindow()
         {
             InitializeComponent();
         }
 
-        public EditWindow(int userId)
+        public EditWindow(int userId, Main mwin)
         {
             InitializeComponent();
             loggeduser = userId;
@@ -35,7 +38,7 @@ namespace COE131L
 
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
         {
-            int sernum = Int32.Parse(this.textboxSerial.Text);
+            string sernum =  this.textboxSerial.Text ;
             item editItem = new item();
 
             if(checkEdit.IsChecked == true && string.IsNullOrWhiteSpace(this.textboxSerial.Text)== true) // CANNOT HAPPEN

@@ -122,8 +122,8 @@
                         </TransformGroup>
                     </Grid.RenderTransform>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="Edit" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Edit
-" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
+                    <Button x:Name="Edit_button" Margin="45,33,5,23"  Content="Edit
+" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" Click="EditButon_clicked" />
                 </Grid>
                 <Grid x:Name="grid3" Height="100" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
@@ -135,7 +135,7 @@
                         </TransformGroup>
                     </Grid.RenderTransform>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="Printer" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Print" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" />
+                    <Button x:Name="Print_Button" Margin="45,33,5,23"  Content="Print" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" Click="Print_Button_Clicked" />
                 </Grid>
             </StackPanel>
 

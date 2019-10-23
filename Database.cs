@@ -18,9 +18,10 @@ namespace COE131L
         public Database()
         {
 
-
-
         }
+
+
+
         //FUNCTION TO DISPLAY THE TABLE
         public static DataTable getRecord()
         {
@@ -44,7 +45,7 @@ namespace COE131L
             }
             return itemTable;
         }
-        //FUNCTION USED FOR GETTING BREAKAGE INFORMATION
+     
         public static DataTable getBreakageRecord()
         {
             DataTable itemTable = new DataTable();
@@ -70,7 +71,7 @@ namespace COE131L
             }
             return itemTable;
         }
-        //FUNCTION USED FOR SEARCHING
+ 
         public static DataTable searchRecord(string word)
         {
             DataTable itemTable = new DataTable();
@@ -96,7 +97,7 @@ namespace COE131L
             }
             return itemTable;
         }
-        //SEARCH FUNCTION FOR BREAKAGE
+        
         public static DataTable searchBreakageRecord(string word)
         {
             DataTable itemTable = new DataTable();
@@ -124,10 +125,43 @@ namespace COE131L
             }
             return itemTable;
         }
-        //FUNCTION FOR GETTINGserial in notification
-        public static List<User> getSerial(string date)
+
+        public static List<item> storeRecord()
         {
-            List<User> notiftable = new List<User>();
+            List<item> storetable = new List<item>();
+
+            string query = "SELECT * FROM type";
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        item p = new item();
+                        p.itemType = reader.GetInt32(1);
+                        p.model = reader.GetString(2);
+                        
+                        storetable.Add(p);
+
+
+                        // Process people...      
+                    }
+
+                }
+
+                conn.Close();
+            }
+            return storetable;
+        }
+
+        //FUNCTION FOR GETTINGserial in notification
+        public static List<item> getSerial(string date)
+        {
+            List<item> notiftable = new List<item>();
       
             string query = "SELECT i.serialnumber FROM itemTable as i WHERE i.datedecommissioned = @date ";
 
@@ -142,8 +176,8 @@ namespace COE131L
                 {
                     while (reader.Read())
                     {
-                        User p = new User();
-                        p.id = reader.GetInt32(0);
+                        item p = new item();
+                        p.serialNumber = reader.GetString(0);
                         notiftable.Add(p);
 
 
@@ -246,7 +280,7 @@ namespace COE131L
                 using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
                 {
                     conn.Open();
-                    string query = "INSERT INTO itemTable (serialnumber,itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid,model)" +
+                    string query = "INSERT INTO itemTable (serialnumber,itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid,itemtype)" +
                                                                 "VALUES(@sernum,@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid,@model)";
                     SQLiteCommand command = new SQLiteCommand(query, conn);
                     command.Parameters.AddWithValue("@sernum", newItem.serialNumber);
@@ -257,7 +291,7 @@ namespace COE131L
                     command.Parameters.AddWithValue("@statid", newItem.statusId);
                     command.Parameters.AddWithValue("@datedecom", newItem.datedecomm);
                     command.Parameters.AddWithValue("@conid", newItem.conditionId);
-                    command.Parameters.AddWithValue("@model", newItem.model);
+                    command.Parameters.AddWithValue("@model", newItem.itemType);
 
                     command.ExecuteNonQuery();
                     conn.Close();
@@ -422,10 +456,10 @@ namespace COE131L
                 string query = "SELECT name FROM type group by name";
 
                 SQLiteCommand command = new SQLiteCommand(query, conn);
-                
 
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                    while (reader.Read())
                 {
                     itemType.Add(reader.GetString(0));
                 }
@@ -437,9 +471,9 @@ namespace COE131L
         }
 
         //function to get models based on selected item type
-        public static List<string> getModel(string itemType)
+        public static List<item> getModel(string itemType)
         {
-            List<string> modelList = new List<string>();
+            List<item> modelList = new List<item>();
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
@@ -451,10 +485,19 @@ namespace COE131L
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@itemtype", itemType);
 
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
+                
+                using (SQLiteDataReader reader = command.ExecuteReader())
                 {
-                    modelList.Add(reader.GetString(0));
+                    while (reader.Read())
+                    {
+                        item p = new item();
+                        p.model = reader.GetString(0);
+                        modelList.Add(p);
+
+
+                        // Process people...      
+                    }
+
                 }
                 conn.Close();
             }
@@ -465,10 +508,10 @@ namespace COE131L
 
         // FUNCTION FOR ADDING BROKEN ITEMS
         //RETURNS TRUE IF ITEM IS ALREADY SAVED IN THE LIST
-        public static bool breakageAdd(int serialnum,int userId,int studentNum,string daterec)
+        public static bool breakageAdd(string serialnum,int userId,int studentNum,string daterec)
         {
             bool breakageExist = false;
-
+            DataTable breakagetable = new DataTable();
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
@@ -477,26 +520,35 @@ namespace COE131L
 
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@sernum", serialnum);
-
-                SQLiteDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
+       
+ 
+                using (SQLiteDataReader reader = command.ExecuteReader())
                 {
-                    breakageExist = true; //MEANS THAT IT IS ALREADY IN THE RECORD
+                    if (reader.HasRows)
+                    {
+                        breakageExist = true; //MEANS THAT IT IS ALREADY IN THE RECORD
+                    }
+                    conn.Close();
                 }
-
-                if(breakageExist == false) 
+                
+                
+                if (breakageExist == false)
                 {
-                    query = "INSERT INTO breakageInformation(serialno,studentid,recordedby,daterecorded) VALUES(@sernum,@stdnum,@recby,@datrec)";
-                    command = new SQLiteCommand(query, conn);
-                    command.Parameters.AddWithValue("@sernum", serialnum);
-                    command.Parameters.AddWithValue("@stdnum", studentNum);
-                    command.Parameters.AddWithValue("@recby", userId);
-                    command.Parameters.AddWithValue("@datrec", daterec);
+                    conn.Open();
+                    string querynew = "INSERT INTO breakageInformation(serialno,studentid,recordedby,daterecorded) VALUES(@sernum,@stdnum,@recby,@datrec)";
 
-                    command.ExecuteNonQuery();
+                    SQLiteCommand cmd = new SQLiteCommand(querynew, conn);
+
+                    cmd.Parameters.AddWithValue("@sernum", serialnum);
+                    cmd.Parameters.AddWithValue("@stdnum", studentNum);
+                    cmd.Parameters.AddWithValue("@recby", userId);
+                    cmd.Parameters.AddWithValue("@datrec", daterec);
+
+                    cmd.ExecuteNonQuery();
+
                 }
-
                 conn.Close();
+
             }
 
 
@@ -506,7 +558,7 @@ namespace COE131L
 
         //FUNCTION FOR REMOVING BROKEN ITEMS IN THE DATABASE
         //RETURNS TRUE IF BROKEN ITEM IS REMOVED
-        public static bool breakageRemove(int serialnum)
+        public static bool breakageRemove(string serialnum)
         {
             bool breakageExist = false;
 
@@ -540,7 +592,7 @@ namespace COE131L
 
         //FUNCTION FOR GETTING ITEM INFORMATION USED FOR THE EDIT FUNCTION
         //RETURNS TRUE IF THE ITEM IS EXISTING AND EDITED
-        public static bool searchitem(int serialNum,ref item foundItem)
+        public static bool searchitem(string serialNum,ref item foundItem)
         {
             bool itemExist = false;
 
@@ -548,7 +600,7 @@ namespace COE131L
             {
                 conn.Open();
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                string query = "SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionId,model " +
+                string query = "SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionId,itemtype " +
                     "FROM itemTable WHERE serialnumber = @sernum";
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@sernum",serialNum);
@@ -576,7 +628,7 @@ namespace COE131L
             return itemExist;
         }
 
-        public static string getUsername(int serNum)
+        public static string getUsername(string serNum)
         {
             string username = "null";
 
@@ -598,6 +650,30 @@ namespace COE131L
             return username;
         }
 
+        
+
+        public string WriteToXls(string dataToWrite)
+        {
+            try
+            {
+                string destination = DateTime.Now.ToString("dd_MM_yyyy_HH_mm");
+                foreach (char c in System.IO.Path.GetInvalidFileNameChars())
+                {
+                    destination = destination.Replace(c, '_');
+                }
+                destination = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + destination + ".xlsx";
+                FileStream fs = new FileStream(destination, FileMode.Create, FileAccess.Write);
+                StreamWriter objWrite = new StreamWriter(fs);
+                objWrite.Write(dataToWrite);
+                objWrite.Close();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+
+            return null;
+        }
 
     }
 }

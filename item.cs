@@ -9,7 +9,7 @@ namespace COE131L
     class item
     {
      
-        public int serialNumber;
+        public string serialNumber;
         public int itemType;
         public int addedby;
         public int conditionId;

@@ -16,6 +16,8 @@ using Tulpep.NotificationWindow;
 using System.Collections.ObjectModel;
 using System.Media;
 using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
+using System.IO;
 
 namespace COE131L
 {
@@ -28,6 +30,7 @@ namespace COE131L
     {
         ObservableCollection<item> datamodel = new ObservableCollection<item>();
         User loggedUser = new User();
+        
         private SoundPlayer notif;
         public Main(User loguser)
         {
@@ -45,37 +48,7 @@ namespace COE131L
 
             loadDatagrid();
 
-            DateTime mydate = DateTime.Now;
-            string strdate = mydate.ToShortDateString();
-            List<User> notiftable = new List<User>();
-            notiftable = Database.getSerial(strdate);
-
-            foreach (User p in notiftable)
-            {
-                this.Serial_list.Items.Add(p.id);
-            }
-
-            if(Serial_list.Items.IsEmpty)
-            {
-                ;
-            }
-            else
-            {
-                Notification_button.Content = new PackIcon { Kind = PackIconKind.NotificationsActive, Width = 30, Height = 30 };
-                Notification_button.Foreground = Brushes.Red;
-            }
-
-            if (Notification_button.Foreground == Brushes.Red)
-            {
-                notif.Play();
-                PopupNotifier popup = new PopupNotifier();
-                popup.Image = Properties.Resources.warn;
-                popup.TitleText = "WARNING";
-                popup.ContentText = "There are items to be decomissioned";
-                
-                popup.Popup();
-            
-            }
+            loadnotif();
 
                
        
@@ -129,16 +102,62 @@ namespace COE131L
         
         public void loadDatagrid()
         {
-            DataTable itemTable = new DataTable();
-            itemTable = Database.getRecord();
-            this.itemGrid.ItemsSource = itemTable.DefaultView;
+
+            if (Breakage_checkBox.IsChecked == true)
+            {
+                loadBreakageGrid();
+            }
+            else
+            {
+                DataTable itemTable = new DataTable();
+                itemTable = Database.getRecord();
+                this.itemGrid.ItemsSource = itemTable.DefaultView;
+            }
+           
+
+
         }
         public void loadBreakageGrid()
         {
+
             DataTable itemTable = new DataTable();
             itemTable = Database.getBreakageRecord();
             this.itemGrid.ItemsSource = itemTable.DefaultView;
             
+        }
+        public void loadnotif()
+        {
+            DateTime mydate = DateTime.Now;
+            string strdate = mydate.ToShortDateString();
+            List<item> notiftable = new List<item>();
+            notiftable = Database.getSerial(strdate);
+
+            foreach (item p in notiftable)
+            {
+                this.Serial_list.Items.Add(p.serialNumber);
+            }
+
+            if (Serial_list.Items.IsEmpty)
+            {
+                ;
+            }
+            else
+            {
+                Notification_button.Content = new PackIcon { Kind = PackIconKind.NotificationsActive, Width = 30, Height = 30 };
+                Notification_button.Foreground = Brushes.Red;
+            }
+
+            if (Notification_button.Foreground == Brushes.Red)
+            {
+                notif.Play();
+                PopupNotifier popup = new PopupNotifier();
+                popup.Image = Properties.Resources.warn;
+                popup.TitleText = "WARNING";
+                popup.ContentText = "There are items to be decomissioned";
+
+                popup.Popup();
+
+            }
         }
 
         private void breakage_clicked(object sender, RoutedEventArgs e)
@@ -183,6 +202,34 @@ namespace COE131L
         {
             BreakageWindow breakwin = new BreakageWindow(loggedUser.id,this);
             breakwin.Show();
+        }
+
+        private void EditButon_clicked(object sender, RoutedEventArgs e)
+        {
+            EditWindow edtiwin = new EditWindow(loggedUser.id, this);
+            edtiwin.Show();
+        }
+
+        private void Print_Button_Clicked(object sender, RoutedEventArgs e)
+        {
+           
+
+            SaveFileDialog sfd = new SaveFileDialog()
+            {
+                Title = "Save",
+                Filter = "CSV File (.csv) | *.csv",
+                FileName = ""
+            
+            };
+
+            if (sfd.ShowDialog() == true)
+            {
+                DataTable dt = new DataTable();
+                dt = Database.getRecord();
+                dt.ToCSV(sfd.FileName);
+                MessageBox.Show("Succesfully Export to CSV", "SUCCESSFULL", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            
         }
     }
 }
