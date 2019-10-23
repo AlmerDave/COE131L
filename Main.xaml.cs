@@ -43,7 +43,7 @@ namespace COE131L
             string fName = loggedUser.firstName + " " + loggedUser.lastName;
             this.nameBox.Text = fName;
 
-            loadDatagrid(this);
+            loadDatagrid();
 
             DateTime mydate = DateTime.Now;
             string strdate = mydate.ToShortDateString();
@@ -122,32 +122,33 @@ namespace COE131L
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            settingsWindow setwin = new settingsWindow(loggedUser.id);
+            settingsWindow setwin = new settingsWindow(loggedUser.id,this);
             setwin.Show();
         }
         
         
-        public void loadDatagrid(Main main)
+        public void loadDatagrid()
         {
             DataTable itemTable = new DataTable();
             itemTable = Database.getRecord();
             this.itemGrid.ItemsSource = itemTable.DefaultView;
         }
-        public void loadBreakageGrid(Main main)
+        public void loadBreakageGrid()
         {
             DataTable itemTable = new DataTable();
             itemTable = Database.getBreakageRecord();
             this.itemGrid.ItemsSource = itemTable.DefaultView;
+            
         }
 
         private void breakage_clicked(object sender, RoutedEventArgs e)
         {
             if (Breakage_checkBox.IsChecked == true)
             {
-                loadBreakageGrid(this);
+                loadBreakageGrid();
             }
             else
-                loadDatagrid(this);
+                loadDatagrid();
         }
 
         private void Notif_clicked(object sender, RoutedEventArgs e)
@@ -176,6 +177,12 @@ namespace COE131L
            
 
 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            BreakageWindow breakwin = new BreakageWindow(loggedUser.id,this);
+            breakwin.Show();
         }
 
  

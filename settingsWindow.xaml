@@ -35,7 +35,7 @@
                     <ColumnDefinition Width="221*"/>
                     <ColumnDefinition Width="261*"/>
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="textboxSerial" materialDesign:HintAssist.Hint ="Serial" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="14,13,18,311" FontFamily="Champagne &amp; Limousiness" FontSize="12" CaretBrush="#FF992020" SelectionBrush="#FF992020" />
+                <TextBox x:Name="textboxSerial" materialDesign:HintAssist.Hint ="Serial Number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="14,13,18,311" FontFamily="Champagne &amp; Limousiness" FontSize="12" CaretBrush="#FF992020" SelectionBrush="#FF992020" IsEnabled="{Binding ElementName =raduiEquiprem,Path=IsChecked}"/>
                 <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="65,54,0,0" VerticalAlignment="Top" Width="137" SelectionChanged="comboType_SelectionChanged" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock x:Name="statusBlock" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="13,100,0,0" TextWrapping="Wrap" Text="Item Status" VerticalAlignment="Top" Height="20" Width="75" FontSize="14"/>
                 <TextBlock x:Name="conditionBlock" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="13,144,0,0" TextWrapping="Wrap" Text="Condition" VerticalAlignment="Top" Width="75" FontSize="14"/>
@@ -73,8 +73,9 @@
                 <TextBlock HorizontalAlignment="Left" Margin="13,54,0,0" TextWrapping="Wrap" Text="Type: " VerticalAlignment="Top" FontSize="14" Height="28" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="14,282,0,0" TextWrapping="Wrap" Text="Mode" VerticalAlignment="Top" FontSize="14"/>
                 <ComboBox x:Name="comboDay" HorizontalAlignment="Left" Margin="148,184,0,0" VerticalAlignment="Top" Width="41" RenderTransformOrigin="0.488,0.786"/>
+                <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="77,204,0,0" VerticalAlignment="Top" Width="120"/>
                 <ComboBox x:Name="comboMonth" Grid.Column="1" HorizontalAlignment="Left" Margin="62,184,0,0" VerticalAlignment="Top" Width="52"/>
-                <TextBox x:Name="textboxYear" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="165,191,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="86"/>
+                <TextBox x:Name="textboxYear" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="197,199,-56,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
             </Grid>
 
         </GroupBox>
