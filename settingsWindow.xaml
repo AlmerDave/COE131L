@@ -72,9 +72,9 @@
                 <TextBox x:Name="textboxSupplier" materialDesign:HintAssist.Hint ="Supplier" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="45,10,27,311" FontFamily="Champagne &amp; Limousiness" FontSize="12" CaretBrush="#FF992020" SelectionBrush="#FF992020" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" Grid.Column="1"/>
                 <TextBlock HorizontalAlignment="Left" Margin="13,54,0,0" TextWrapping="Wrap" Text="Type: " VerticalAlignment="Top" FontSize="14" Height="28" IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}"/>
                 <TextBlock IsEnabled="{Binding ElementName =radioEqauipadd,Path=IsChecked}" HorizontalAlignment="Left" Margin="14,282,0,0" TextWrapping="Wrap" Text="Mode" VerticalAlignment="Top" FontSize="14"/>
-                <ComboBox x:Name="comboDay" HorizontalAlignment="Left" Margin="148,184,0,0" VerticalAlignment="Top" Width="41" RenderTransformOrigin="0.488,0.786"/>
-                <ComboBox x:Name="comboMonth" Grid.Column="1" HorizontalAlignment="Left" Margin="62,184,0,0" VerticalAlignment="Top" Width="52"/>
-                <TextBox x:Name="textboxYear" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="165,189,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="86"/>
+                <ComboBox x:Name="comboDay" HorizontalAlignment="Left" Margin="148,184,0,0" VerticalAlignment="Top" Width="41" RenderTransformOrigin="0.488,0.786" IsEnabled="{Binding ElementName=equiRadio,Path=IsChecked}"/>
+                <ComboBox x:Name="comboMonth" Grid.Column="1" HorizontalAlignment="Left" Margin="62,184,0,0" VerticalAlignment="Top" Width="52"  IsEnabled="{Binding ElementName=equiRadio,Path=IsChecked}"/>
+                <TextBox x:Name="textboxYear" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="165,189,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="86"  IsEnabled="{Binding ElementName=equiRadio,Path=IsChecked}"/>
             </Grid>
 
         </GroupBox>
