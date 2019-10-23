@@ -35,26 +35,62 @@ namespace COE131L
             this.comboType.ItemsSource = Database.getItemtypes();
             
         }
-        public settingsWindow(int userId)
+        public settingsWindow(int userId,Main mWin)
         {
-            int dayVal = 1;
-            int monthVal = 1;
+            wind = mWin;
             InitializeComponent();
             this.comboType.ItemsSource = Database.getItemtypes();
             loggedUser = userId;
             //ADD COMBO BOX ELEMENTS 
-            for (; dayVal <= 31;dayVal++ )
-            {
-                dayList.Add(dayVal.ToString());
+           
+            dayList.Add("01");
+            dayList.Add("02");
+            dayList.Add("03");
+            dayList.Add("04");
+            dayList.Add("05");
+            dayList.Add("06");
+            dayList.Add("07");
+            dayList.Add("08");
+            dayList.Add("09");
+            dayList.Add("10");
+            dayList.Add("11");
+            dayList.Add("12");
+            dayList.Add("13");
+            dayList.Add("14");
+            dayList.Add("15");
+            dayList.Add("16");
+            dayList.Add("17");
+            dayList.Add("18");
+            dayList.Add("19");
+            dayList.Add("20");
+            dayList.Add("21");
+            dayList.Add("22");
+            dayList.Add("23");
+            dayList.Add("24");
+            dayList.Add("25");
+            dayList.Add("26");
+            dayList.Add("27");
+            dayList.Add("28");
+            dayList.Add("29");
+            dayList.Add("30");
+            dayList.Add("31");
 
-            }
             comboDay.ItemsSource = dayList;
 
-            while(monthVal <= 12)
-            {
-                monthList.Add(monthVal.ToString());
-                monthVal++;
-            }
+            
+                monthList.Add("01");
+                monthList.Add("02");
+                monthList.Add("03");
+                monthList.Add("04");
+                monthList.Add("05");
+                monthList.Add("06");
+                monthList.Add("07");
+                monthList.Add("08");
+                monthList.Add("09");
+                monthList.Add("10");
+                monthList.Add("11");
+                monthList.Add("12");
+            
             this.comboMonth.ItemsSource = monthList;
 
         }
@@ -75,6 +111,7 @@ namespace COE131L
                 {
                     //MEANS THAT THE INSERT SUCCESSFUL MAKE A PROMPT OR MESSAGE SUCCESSFUL INSERT
                     MessageBox.Show("Insert of new type success!", "Successful Insert", MessageBoxButton.OK, MessageBoxImage.Information);
+                    
                 }
             }
             else if(this.removeRadio.IsChecked == true)
@@ -143,8 +180,8 @@ namespace COE131L
                 newItem.statusId = this.itemStat;
                 newItem.conditionId = this.condId;
                 newItem.supplier = this.textboxSupplier.Text;
-                newItem.datedelivered = deldate.ToString("dd-mm-yyyy");
-                newItem.datedecomm = datedecom.ToString("dd-mm-yyyy");
+                newItem.datedelivered = deldate.ToString("dd/MM/yyyy");
+                newItem.datedecomm = datedecom.ToString("dd/MM/yyyy");
                 newItem.model = this.comboModel.SelectedItem.ToString();
 
                 if (Database.addItem(newItem) == true) //FAILED TO ADD ITEM TO THE RECORD 
@@ -154,7 +191,7 @@ namespace COE131L
                 else //SUCCESSFULLY ADDED
                 {
                     MessageBox.Show("Item is added to the record!", "Item added", MessageBoxButton.OK, MessageBoxImage.Information);
-                    
+                    wind.loadDatagrid();
                     //CLEAR ALL THE CONTENT OF THE RECORD  
                 }
             }

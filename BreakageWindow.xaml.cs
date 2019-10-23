@@ -21,19 +21,20 @@ namespace COE131L
     {
         int loggedid;
         DateTime currentDate;
+        Main win;
         public BreakageWindow()
         {
             InitializeComponent();
             
         }
 
-        public BreakageWindow(int userid)
+        public BreakageWindow(int userid, Main mWin)
         {
             InitializeComponent();
             currentDate = System.DateTime.Today;
             this.loggedid = userid;
             this.textboxDate.Text = currentDate.ToString("dd/MM/yyyy");
-
+            win = mWin;
         }
 
         private void buttonExecute_Click(object sender, RoutedEventArgs e)
@@ -49,10 +50,12 @@ namespace COE131L
                 if (Database.breakageAdd(serialNum, recby, studNum, daterec) == true)
                 {
                     MessageBox.Show("Broken Item is saved to the list.", "Item Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+               
                 }
                 else
                 {
                     MessageBox.Show("Item is already on the list!", "Already Existing Item", MessageBoxButton.OK, MessageBoxImage.Error);
+               
                 }
 
             }
