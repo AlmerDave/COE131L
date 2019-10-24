@@ -30,16 +30,23 @@ namespace COE131L
 
         public EditWindow(int userId, Main mwin)
         {
+        
+
             InitializeComponent();
             loggeduser = userId;
-            this.comboType.ItemsSource = Database.getItemtypes();
-            
+            this.ComboDay.IsEnabled = false;
+            this.ComboMonth.IsEnabled = false;
+            this.textboxYear.IsEnabled = false;
+            this.textboxUser.IsEnabled = false;
+
+            win = mwin;
         }
 
         private void buttonSearch_Click(object sender, RoutedEventArgs e)
         {
             string sernum =  this.textboxSerial.Text ;
             item editItem = new item();
+            List<string> arrList = new List<string>();
 
             if(checkEdit.IsChecked == true && string.IsNullOrWhiteSpace(this.textboxSerial.Text)== true) // CANNOT HAPPEN
             {
@@ -48,16 +55,44 @@ namespace COE131L
             }
             else
             {
-                if(Database.searchitem(sernum,ref editItem) == true)//ITEM IS EDITED
+                if(Database.searchitem(sernum,ref editItem, ref arrList) == true)//ITEM IS EDITED
                 {
+                    List<item> itmList = new List<item>();
+                    this.comboType.ItemsSource=Database.getItemtypes();
+               
                     this.textboxUser.Text = Database.getUsername(editItem.serialNumber);
-                    this.textblockSupplier.Text = editItem.supplier;
-                   // this.comboType.Text = 
+                    this.textboxSupplier.Text = editItem.supplier;
+                    this.comboType.Text = arrList[0];
+                    this.comboStatus.Text = arrList[1];
+                    this.comboCondition.Text = arrList[2];
+                    this.textboxUser.Text = arrList[3];
+                    string[] datedel = editItem.datedelivered.Split('/');
+                    this.ComboDay.Text = datedel[0];
+                    this.ComboMonth.Text = datedel[1];
+                    this.textboxYear.Text = datedel[2];
 
+                    
+                    itmList = Database.getModel(this.comboType.Text);
+                    if (comboModel.HasItems)
+                    {
+                        comboModel.Items.Clear();
+                        foreach (item p in itmList)
+                        {
+                            this.comboModel.Items.Add(p.model);
+                        }
+                    }
+                    else
+                    {
+                        foreach (item p in itmList)
+                        {
+                            this.comboModel.Items.Add(p.model);
+                        }
+                    }
+                    comboModel.Text = editItem.model;
                 }
                 else // ITEM DOES NOT EXIST
                 {
-
+                    MessageBox.Show("The entered item is not found in the record!", "Item not found", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 }
             }
 
@@ -65,7 +100,54 @@ namespace COE131L
 
         private void comboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.comboModel.ItemsSource = Database.getModel(this.comboType.SelectedItem.ToString());
+            List<item> itmList = new List<item>();
+            itmList = Database.getModel(this.comboType.SelectedItem.ToString());
+            if (comboModel.HasItems)
+            {
+                comboModel.Items.Clear();
+                foreach (item p in itmList)
+                {
+                    this.comboModel.Items.Add(p.model);
+                }
+            }
+            else
+            {
+                foreach (item p in itmList)
+                {
+                    this.comboModel.Items.Add(p.model);
+                }
+            }
+
+        }
+
+        private void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            item editItem = new item();
+
+            editItem.serialNumber = this.textboxSerial.Text;
+
+            List<item> modelist = new List<item>();
+            modelist = Database.storeRecord();
+
+            foreach (item p in modelist)
+            {
+                if (p.model == comboModel.Text)
+                {
+                    editItem.itemType = p.itemType;
+                }
+            }
+            editItem.addedby = loggeduser;
+            editItem.supplier = this.textboxSupplier.Text;
+           
+            editItem.statusId = this.comboStatus.SelectedIndex + 1;
+           
+            editItem.conditionId = this.comboCondition.SelectedIndex + 1;
+
+            Database.UpdateEdit(editItem);
+            MessageBox.Show("Item is saved to the record!", "Item Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+           
+            win.loadDatagrid();
+
         }
     }
 }

@@ -29,6 +29,7 @@ namespace COE131L
             Password_TextBox.IsEnabled = false;
             Error_textBox.Visibility = Visibility.Hidden;
         }
+
         private void Login_Click(object sender, RoutedEventArgs e)
         {
             User loguser = new User();
@@ -72,6 +73,13 @@ namespace COE131L
             {
                 Password_TextBox.IsEnabled = false;
             }
+        }
+
+        private void GuestButton_Click(object sender, RoutedEventArgs e)
+        {
+            Main win = new Main(true);
+            win.Show();
+            this.Close();
         }
     }
 }

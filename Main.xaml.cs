@@ -32,6 +32,23 @@ namespace COE131L
         User loggedUser = new User();
         
         private SoundPlayer notif;
+        public Main(bool sw)
+        {
+            InitializeComponent();
+            SettingsButton.IsEnabled = false;
+            BreakageButton.IsEnabled = false;
+            Edit_button.IsEnabled = false;
+            notif = new SoundPlayer("notif.wav");
+
+
+
+            string fName = loggedUser.firstName + " " + loggedUser.lastName;
+            this.nameBox.Text = fName;
+
+            loadDatagrid();
+
+            loadnotif();
+        }
         public Main(User loguser)
         {
  
@@ -105,7 +122,9 @@ namespace COE131L
 
             if (Breakage_checkBox.IsChecked == true)
             {
-                loadBreakageGrid();
+                DataTable itemTable = new DataTable();
+                itemTable = Database.getBreakageRecord();
+                this.itemGrid.ItemsSource = itemTable.DefaultView;
             }
             else
             {

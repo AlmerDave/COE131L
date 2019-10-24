@@ -50,12 +50,14 @@ namespace COE131L
                 if (Database.breakageAdd(serialNum, recby, studNum, daterec) == true)
                 {
                     MessageBox.Show("Item is already on the list!", "Already Existing Item", MessageBoxButton.OK, MessageBoxImage.Error);
+                    
 
                 }
                 else
                 {
                     
                     MessageBox.Show("Broken Item is saved to the list.", "Item Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Database.UpdateBreakage();
 
                 }
 
@@ -66,12 +68,15 @@ namespace COE131L
                 if(Database.breakageRemove(serialNum) == true)
                 {
                     MessageBox.Show("Item is removed from the breakage list.", "Item Removed", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Database.UpdateBreakage(serialNum);
+
                 }
                 else
                 {
                     MessageBox.Show("Item is not existing in the breakage list.", "Item not in the list", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            win.loadDatagrid();
         }
 
         private void textboxDate_TextChanged(object sender, TextChangedEventArgs e)

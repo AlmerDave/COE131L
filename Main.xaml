@@ -98,7 +98,7 @@
                         <ColumnDefinition Width="63*"/>
                     </Grid.ColumnDefinitions>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="SettingsApplications" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Settings" Height="Auto" FontSize="20" Grid.ColumnSpan="2" Background="#FF992020" BorderBrush="#FFD4B805" Click="Button_Click"/>
+                    <Button x:Name="SettingsButton" Margin="45,33,5,23"  Content="Settings" Height="Auto" FontSize="20" Grid.ColumnSpan="2" Background="#FF992020" BorderBrush="#FFD4B805" Click="Button_Click"/>
                 </Grid>
                 <Grid x:Name="grid1" Height="100" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>
@@ -110,7 +110,7 @@
                         </TransformGroup>
                     </Grid.RenderTransform>
                     <materialDesign:PackIcon Width="30" Height="30" Kind="TrophyBroken" VerticalAlignment="Bottom" Margin="10,0,0,30" Foreground="White"/>
-                    <Button Margin="45,33,5,23"  Content="Breakage" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" Click="Button_Click_1"/>
+                    <Button x:Name="BreakageButton" Margin="45,33,5,23"  Content="Breakage" Height="Auto" FontSize="20" Background="#FF992020" BorderBrush="#FFD4B805" Click="Button_Click_1"/>
                 </Grid>
                 <Grid x:Name="grid2" Height="100" RenderTransformOrigin="0.5,0.5">
                     <Grid.RenderTransform>

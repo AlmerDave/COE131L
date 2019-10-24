@@ -36,10 +36,10 @@
         </Grid>
 
         <Button x:Name="LoginButton" VerticalAlignment="Bottom" Margin="0,85" Width="150" Content="LOGIN" Click="Login_Click" Background="#FF992020"/>
-        <TextBlock x:Name="Text1" Text="  New Here?" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="22,0,247,32" Foreground="Gray" Width="74" Height="26" />
-        <Button x:Name="SignUp_Button" VerticalAlignment="Bottom" Margin="96,0,154,37" Content="SignUp" Height="26" FontSize="12" Click="SignUpButton_Click" Background="#FF992020"/>
-        <TextBlock x:Name="ChangePassText" Text="    Forgot Password?" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="218,0,10,34" Foreground="Red" Width="115"  Cursor="Hand" Height="24"  />
+        <TextBlock x:Name="Text1" Text="  New Here?" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="49,0,220,10" Foreground="Gray" Width="74" Height="26" />
+        <Button x:Name="SignUp_Button" VerticalAlignment="Bottom" Margin="123,0,127,15" Content="SignUp" Height="26" FontSize="12" Click="SignUpButton_Click" Background="#FF992020"/>
         <TextBlock x:Name="Error_textBox" Text="  Wrong username or password" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="49,310,47,0" Foreground="Red" FontSize="14" Width="247" FontStyle="Italic"/>
+        <Button x:Name="GuestButton" VerticalAlignment="Bottom" Margin="80,0,85,46" Content="LOGIN AS GUEST" Click="GuestButton_Click"  Background="#FF992020" Height="26"/>
 
     </Grid>
 

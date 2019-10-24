@@ -25,24 +25,72 @@
                 <TextBlock HorizontalAlignment="Left" Margin="264,63,0,0" TextWrapping="Wrap" Text="Added By:" VerticalAlignment="Top"/>
                 <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="84,112,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboType_SelectionChanged"/>
                 <ComboBox x:Name="comboModel" HorizontalAlignment="Left" Margin="314,112,0,0" VerticalAlignment="Top" Width="120"/>
-                <ComboBox x:Name="comboStatus" HorizontalAlignment="Left" Margin="84,162,0,0" VerticalAlignment="Top" Width="120"/>
-                <ComboBox x:Name="comboCondition" HorizontalAlignment="Left" Margin="338,162,-8,0" VerticalAlignment="Top" Width="120"/>
-                <Button x:Name="buttonSave" Content="Save Changes" HorizontalAlignment="Left" Margin="158,76,0,-53" VerticalAlignment="Top" Width="131" Grid.Row="1"/>
+                <ComboBox x:Name="comboStatus" HorizontalAlignment="Left" Margin="84,162,0,0" VerticalAlignment="Top" Width="120">
+                    <ComboBoxItem >Commission</ComboBoxItem>
+                    <ComboBoxItem >Decommission</ComboBoxItem>
+                </ComboBox>
+                <ComboBox x:Name="comboCondition" HorizontalAlignment="Left" Margin="338,162,-8,0" VerticalAlignment="Top" Width="120">
+                    <ComboBoxItem >Good Condition</ComboBoxItem>
+                    <ComboBoxItem >For Repair</ComboBoxItem>
+                    <ComboBoxItem >Breakage</ComboBoxItem>
+                </ComboBox>
+                <Button x:Name="buttonSave" Content="Save Changes" HorizontalAlignment="Left" Margin="158,76,0,-53" Width="131" Grid.Row="1" Click="ButtonSave_Click" Height="Auto"/>
                 <TextBlock x:Name="textblockModel" HorizontalAlignment="Left" Margin="264,124,0,0" TextWrapping="Wrap" Text="Model" VerticalAlignment="Top"/>
                 <TextBlock x:Name="textblockType" HorizontalAlignment="Left" Margin="10,124,0,0" TextWrapping="Wrap" Text="Item Type" VerticalAlignment="Top"/>
                 <TextBlock x:Name="textblockCondition" HorizontalAlignment="Left" Margin="264,174,0,0" TextWrapping="Wrap" Text="Condition" VerticalAlignment="Top"/>
                 <TextBlock x:Name="textblockStatus" HorizontalAlignment="Left" Margin="10,174,0,0" TextWrapping="Wrap" Text="Status" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="7,223,0,0" TextWrapping="Wrap" Text="Date Delivered" VerticalAlignment="Top" Grid.RowSpan="2"/>
-                <TextBlock HorizontalAlignment="Left" Margin="124,39,0,0" TextWrapping="Wrap" Text="Month/s:" VerticalAlignment="Top" Grid.Row="1"/>
-                <ComboBox HorizontalAlignment="Left" Margin="264,223,0,0" VerticalAlignment="Top" Width="46" Grid.RowSpan="2"/>
-                <ComboBox HorizontalAlignment="Left" Margin="146,223,0,0" VerticalAlignment="Top" Width="58" RenderTransformOrigin="1.895,0.75" Grid.RowSpan="2"/>
-
-
+                <ComboBox Name="ComboDay" HorizontalAlignment="Left" Margin="264,223,0,0" VerticalAlignment="Top" Width="46" Grid.RowSpan="2">
+                    <ComboBoxItem >01</ComboBoxItem>
+                    <ComboBoxItem >02</ComboBoxItem>
+                    <ComboBoxItem >03</ComboBoxItem>
+                    <ComboBoxItem >04</ComboBoxItem>
+                    <ComboBoxItem >05</ComboBoxItem>
+                    <ComboBoxItem >06</ComboBoxItem>
+                    <ComboBoxItem >07</ComboBoxItem>
+                    <ComboBoxItem >08</ComboBoxItem>
+                    <ComboBoxItem >09</ComboBoxItem>
+                    <ComboBoxItem >10</ComboBoxItem>
+                    <ComboBoxItem >11</ComboBoxItem>
+                    <ComboBoxItem >12</ComboBoxItem>
+                    <ComboBoxItem >13</ComboBoxItem>
+                    <ComboBoxItem >14</ComboBoxItem>
+                    <ComboBoxItem >15</ComboBoxItem>
+                    <ComboBoxItem >16</ComboBoxItem>
+                    <ComboBoxItem >17</ComboBoxItem>
+                    <ComboBoxItem >18</ComboBoxItem>
+                    <ComboBoxItem >19</ComboBoxItem>
+                    <ComboBoxItem >20</ComboBoxItem>
+                    <ComboBoxItem >21</ComboBoxItem>
+                    <ComboBoxItem >22</ComboBoxItem>
+                    <ComboBoxItem >23</ComboBoxItem>
+                    <ComboBoxItem >24</ComboBoxItem>
+                    <ComboBoxItem >25</ComboBoxItem>
+                    <ComboBoxItem >26</ComboBoxItem>
+                    <ComboBoxItem >27</ComboBoxItem>
+                    <ComboBoxItem >28</ComboBoxItem>
+                    <ComboBoxItem >29</ComboBoxItem>
+                    <ComboBoxItem >30</ComboBoxItem>
+                    <ComboBoxItem >31</ComboBoxItem>
+                </ComboBox>
+                <ComboBox x:Name="ComboMonth" HorizontalAlignment="Left" Margin="146,214,0,0" VerticalAlignment="Top" Width="58" RenderTransformOrigin="1.895,0.75" Grid.RowSpan="2">
+                    <ComboBoxItem >01</ComboBoxItem>
+                    <ComboBoxItem >02</ComboBoxItem>
+                    <ComboBoxItem >03</ComboBoxItem>
+                    <ComboBoxItem >04</ComboBoxItem>
+                    <ComboBoxItem >05</ComboBoxItem>
+                    <ComboBoxItem >06</ComboBoxItem>
+                    <ComboBoxItem >07</ComboBoxItem>
+                    <ComboBoxItem >08</ComboBoxItem>
+                    <ComboBoxItem >09</ComboBoxItem>
+                    <ComboBoxItem >10</ComboBoxItem>
+                    <ComboBoxItem >11</ComboBoxItem>
+                    <ComboBoxItem >12</ComboBoxItem>
+                </ComboBox>
+                <TextBox x:Name="textboxYear"  HorizontalAlignment="Left" Height="23" Margin="375,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="65" Grid.Row="1"/>
                 <TextBlock HorizontalAlignment="Left" Margin="106,1,0,0" TextWrapping="Wrap" Text="Month" VerticalAlignment="Top" Grid.Row="1"/>
                 <TextBlock HorizontalAlignment="Left" Margin="228,4,0,0" TextWrapping="Wrap" Text="Day" VerticalAlignment="Top" Width="31" Grid.Row="1"/>
                 <TextBlock HorizontalAlignment="Left" Margin="338,4,0,0" TextWrapping="Wrap" Text="Year" VerticalAlignment="Top" Grid.Row="1"/>
-                <TextBlock HorizontalAlignment="Left" Margin="314,39,0,0" TextWrapping="Wrap" Text="Year/s" VerticalAlignment="Top" Grid.Row="1"/>
-                <TextBlock HorizontalAlignment="Left" Margin="17,42,0,-3" TextWrapping="Wrap" Text="Lifespan of item" VerticalAlignment="Top" Grid.Row="1"/>
             </Grid>
         </GroupBox>
     </Grid>

@@ -58,7 +58,7 @@ namespace COE131L
                 + "INNER JOIN account on account.id = breakageInformation.recordedby "
                 + "WHERE itemTable.conditionId = 3";
 
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source= MUlab.db"))
             {
                 conn.Open();
 
@@ -515,13 +515,14 @@ namespace COE131L
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
+                /*
                 conn.Open();
                 string query = "SELECT studentid FROM breakageInformation WHERE serialno=@sernum";
 
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@sernum", serialnum);
        
- 
+                
                 using (SQLiteDataReader reader = command.ExecuteReader())
                 {
                     if (reader.HasRows)
@@ -530,10 +531,8 @@ namespace COE131L
                     }
                     conn.Close();
                 }
+                */
                 
-                
-                if (breakageExist == false)
-                {
                     conn.Open();
                     string querynew = "INSERT INTO breakageInformation(serialno,studentid,recordedby,daterecorded) VALUES(@sernum,@stdnum,@recby,@datrec)";
 
@@ -546,14 +545,79 @@ namespace COE131L
 
                     cmd.ExecuteNonQuery();
 
-                }
+                
                 conn.Close();
 
             }
 
-
-            return breakageExist;
+                return breakageExist;
         }
+
+        public static void UpdateEdit(item ediItem)
+        {
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                string querynew = "UPDATE itemTable SET itemtype = @i,addedby = @a,supplier= @s, statusid = @stat, conditionId = @cond WHERE serialnumber = @sernum";
+
+                SQLiteCommand cmd = new SQLiteCommand(querynew, conn);
+                cmd.Parameters.AddWithValue("@i", ediItem.itemType);
+                cmd.Parameters.AddWithValue("@a", ediItem.addedby);
+                cmd.Parameters.AddWithValue("@s", ediItem.supplier);
+               
+                cmd.Parameters.AddWithValue("@stat", ediItem.statusId);
+               
+                cmd.Parameters.AddWithValue("@cond", ediItem.conditionId);
+                cmd.Parameters.AddWithValue("@sernum", ediItem.serialNumber);
+
+
+                cmd.ExecuteNonQuery();
+
+
+                conn.Close();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+        public static void UpdateBreakage()
+        {
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                string querynew = "UPDATE itemTable SET conditionId = 3 WHERE itemTable.serialnumber in (SELECT breakageInformation.serialno from breakageInformation)";
+
+                SQLiteCommand cmd = new SQLiteCommand(querynew, conn);
+
+                cmd.ExecuteNonQuery();
+
+
+                conn.Close();
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+        public static void UpdateBreakage(string serial)
+        {
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+                string querynew = "UPDATE itemTable SET conditionId = 1 WHERE itemTable.serialnumber = @word";
+                SQLiteCommand cmd = new SQLiteCommand(querynew, conn);
+
+                cmd.Parameters.AddWithValue("@word", serial);
+
+                cmd.ExecuteNonQuery();
+
+
+                conn.Close();
+            }
+        }
+
+
+
 
 
         //FUNCTION FOR REMOVING BROKEN ITEMS IN THE DATABASE
@@ -592,7 +656,7 @@ namespace COE131L
 
         //FUNCTION FOR GETTING ITEM INFORMATION USED FOR THE EDIT FUNCTION
         //RETURNS TRUE IF THE ITEM IS EXISTING AND EDITED
-        public static bool searchitem(string serialNum,ref item foundItem)
+        public static bool searchitem(string serialNum,ref item foundItem, ref List<string> arr)
         {
             bool itemExist = false;
 
@@ -600,8 +664,9 @@ namespace COE131L
             {
                 conn.Open();
                 //PLACE USERTYPELATER ON IN THE SCRIPT
-                string query = "SELECT itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionId,itemtype " +
-                    "FROM itemTable WHERE serialnumber = @sernum";
+                string query = "SELECT itemtype,addedby,supplier,datedelivered,itemTable.statusid,datedecommissioned,conditionId, " +
+                    "type.model,type.name,status.description,condition.description,account.username FROM itemTable INNER JOIN type ON type.typeid= itemTable.itemtype " +
+                    "INNER JOIN status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = conditionId INNER JOIN account ON account.id = addedby WHERE serialnumber = @sernum";
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@sernum",serialNum);
 
@@ -619,6 +684,11 @@ namespace COE131L
                         foundItem.datedecomm = reader.GetString(5);
                         foundItem.conditionId = reader.GetInt32(6);
                         foundItem.model = reader.GetString(7);
+
+                        arr.Add(reader.GetString(8));//0 - NAME
+                        arr.Add(reader.GetString(9));//1 - stat desc
+                        arr.Add(reader.GetString(10));//2 - cond desc
+                        arr.Add(reader.GetString(11));//3 -  acc user
                     }
                 }
 
