@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Data;
 
 using OfficeOpenXml;
+using System.Windows;
 
 namespace COE131L
 {
@@ -723,19 +724,25 @@ namespace COE131L
             return username;
         }
 
-        public static void ExcelConvert()
+        public static void ExcelConvert(string saveFile)
         {
             FileInfo excelFile = new FileInfo("MULabInventory.xlsx");
+            FileInfo sfd = new FileInfo(saveFile);
             using (ExcelPackage excel = new ExcelPackage(excelFile))
             {
-
+                var worksheets = excel.Workbook.Worksheets["Summary Report"];
+                worksheets.Cells["B3"].Value = 14;
                 
-                excel.Save();
-
+                
+                excel.SaveAs(sfd);
                 bool isExcelInstalled = Type.GetTypeFromProgID("Excel.Application") != null ? true : false;
                 if (isExcelInstalled)
                 {
-                    System.Diagnostics.Process.Start(excelFile.ToString());
+                    System.Diagnostics.Process.Start(sfd.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Microsoft Excel Not Installed", "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 
             }
