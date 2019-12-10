@@ -40,7 +40,7 @@ namespace COE131L
 
 
 
-            string fName = loggedUser.firstName + " " + loggedUser.lastName;
+            string fName = loggedUser.firstName + "  " + loggedUser.lastName;
             this.nameBox.Text = fName;
 
             loadDatagrid(this);
