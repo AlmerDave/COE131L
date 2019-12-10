@@ -9,6 +9,8 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
 
+using OfficeOpenXml;
+
 namespace COE131L
 {
     class Database
@@ -26,7 +28,7 @@ namespace COE131L
         public static DataTable getRecord()
         {
             DataTable itemTable = new DataTable();
-            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name', type.model as 'Model',account.username as 'Added By'" +
+            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name', type.model as 'Model',account.username as 'Laboratory Assistant'" +
                     ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
                     "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
                     "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
@@ -50,7 +52,7 @@ namespace COE131L
         {
             DataTable itemTable = new DataTable();
             string query = "SELECT breakageInformation.serialno as 'Serial Number', type.name as 'Item Name', type.model 'Model', " 
-                + "breakageInformation.studentid as 'Broken By', condition.description as 'Condition', account.username as 'Added By', "
+                + "breakageInformation.studentid as 'Broken By', condition.description as 'Condition', account.username as 'Laboratory Assistant', "
                 + "breakageInformation.daterecorded as 'Date Recorded' FROM breakageInformation  " 
                 + "INNER JOIN itemTable on itemTable.serialnumber = breakageInformation.serialno "
                 + "INNER JOIN type on itemTable.itemtype = type.typeid "
@@ -76,7 +78,7 @@ namespace COE131L
         {
             DataTable itemTable = new DataTable();
             string quote = word + "%";
-            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name', type.model as 'Model' ,account.username as 'Added By'" +
+            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name', type.model as 'Model' ,account.username as 'Laboratory Assistant'" +
                     ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
                     "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
                     "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
@@ -103,7 +105,7 @@ namespace COE131L
             DataTable itemTable = new DataTable();
             string quote = word + "%";
             string query = "SELECT breakageInformation.serialno as 'Serial Number', type.name as 'Item Name', type.model 'Model', "
-                + "breakageInformation.studentid as 'Broken By', condition.description as 'Condition', account.username as 'Added By', "
+                + "breakageInformation.studentid as 'Broken By', condition.description as 'Condition', account.username as 'Laboratory Assistant', "
                 + "breakageInformation.daterecorded as 'Date Recorded' FROM breakageInformation  "
                 + "INNER JOIN itemTable on itemTable.serialnumber = breakageInformation.serialno "
                 + "INNER JOIN type on itemTable.itemtype = type.typeid "
@@ -559,7 +561,7 @@ namespace COE131L
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
                 conn.Open();
-                string querynew = "UPDATE itemTable SET itemtype = @i,addedby = @a,supplier= @s, statusid = @stat, conditionId = @cond WHERE serialnumber = @sernum";
+                string querynew = "UPDATE itemTable SET itemtype = @i,addedby = @a,supplier= @s, statusid = @stat, conditionId = @cond, datedelivered = @datedel, datedecommissioned = @datedecom WHERE serialnumber = @sernum";
 
                 SQLiteCommand cmd = new SQLiteCommand(querynew, conn);
                 cmd.Parameters.AddWithValue("@i", ediItem.itemType);
@@ -567,7 +569,8 @@ namespace COE131L
                 cmd.Parameters.AddWithValue("@s", ediItem.supplier);
                
                 cmd.Parameters.AddWithValue("@stat", ediItem.statusId);
-               
+                cmd.Parameters.AddWithValue("@datedel", ediItem.datedelivered);
+                cmd.Parameters.AddWithValue("@datedecom", ediItem.datedecomm);
                 cmd.Parameters.AddWithValue("@cond", ediItem.conditionId);
                 cmd.Parameters.AddWithValue("@sernum", ediItem.serialNumber);
 
@@ -720,7 +723,23 @@ namespace COE131L
             return username;
         }
 
-        
+        public static void ExcelConvert()
+        {
+            FileInfo excelFile = new FileInfo("MULabInventory.xlsx");
+            using (ExcelPackage excel = new ExcelPackage(excelFile))
+            {
+
+                
+                excel.Save();
+
+                bool isExcelInstalled = Type.GetTypeFromProgID("Excel.Application") != null ? true : false;
+                if (isExcelInstalled)
+                {
+                    System.Diagnostics.Process.Start(excelFile.ToString());
+                }
+                
+            }
+        }
 
         
     }

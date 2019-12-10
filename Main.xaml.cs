@@ -18,6 +18,8 @@ using System.Media;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using System.IO;
+using ExcelLibrary.SpreadSheet;
+using ExcelLibrary.CompoundDocumentFormat;
 
 namespace COE131L
 {
@@ -65,7 +67,6 @@ namespace COE131L
 
             loadDatagrid();
 
-            loadnotif();
 
                
        
@@ -132,8 +133,8 @@ namespace COE131L
                 itemTable = Database.getRecord();
                 this.itemGrid.ItemsSource = itemTable.DefaultView;
             }
-           
 
+            loadnotif();
 
         }
         public void loadBreakageGrid()
@@ -147,9 +148,22 @@ namespace COE131L
         public void loadnotif()
         {
             DateTime mydate = DateTime.Now;
+            mydate = mydate.AddDays(2);
             string strdate = mydate.ToShortDateString();
+            string[] arrdate = strdate.Split('/');
+            
+            if(int.Parse(arrdate[0]) < 10)
+            {
+                arrdate[0] = "0" + arrdate[0];
+            }
+            if(int.Parse(arrdate[1]) < 10)
+            {
+                arrdate[1] = "0" + arrdate[1];
+            }
+
+            string aheadDate = arrdate[0] + '/' + arrdate[1] + '/' + arrdate[2];
             List<item> notiftable = new List<item>();
-            notiftable = Database.getSerial(strdate);
+            notiftable = Database.getSerial(aheadDate);
 
             foreach (item p in notiftable)
             {
@@ -243,12 +257,58 @@ namespace COE131L
 
             if (sfd.ShowDialog() == true)
             {
+                
+
                 DataTable dt = new DataTable();
                 dt = Database.getRecord();
-                dt.ToCSV(sfd.FileName);
+                 Database.ExcelConvert();
+                //dt.ToCSV(sfd.FileName);
                 MessageBox.Show("Succesfully Export to CSV", "SUCCESSFULL", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             
         }
+
+        public static void sample()
+        {
+            //create new xls file 
+            string file = "newdoc.xls";
+            Workbook workbook = new Workbook();
+            Worksheet worksheet = new Worksheet("First Sheet");
+            worksheet.Cells[0, 1] = new Cell((short)1);
+            worksheet.Cells[2, 0] = new Cell(9999999);
+            worksheet.Cells[3, 3] = new Cell((decimal)3.45);
+            worksheet.Cells[2, 2] = new Cell("Text string");
+            worksheet.Cells[2, 4] = new Cell("Second string");
+            worksheet.Cells[4, 0] = new Cell(32764.5, "#,##0.00");
+            worksheet.Cells[5, 1] = new Cell(DateTime.Now, @"YYYY-MM-DD");
+            worksheet.Cells.ColumnWidth[0, 1] = 3000;
+            workbook.Worksheets.Add(worksheet);
+            workbook.Save(file);
+
+            // open xls file 
+            Workbook book = Workbook.Load(file);
+            Worksheet sheet = book.Worksheets[0];
+
+            /*
+            // traverse cells 
+            foreach (Pair, Cell > cell in sheet.Cells)
+            {
+                dgvCells[cell.Left.Right, cell.Left.Left].Value = cell.Right.Value;
+            }
+            */
+
+            // traverse rows by Index 
+            for (int rowIndex = sheet.Cells.FirstRowIndex; rowIndex <= sheet.Cells.LastRowIndex; rowIndex++)
+            {
+                Row row = sheet.Cells.GetRow(rowIndex);
+                for (int colIndex = row.FirstColIndex; colIndex <= row.LastColIndex; colIndex++)
+                {
+                    Cell cell = row.GetCell(colIndex);
+
+                }
+            }
+        }
+
+
     }
 }

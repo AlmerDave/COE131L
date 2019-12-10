@@ -122,10 +122,6 @@ namespace COE131L
         
         }
 
-        private void typeRadio_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void comboType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

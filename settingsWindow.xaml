@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:COE131L"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Settings" Height="724.5" Width="564.5" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
+        Title="Settings" Height="747.5" Width="564.5" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow">
     <Grid Margin="0,0,2,0" Height="721" VerticalAlignment="Top">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -15,7 +15,7 @@
                 <GradientStop Color="#FFCB2C2C" Offset="0.507"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <RadioButton x:Name="typeRadio" FontFamily="Champagne &amp; Limousiness" Content="Item Type" HorizontalAlignment="Left" Margin="28,24,0,0" VerticalAlignment="Top" Height="21" Width="100" Checked="typeRadio_Checked" FontSize="16"/>
+        <RadioButton x:Name="typeRadio" FontFamily="Champagne &amp; Limousiness" Content="Item Type" HorizontalAlignment="Left" Margin="28,24,0,0" VerticalAlignment="Top" Height="21" Width="100"  FontSize="16"/>
         <GroupBox   Header= "Type " HorizontalAlignment="Left" Height="210" Margin="30,50,0,0" VerticalAlignment="Top" Width="492" IsEnabled="{Binding ElementName = typeRadio,Path=IsChecked}" Background="White">
 
             <Grid>
