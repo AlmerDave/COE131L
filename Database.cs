@@ -29,11 +29,12 @@ namespace COE131L
         public static DataTable getRecord()
         {
             DataTable itemTable = new DataTable();
-            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name', type.model as 'Model',account.username as 'Laboratory Assistant'" +
+            string query = "SELECT serialnumber as 'Serial Number', classification.description as 'Classification', type.name as 'Item Name', type.model as 'Model'," +
+                    "account.username as 'Laboratory Assistant'" +
                     ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
                     "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
                     "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
-                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId"; 
+                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId INNER JOIN classification ON classification.id = itemTable.classtype"; 
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
@@ -52,14 +53,14 @@ namespace COE131L
         public static DataTable getBreakageRecord()
         {
             DataTable itemTable = new DataTable();
-            string query = "SELECT breakageInformation.serialno as 'Serial Number', type.name as 'Item Name', type.model 'Model', " 
+            string query = "SELECT breakageInformation.serialno as 'Serial Number', classification.description as 'Classification', type.name as 'Item Name', type.model 'Model', "
                 + "breakageInformation.studentid as 'Broken By', condition.description as 'Condition', account.username as 'Laboratory Assistant', "
-                + "breakageInformation.daterecorded as 'Date Recorded' FROM breakageInformation  " 
+                + "breakageInformation.daterecorded as 'Date Recorded' FROM breakageInformation  "
                 + "INNER JOIN itemTable on itemTable.serialnumber = breakageInformation.serialno "
                 + "INNER JOIN type on itemTable.itemtype = type.typeid "
                 + "INNER JOIN condition on itemTable.conditionId = condition.id "
                 + "INNER JOIN account on account.id = breakageInformation.recordedby "
-                + "WHERE itemTable.conditionId = 3";
+                + "INNER JOIN classification ON classification.id = breakageInformation.classtype";
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source= MUlab.db"))
             {
@@ -148,6 +149,38 @@ namespace COE131L
                         p.itemType = reader.GetInt32(1);
                         p.model = reader.GetString(2);
                         
+                        storetable.Add(p);
+
+
+                        // Process people...      
+                    }
+
+                }
+
+                conn.Close();
+            }
+            return storetable;
+        }
+
+        public static List<item> storeClassification()
+        {
+            List<item> storetable = new List<item>();
+
+            string query = "SELECT * FROM classification";
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+                conn.Open();
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        item p = new item();
+                        p.classType = reader.GetInt32(1);
+                        p.classification = reader.GetString(2);
+
                         storetable.Add(p);
 
 
@@ -283,8 +316,8 @@ namespace COE131L
                 using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
                 {
                     conn.Open();
-                    string query = "INSERT INTO itemTable (serialnumber,itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid,itemtype)" +
-                                                                "VALUES(@sernum,@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid,@model)";
+                    string query = "INSERT INTO itemTable (serialnumber,itemtype,addedby,supplier,datedelivered,statusid,datedecommissioned,conditionid,itemtype,classtype)" +
+                                                                "VALUES(@sernum,@itemtype, @userid, @supp, @datedel, @statid, @datedecom,@conid,@model,@class)";
                     SQLiteCommand command = new SQLiteCommand(query, conn);
                     command.Parameters.AddWithValue("@sernum", newItem.serialNumber);
                     command.Parameters.AddWithValue("@itemtype", newItem.itemType);
@@ -295,6 +328,7 @@ namespace COE131L
                     command.Parameters.AddWithValue("@datedecom", newItem.datedecomm);
                     command.Parameters.AddWithValue("@conid", newItem.conditionId);
                     command.Parameters.AddWithValue("@model", newItem.itemType);
+                    command.Parameters.AddWithValue("@class", newItem.classType);
 
                     command.ExecuteNonQuery();
                     conn.Close();
@@ -518,13 +552,13 @@ namespace COE131L
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
-                /*
+                
                 conn.Open();
                 string query = "SELECT studentid FROM breakageInformation WHERE serialno=@sernum";
 
                 SQLiteCommand command = new SQLiteCommand(query, conn);
                 command.Parameters.AddWithValue("@sernum", serialnum);
-       
+                
                 
                 using (SQLiteDataReader reader = command.ExecuteReader())
                 {
@@ -532,10 +566,25 @@ namespace COE131L
                     {
                         breakageExist = true; //MEANS THAT IT IS ALREADY IN THE RECORD
                     }
-                    conn.Close();
+                    else
+                    {
+                        string querynew = "INSERT INTO breakageInformation(serialno,studentid,recordedby,daterecorded) VALUES(@sernum,@stdnum,@recby,@datrec)";
+
+                        SQLiteCommand cmd = new SQLiteCommand(querynew, conn);
+
+                        cmd.Parameters.AddWithValue("@sernum", serialnum);
+                        cmd.Parameters.AddWithValue("@stdnum", studentNum);
+                        cmd.Parameters.AddWithValue("@recby", userId);
+                        cmd.Parameters.AddWithValue("@datrec", daterec);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                    
                 }
-                */
-                
+
+
+                conn.Close();
+                /*
                     conn.Open();
                     string querynew = "INSERT INTO breakageInformation(serialno,studentid,recordedby,daterecorded) VALUES(@sernum,@stdnum,@recby,@datrec)";
 
@@ -547,9 +596,8 @@ namespace COE131L
                     cmd.Parameters.AddWithValue("@datrec", daterec);
 
                     cmd.ExecuteNonQuery();
-
-                
-                conn.Close();
+                    conn.Close();
+               */
 
             }
 
@@ -747,6 +795,8 @@ namespace COE131L
                 
             }
         }
+
+
 
         
     }

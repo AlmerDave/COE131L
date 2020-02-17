@@ -78,8 +78,9 @@ namespace COE131L
         private void GuestButton_Click(object sender, RoutedEventArgs e)
         {
             Main win = new Main(true);
-            win.Show();
             this.Close();
+            win.Show();
+           
         }
     }
 }

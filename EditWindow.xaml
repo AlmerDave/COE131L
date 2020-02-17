@@ -20,22 +20,22 @@
                 </Grid.RowDefinitions>
                 <TextBox x:Name="textboxSupplier"  materialDesign:HintAssist.Hint ="Supplier" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="10,47,230,137" FontFamily="Champagne &amp; Limousiness" FontSize="12" CaretBrush="#FF992020" SelectionBrush="#FF992020"/>
                 <TextBox x:Name="textboxUser"  materialDesign:HintAssist.Hint ="Laboratory Assistant" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="238,40,16,137" FontFamily="Champagne &amp; Limousiness" FontSize="12" CaretBrush="#FF992020" SelectionBrush="#FF992020"/>
-                <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="84,112,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboType_SelectionChanged"/>
+                <ComboBox x:Name="comboType" HorizontalAlignment="Left" Margin="76,112,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboType_SelectionChanged"/>
                 <ComboBox x:Name="comboModel" HorizontalAlignment="Left" Margin="314,112,0,0" VerticalAlignment="Top" Width="120"/>
-                <ComboBox x:Name="comboStatus" HorizontalAlignment="Left" Margin="84,162,0,0" VerticalAlignment="Top" Width="120">
+                <ComboBox x:Name="comboStatus" HorizontalAlignment="Left" Margin="56,187,0,0" VerticalAlignment="Top" Width="120">
                     <ComboBoxItem >Commission</ComboBoxItem>
                     <ComboBoxItem >Decommission</ComboBoxItem>
                 </ComboBox>
-                <ComboBox x:Name="comboCondition" HorizontalAlignment="Left" Margin="314,162,0,0" VerticalAlignment="Top" Width="120">
+                <ComboBox x:Name="comboCondition" HorizontalAlignment="Left" Margin="296,187,0,0" VerticalAlignment="Top" Width="120">
                     <ComboBoxItem >Good Condition</ComboBoxItem>
                     <ComboBoxItem >For Repair</ComboBoxItem>
                     <ComboBoxItem >Breakage</ComboBoxItem>
                 </ComboBox>
                 <Button x:Name="buttonSave" Content="Save Changes" HorizontalAlignment="Left" Margin="314,104,0,-81" Width="131" Grid.Row="1" Click="ButtonSave_Click" Height="Auto"/>
                 <TextBlock x:Name="textblockModel" HorizontalAlignment="Left" Margin="257,124,0,0" TextWrapping="Wrap" Text="Model" VerticalAlignment="Top"/>
-                <TextBlock x:Name="textblockType" HorizontalAlignment="Left" Margin="10,124,0,0" TextWrapping="Wrap" Text="Item Type" VerticalAlignment="Top"/>
-                <TextBlock x:Name="textblockCondition" HorizontalAlignment="Left" Margin="257,174,0,0" TextWrapping="Wrap" Text="Condition" VerticalAlignment="Top"/>
-                <TextBlock x:Name="textblockStatus" HorizontalAlignment="Left" Margin="10,174,0,0" TextWrapping="Wrap" Text="Status" VerticalAlignment="Top"/>
+                <TextBlock x:Name="textblockType" HorizontalAlignment="Left" Margin="19,124,0,0" TextWrapping="Wrap" Text="Item Type" VerticalAlignment="Top"/>
+                <TextBlock x:Name="textblockCondition" HorizontalAlignment="Left" Margin="239,199,0,0" TextWrapping="Wrap" Text="Condition" VerticalAlignment="Top"/>
+                <TextBlock x:Name="textblockStatus" HorizontalAlignment="Left" Margin="19,199,0,0" TextWrapping="Wrap" Text="Status" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="10,1,0,0" TextWrapping="Wrap" Text="Date Delivered" VerticalAlignment="Top" Grid.Row="1"/>
                 <ComboBox Name="ComboDay" HorizontalAlignment="Left" Margin="225,17,0,0" VerticalAlignment="Top" Width="46" Grid.Row="1">
                     <ComboBoxItem >01</ComboBoxItem>

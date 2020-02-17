@@ -14,9 +14,11 @@ namespace COE131L
         public int addedby;
         public int conditionId;
         public int statusId;
+        public int classType;
 
         public string supplier;
         public string model;
+        public string classification;
 
         public string datedelivered;
         public string datedecomm;

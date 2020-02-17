@@ -29,11 +29,31 @@ namespace COE131L
 
         List<string> dayList = new List<string>();
         List<string> monthList = new List<string>();
+        List<item> classlist = new List<item>();
         public settingsWindow()
         {
             InitializeComponent(); 
             this.comboType.ItemsSource =  Database.getItemtypes();
-            
+
+            classlist = Database.storeClassification();
+
+            if (comboClass.HasItems)
+            {
+                comboClass.Items.Clear();
+                foreach (item p in classlist)
+                {
+                    this.comboClass.Items.Add(p.classification);
+                }
+            }
+            else
+            {
+                foreach (item p in classlist)
+                {
+                    this.comboClass.Items.Add(p.classification);
+                }
+            }
+
+
         }
         public settingsWindow(int userId, Main mWin)
         {
@@ -41,8 +61,27 @@ namespace COE131L
             InitializeComponent();
             this.comboType.ItemsSource = Database.getItemtypes();
             loggedUser = userId;
+
+            List<item> classlist = new List<item>();
+            classlist = Database.storeClassification();
+
+            if (comboClass.HasItems)
+            {
+                comboClass.Items.Clear();
+                foreach (item p in classlist)
+                {
+                    this.comboClass.Items.Add(p.classification);
+                }
+            }
+            else
+            {
+                foreach (item p in classlist)
+                {
+                    this.comboClass.Items.Add(p.classification);
+                }
+            }
             //ADD COMBO BOX ELEMENTS 
-           
+
             dayList.Add("01");dayList.Add("02");dayList.Add("03");
             dayList.Add("04");dayList.Add("05");dayList.Add("06");
             dayList.Add("07");dayList.Add("08");dayList.Add("09");
@@ -187,13 +226,23 @@ namespace COE131L
                     List<item> modelist = new List<item>();
                     modelist = Database.storeRecord();
 
-                foreach (item p in modelist)
-                {
-                    if (p.model == comboModel.Text)
+                    foreach (item p in modelist)
                     {
-                        newItem.itemType = p.itemType;
+                        if (p.model == comboModel.Text)
+                        {
+                            newItem.itemType = p.itemType;
+                        }
                     }
-                }
+
+                    classlist = Database.storeClassification();
+                    foreach (item p in classlist)
+                    {
+                        if (p.classification == comboClass.Text)
+                        {
+                            newItem.classType = p.classType;
+                        }
+                    }
+
 
                     newItem.addedby = loggedUser;
                     newItem.statusId = this.itemStat;

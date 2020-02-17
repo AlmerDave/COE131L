@@ -40,12 +40,13 @@ namespace COE131L
             SettingsButton.IsEnabled = false;
             BreakageButton.IsEnabled = false;
             Edit_button.IsEnabled = false;
+            ButtonCloseMenu.Visibility = Visibility.Hidden;
             notif = new SoundPlayer("notif.wav");
 
 
 
-            string fName = loggedUser.firstName + " " + loggedUser.lastName;
-            this.nameBox.Text = fName;
+            //string fName = loggedUser.firstName + " " + loggedUser.lastName;
+            //this.nameBox.Text = fName;
 
             loadDatagrid();
 
@@ -66,7 +67,6 @@ namespace COE131L
             this.nameBox.Text = fName;
 
             loadDatagrid();
-
 
                
        

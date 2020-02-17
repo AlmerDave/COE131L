@@ -175,13 +175,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="MUlab.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="MUlab.db" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -215,6 +213,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="notif.wav" />
+    <Resource Include="ToDo.txt" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\ImageWallpaper - Copy.jpg" />
