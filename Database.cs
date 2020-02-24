@@ -80,12 +80,12 @@ namespace COE131L
         {
             DataTable itemTable = new DataTable();
             string quote = word + "%";
-            string query = "SELECT serialnumber as 'Serial Number',type.name as 'Item Name', type.model as 'Model' ,account.username as 'Laboratory Assistant'" +
+            string query = "SELECT serialnumber as 'Serial Number', classification.description as 'Classification', type.name as 'Item Name', type.model as 'Model' ,account.username as 'Laboratory Assistant'" +
                     ",supplier as 'Supplier Name',datedelivered as 'Date Delivered',status.description as 'Status'," +
                     "datedecommissioned as 'Date of Decommission',condition.description as 'Condition' " +
                     "FROM itemTable INNER JOIN type ON type.typeid = itemTable.itemtype INNER JOIN account ON account.id = itemTable.addedby INNER JOIN " +
-                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId "
-                    + "WHERE serialnumber like @word or type.name like @word or type.model like @word or account.username like  @word or supplier like  @word or status.description like  @word  or condition.description like  @word ";
+                    "status ON status.statusid = itemTable.statusid INNER JOIN condition ON condition.id = itemTable.conditionId INNER JOIN classification ON classification.id = itemTable.classtype "
+                    + "WHERE serialnumber like @word or type.name like @word or type.model like @word or account.username like  @word or supplier like  @word or status.description like  @word  or condition.description like  @word or classification.description like  @word ";
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
@@ -106,14 +106,15 @@ namespace COE131L
         {
             DataTable itemTable = new DataTable();
             string quote = word + "%";
-            string query = "SELECT breakageInformation.serialno as 'Serial Number', type.name as 'Item Name', type.model 'Model', "
+            string query = "SELECT breakageInformation.serialno as 'Serial Number', classification.description as 'Classification', type.name as 'Item Name', type.model 'Model', "
                 + "breakageInformation.studentid as 'Broken By', condition.description as 'Condition', account.username as 'Laboratory Assistant', "
                 + "breakageInformation.daterecorded as 'Date Recorded' FROM breakageInformation  "
                 + "INNER JOIN itemTable on itemTable.serialnumber = breakageInformation.serialno "
                 + "INNER JOIN type on itemTable.itemtype = type.typeid "
                 + "INNER JOIN condition on itemTable.conditionId = condition.id "
                 + "INNER JOIN account on account.id = breakageInformation.recordedby "
-                + "WHERE breakageInformation.serialno like @word or type.name like @word or type.model like @word or breakageInformation.studentid like @word or account.username like  @word or condition.description like @word AND itemTable.conditionId = 3";
+                + " INNER JOIN classification ON classification.id = itemTable.classtype "
+                + "WHERE breakageInformation.serialno like @word or type.name like @word or type.model like @word or breakageInformation.studentid like @word or account.username like  @word or condition.description like @word or classification.description like  @word AND itemTable.conditionId = 3";
 
             using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
             {
@@ -774,12 +775,57 @@ namespace COE131L
 
         public static void ExcelConvert(string saveFile)
         {
+            List<ExcelReport> quantity = new List<ExcelReport>();
+            quantity = Report();
             FileInfo excelFile = new FileInfo("MULabInventory.xlsx");
             FileInfo sfd = new FileInfo(saveFile);
             using (ExcelPackage excel = new ExcelPackage(excelFile))
             {
                 var worksheets = excel.Workbook.Worksheets["Summary Report"];
-                worksheets.Cells["B3"].Value = 14;
+                foreach (ExcelReport r in quantity)
+                {
+                    worksheets.Cells["B3"].Value = r.qMachine;
+                    worksheets.Cells["B4"].Value = r.qTrainerUnit;
+                    worksheets.Cells["B5"].Value = r.qTestEquipment;
+                    worksheets.Cells["B6"].Value = r.qComputer;
+                    worksheets.Cells["B7"].Value = r.qGlassware;
+                    worksheets.Cells["B8"].Value = r.qTools;
+                    worksheets.Cells["B9"].Value = r.qFurniture;
+                    worksheets.Cells["B10"].Value = r.qAppliances;
+                    worksheets.Cells["B11"].Value = r.qSafetyEquipment;
+
+                    worksheets.Cells["C3"].Value = r.gMachine;
+                    worksheets.Cells["C4"].Value = r.gTrainerUnit;
+                    worksheets.Cells["C5"].Value = r.gTestEquipment;
+                    worksheets.Cells["C6"].Value = r.gComputer;
+                    worksheets.Cells["C7"].Value = r.gGlassware;
+                    worksheets.Cells["C8"].Value = r.gTools;
+                    worksheets.Cells["C9"].Value = r.gFurniture;
+                    worksheets.Cells["C10"].Value = r.gAppliances;
+                    worksheets.Cells["C11"].Value = r.gSafetyEquipment;
+
+                    worksheets.Cells["D3"].Value = r.dMachine;
+                    worksheets.Cells["D4"].Value = r.dTrainerUnit;
+                    worksheets.Cells["D5"].Value = r.dTestEquipment;
+                    worksheets.Cells["D6"].Value = r.dComputer;
+                    worksheets.Cells["D7"].Value = r.dGlassware;
+                    worksheets.Cells["D8"].Value = r.dTools;
+                    worksheets.Cells["D9"].Value = r.dFurniture;
+                    worksheets.Cells["D10"].Value = r.dAppliances;
+                    worksheets.Cells["D11"].Value = r.dSafetyEquipment;
+
+
+                    worksheets.Cells["E3"].Value = r.decomMachine;
+                    worksheets.Cells["E4"].Value = r.decomTrainerUnit;
+                    worksheets.Cells["E5"].Value = r.decomTestEquipment;
+                    worksheets.Cells["E6"].Value = r.decomComputer;
+                    worksheets.Cells["E7"].Value = r.decomGlassware;
+                    worksheets.Cells["E8"].Value = r.decomTools;
+                    worksheets.Cells["E9"].Value = r.decomFurniture;
+                    worksheets.Cells["E10"].Value = r.decomAppliances;
+                    worksheets.Cells["E11"].Value = r.decomSafetyEquipment;
+                }
+                
                 
                 
                 excel.SaveAs(sfd);
@@ -796,6 +842,227 @@ namespace COE131L
             }
         }
 
+        public static List<ExcelReport> Report()
+        {
+            List<ExcelReport> quantity = new List<ExcelReport>();
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=MUlab.db"))
+            {
+
+
+                conn.Open();
+                string query = "SELECT classtype, conditionId, statusid FROM itemTable";
+
+                SQLiteCommand command = new SQLiteCommand(query, conn);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    ExcelReport r = new ExcelReport();
+                    while (reader.Read())
+                    {
+                        
+                        if(reader.GetInt32(0) == 1)
+                        {
+                            r.qMachine += 1;
+                        }
+                        else if(reader.GetInt32(0) == 2)
+                        {
+                            r.qTrainerUnit += 1;
+                        }
+                        else if (reader.GetInt32(0) == 3)
+                        {
+                            r.qTestEquipment += 1;
+                        }
+                        else if (reader.GetInt32(0) == 4)
+                        {
+                            r.qComputer += 1;
+                        }
+                        else if (reader.GetInt32(0) == 5)
+                        {
+                            r.qGlassware += 1;
+                        }
+                        else if (reader.GetInt32(0) == 6)
+                        {
+                            r.qTools += 1;
+                        }
+                        else if (reader.GetInt32(0) == 7)
+                        {
+                            r.qFurniture += 1;
+                        }
+                        else if (reader.GetInt32(0) == 8)
+                        {
+                            r.qAppliances += 1;
+                        }
+                        else if (reader.GetInt32(0) == 9)
+                        {
+                            r.qSafetyEquipment += 1;
+                        }
+                        //=====================================================================================================================
+
+                        if (reader.GetInt32(0) == 1 && reader.GetInt32(1) == 1)
+                        {
+                            r.gMachine += 1;
+                        }
+                        else if (reader.GetInt32(0) == 2 && reader.GetInt32(1) == 1)
+                        {
+                            r.gTrainerUnit += 1;
+                        }
+                        else if (reader.GetInt32(0) == 3 && reader.GetInt32(1) == 1)
+                        {
+                            r.gTestEquipment += 1;
+                        }
+                        else if (reader.GetInt32(0) == 4 && reader.GetInt32(1) == 1)
+                        {
+                            r.gComputer += 1;
+                        }
+                        else if (reader.GetInt32(0) == 5 && reader.GetInt32(1) == 1)
+                        {
+                            r.gGlassware += 1;
+                        }
+                        else if (reader.GetInt32(0) == 6 && reader.GetInt32(1) == 1)
+                        {
+                            r.gTools += 1;
+                        }
+                        else if (reader.GetInt32(0) == 7 && reader.GetInt32(1) == 1)
+                        {
+                            r.gFurniture += 1;
+                        }
+                        else if (reader.GetInt32(0) == 8 && reader.GetInt32(1) == 1)
+                        {
+                            r.gAppliances += 1;
+                        }
+                        else if (reader.GetInt32(0) == 9 && reader.GetInt32(1) == 1)
+                        {
+                            r.gSafetyEquipment += 1;
+                        }
+
+                        //=====================================================================================================================
+
+                        if (reader.GetInt32(0) == 1 && reader.GetInt32(1) == 2)
+                        {
+                            r.rMachine += 1;
+                        }
+                        else if (reader.GetInt32(0) == 2 && reader.GetInt32(1) == 2)
+                        {
+                            r.rTrainerUnit += 1;
+                        }
+                        else if (reader.GetInt32(0) == 3 && reader.GetInt32(1) == 2)
+                        {
+                            r.rTestEquipment += 1;
+                        }
+                        else if (reader.GetInt32(0) == 4 && reader.GetInt32(1) == 2)
+                        {
+                            r.rComputer += 1;
+                        }
+                        else if (reader.GetInt32(0) == 5 && reader.GetInt32(1) == 2)
+                        {
+                            r.rGlassware += 1;
+                        }
+                        else if (reader.GetInt32(0) == 6 && reader.GetInt32(1) == 2)
+                        {
+                            r.rTools += 1;
+                        }
+                        else if (reader.GetInt32(0) == 7 && reader.GetInt32(1) == 2)
+                        {
+                            r.rFurniture += 1;
+                        }
+                        else if (reader.GetInt32(0) == 8 && reader.GetInt32(1) == 2)
+                        {
+                            r.rAppliances += 1;
+                        }
+                        else if (reader.GetInt32(0) == 9 && reader.GetInt32(1) == 2)
+                        {
+                            r.rSafetyEquipment += 1;
+                        }
+
+                        //=====================================================================================================================
+
+                        if (reader.GetInt32(0) == 1 && reader.GetInt32(1) == 3)
+                        {
+                            r.dMachine += 1;
+                        }
+                        else if (reader.GetInt32(0) == 2 && reader.GetInt32(1) == 3)
+                        {
+                            r.dTrainerUnit += 1;
+                        }
+                        else if (reader.GetInt32(0) == 3 && reader.GetInt32(1) == 3)
+                        {
+                            r.dTestEquipment += 1;
+                        }
+                        else if (reader.GetInt32(0) == 4 && reader.GetInt32(1) == 3)
+                        {
+                            r.dComputer += 1;
+                        }
+                        else if (reader.GetInt32(0) == 5 && reader.GetInt32(1) == 3)
+                        {
+                            r.dGlassware += 1;
+                        }
+                        else if (reader.GetInt32(0) == 6 && reader.GetInt32(1) == 3)
+                        {
+                            r.dTools += 1;
+                        }
+                        else if (reader.GetInt32(0) == 7 && reader.GetInt32(1) == 3)
+                        {
+                            r.dFurniture += 1;
+                        }
+                        else if (reader.GetInt32(0) == 8 && reader.GetInt32(1) == 3)
+                        {
+                            r.dAppliances += 1;
+                        }
+                        else if (reader.GetInt32(0) == 9 && reader.GetInt32(1) == 3)
+                        {
+                            r.dSafetyEquipment += 1;
+                        }
+
+                        //=====================================================================================================================
+
+                        if (reader.GetInt32(0) == 1 && reader.GetInt32(2) == 2)
+                        {
+                            r.decomMachine += 1;
+                        }
+                        else if (reader.GetInt32(0) == 2 && reader.GetInt32(1) == 2)
+                        {
+                            r.decomTrainerUnit += 1;
+                        }
+                        else if (reader.GetInt32(0) == 3 && reader.GetInt32(1) == 2)
+                        {
+                            r.decomTestEquipment += 1;
+                        }
+                        else if (reader.GetInt32(0) == 4 && reader.GetInt32(1) == 2)
+                        {
+                            r.decomComputer += 1;
+                        }
+                        else if (reader.GetInt32(0) == 5 && reader.GetInt32(1) == 2)
+                        {
+                            r.decomGlassware += 1;
+                        }
+                        else if (reader.GetInt32(0) == 6 && reader.GetInt32(1) == 2)
+                        {
+                            r.decomTools += 1;
+                        }
+                        else if (reader.GetInt32(0) == 7 && reader.GetInt32(1) == 2)
+                        {
+                            r.decomFurniture += 1;
+                        }
+                        else if (reader.GetInt32(0) == 8 && reader.GetInt32(1) == 2)
+                        {
+                            r.decomAppliances += 1;
+                        }
+                        else if (reader.GetInt32(0) == 9 && reader.GetInt32(1) == 2)
+                        {
+                            r.decomSafetyEquipment += 1;
+                        }
+
+
+
+                    }
+                    quantity.Add(r);
+                }
+                conn.Close();
+            }
+
+
+            return quantity;
+        }
 
 
         

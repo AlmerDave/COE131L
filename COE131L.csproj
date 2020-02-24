@@ -110,6 +110,7 @@
     <Compile Include="EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExcelReport.cs" />
     <Compile Include="forgotPass.xaml.cs">
       <DependentUpon>forgotPass.xaml</DependentUpon>
     </Compile>
