@@ -2,3 +2,8 @@
 MULab Inventory bin and folder
 Change if decommisioned - apply
 BUG ON LOGIN AS GUEST
+ICON ON MAINWINDOW
+icon for application
+
+optional:
+PUt spalash screen upon loading
