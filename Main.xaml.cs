@@ -193,6 +193,8 @@ namespace COE131L
             }
         }
 
+
+
         private void breakage_clicked(object sender, RoutedEventArgs e)
         {
             if (Breakage_checkBox.IsChecked == true)

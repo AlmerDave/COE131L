@@ -180,6 +180,7 @@ namespace COE131L
                 foreach (item p in modellist)
                 {
                     this.comboModel.Items.Add(p.model);
+                    
                 }
             }
             
